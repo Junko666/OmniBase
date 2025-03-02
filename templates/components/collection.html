@@ -1,0 +1,97 @@
+<div id="collectionSection">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 relative mb-8 transition-all duration-300">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4 md:mb-0">Your Collection</h2>
+        <!-- Search and filter section -->
+        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Search titles..." class="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button id="filterToggle" class="px-3 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-md hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
+              <i class="fas fa-filter mr-1"></i> Filters
+            </button>
+            <div class="inline-flex">
+              <button id="viewAll" class="px-3 py-2 bg-indigo-600 text-white rounded-l-md hover:bg-indigo-700 transition-colors">All</button>
+              <button id="viewMovies" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Movies</button>
+              <button id="viewSeries" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Series</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Filter options -->
+      <div id="filterOptions" class="filter-container bg-gray-50 dark:bg-gray-900 rounded-md p-4 space-y-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label for="genreFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Genre</label>
+            <select id="genreFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="">All Genres</option>
+            </select>
+          </div>
+          <div>
+            <label for="yearFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Release Year</label>
+            <select id="yearFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="">All Years</option>
+            </select>
+          </div>
+          <div>
+            <label for="userRatingFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Rating</label>
+            <select id="userRatingFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="">Any Rating</option>
+              <option value="notRated">Not Rated</option>
+              <option value="0.5">0.5+ Stars</option>
+              <option value="1">1+ Star</option>
+              <option value="2">2+ Stars</option>
+              <option value="3">3+ Stars</option>
+              <option value="4">4+ Stars</option>
+              <option value="4.5">4.5+ Stars</option>
+            </select>
+          </div>
+          <div>
+            <label for="imdbRatingFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">IMDB Rating</label>
+            <select id="imdbRatingFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="">Any Rating</option>
+              <option value="notRated">Not Available</option>
+              <option value="5">5+ (out of 10)</option>
+              <option value="6">6+ (out of 10)</option>
+              <option value="7">7+ (out of 10)</option>
+              <option value="8">8+ (out of 10)</option>
+              <option value="9">9+ (out of 10)</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button id="resetFilters" class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+      
+      <div id="movieContainer" class="relative min-h-[500px] flex justify-center items-center bg-white dark:bg-gray-800 transition-colors duration-200">
+        <!-- Empty state -->
+        <div id="emptyState" class="text-center py-16">
+          <i class="fas fa-film text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+          <h3 class="text-xl font-medium text-gray-500 dark:text-gray-400 mb-2">No Content Yet</h3>
+          <p class="text-gray-400 dark:text-gray-500">Start by adding a movie/series or importing your collection</p>
+        </div>
+        <!-- Movie cards will be inserted here -->
+      </div>
+  
+      <!-- Navigation -->
+      <div id="navigation" class="mt-6 flex justify-between items-center px-4 hidden">
+        <button id="prevBtn" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 focus:outline-none transition-colors">
+          <i class="fas fa-chevron-left mr-1"></i> Previous
+        </button>
+        <div id="pageIndicator" class="text-sm text-gray-500 dark:text-gray-400">
+          <span id="currentIndex">1</span> of <span id="totalMovies">0</span>
+        </div>
+        <button id="nextBtn" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 focus:outline-none transition-colors">
+          Next <i class="fas fa-chevron-right ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
