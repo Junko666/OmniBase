@@ -209,6 +209,6 @@ flask run --port 16969
 
 
 ## Contributor
-1. Junko666 | Development Dirction https://github.com/Junko666
+1. Junko666 | Development Director https://github.com/Junko666
 2. Claude 3.7 thinking | UI / Backend
 3. OpenAi o3-mini high | Backend
