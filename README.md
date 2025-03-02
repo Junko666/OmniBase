@@ -116,7 +116,8 @@ flask run --port 16969
    # - Disney+ (COMMING)
    ```
    ![CSV Import Demo](https://github.com/user-attachments/assets/71a4068a-393e-4a4f-bc02-e7b27d24cdad)
-
+  For Netflix, follow these instructions: https://help.netflix.com/en/node/101917
+  
   For Amazon Prime Video, do following:
   Go to: "https://www.amazon.(de, com, COUNTRY_TLD)/gp/video/mystuff/watchlist/all/ref=atv_mys_wl_tab"
   Open the Webbrowser Console an paste this JavaScript Code. It will download your Watchlist as a csv file, which you can upload to the MovieBase WebUi.
@@ -208,6 +209,6 @@ flask run --port 16969
 
 
 ## Contributor
-1. Junko666 (Development Dirction) https://github.com/Junko666
-2. Claude 3.7 (thinking)
-3. OpenAi o3-mini (high)
+1. Junko666 | Development Dirction https://github.com/Junko666
+2. Claude 3.7 thinking | UI / Backend
+3. OpenAi o3-mini high | Backend
