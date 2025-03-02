@@ -1,0 +1,502 @@
+/* --- Pure CSS Star Rating Widget --- */
+fieldset, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .rating {
+    float: left;
+  }
+  .rating > input {
+    display: none;
+  }
+  .rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: "FontAwesome";
+    display: inline-block;
+    content: "\f005";
+  }
+  .rating > .half:before {
+    content: "\f089";
+    position: absolute;
+  }
+  .rating > label {
+    color: #ddd;
+    float: right;
+  }
+  .dark .rating > label {
+    color: #4a5568;
+  }
+  .rating > input:checked ~ label,
+  .rating:not(:checked) > label:hover,
+  .rating:not(:checked) > label:hover ~ label {
+    color: #FFD700;
+  }
+  .rating > input:checked + label:hover,
+  .rating > input:checked ~ label:hover,
+  .rating > label:hover ~ input:checked ~ label {
+    color: #FFED85;
+  }
+  
+  /* --- Andere CSS-Regeln aus dem Projekt --- */
+  body {
+    margin: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1 {
+    font-size: 1.5em;
+    margin: 10px;
+  }
+  .rating-display .fas.fa-star,
+  .rating-display .fas.fa-star-half-alt {
+    color: #FFD700;
+  }
+  .rating-display .far.fa-star {
+    color: #ccc;
+  }
+  .dark .rating-display .far.fa-star {
+    color: #4a5568;
+  }
+  /* For swipe animation */
+  .movie-card {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease;
+  }
+  .movie-card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  .dark .movie-card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  }
+  .movie-card.swiping-left {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  .movie-card.swiping-right {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  /* Poster shadow effect */
+  .poster-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .dark .poster-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+  }
+  .poster-shadow:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+  .dark .poster-shadow:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  }
+  /* Dark mode toggle */
+  .toggle-checkbox:checked {
+    right: 0;
+    border-color: #68D391;
+  }
+  .toggle-checkbox:checked + .toggle-label {
+    background-color: #68D391;
+  }
+  .toggle-checkbox {
+    transition: right 0.2s ease;
+  }
+  .toggle-label {
+    transition: background-color 0.2s ease;
+  }
+  /* Filter container */
+  .filter-container {
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  .filter-container.expanded {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Type badge */
+  .type-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .movie-badge {
+    background-color: #EBF4FF;
+    color: #3182CE;
+  }
+  .dark .movie-badge {
+    background-color: #2C5282;
+    color: #BEE3F8;
+  }
+  .series-badge {
+    background-color: #FEF3C7;
+    color: #D97706;
+  }
+  .dark .series-badge {
+    background-color: #92400E;
+    color: #FDE68A;
+  }
+  /* Rating badges */
+  .rating-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .user-rating {
+    background-color: #EBF4FF;
+    color: #3182CE;
+  }
+  .dark .user-rating {
+    background-color: #2C5282;
+    color: #BEE3F8;
+  }
+  .imdb-rating {
+    background-color: #FEF3C7;
+    color: #D97706;
+  }
+  .dark .imdb-rating {
+    background-color: #92400E;
+    color: #FDE68A;
+  }
+  /* Hamburger menu */
+  .menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: white;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .menu-container.open {
+    transform: translateX(0);
+  }
+  .dark .menu-container {
+    background-color: #1A202C;
+  }
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .dark .menu-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  .menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Section transitions */
+  #sectionsContainer > div {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  #sectionsContainer > div.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    display: none;
+  }
+  #sectionsContainer > div:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  /* Button animations */
+  button {
+    transition: all 0.2s ease;
+  }
+  button:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+  
+  /* Form field animations */
+  input, select, textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .dark input:focus, .dark select:focus, .dark textarea:focus {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  }
+  
+  /* Notification animation */
+  .notification {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Improve dark mode text visibility */
+  .dark input, .dark select, .dark textarea {
+    color: #F7FAFC;
+    background-color: #2D3748;
+    border-color: #4A5568;
+  }
+  
+  .dark input::placeholder, .dark textarea::placeholder {
+    color: #A0AEC0;
+  }
+  
+  .dark .text-gray-600, .dark .text-gray-700, .dark .text-gray-800 {
+    color: #E2E8F0 !important;
+  }
+  
+  .dark .text-gray-300, .dark .text-gray-400, .dark .text-gray-500 {
+    color: #CBD5E0;
+  }
+  
+  /* Animated menu items */
+  .menu-container a {
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .menu-container a:hover {
+    transform: translateX(5px);
+  }
+  .menu-container a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: right 0.3s ease;
+  }
+  .menu-container a:hover::after {
+    right: 65%;
+  }
+  
+  /* Additional dark mode styles for proper consistency */
+  .dark .bg-white {
+    background-color: #1A202C;
+  }
+  
+  .dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark .border-gray-200 {
+    border-color: #4A5568;
+  }
+  
+  .dark .bg-gray-50 {
+    background-color: #2D3748;
+  }
+  
+  .dark .bg-gray-100 {
+    background-color: #2D3748;
+  }
+  
+  .dark .border-dashed {
+    border-color: #4A5568;
+  }
+  
+  .dark .border-gray-300 {
+    border-color: #4A5568;
+  }
+  
+  .dark .focus\:ring-indigo-500:focus, 
+  .dark .focus\:border-indigo-500:focus {
+    border-color: #667EEA;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+  }
+  
+  .dark .bg-indigo-50 {
+    background-color: rgba(102, 126, 234, 0.2);
+  }
+  
+  /* Darkmode improvements for buttons */
+  .dark #modalCancelBtn {
+    background-color: #2D3748;
+    color: #E2E8F0;
+  }
+  
+  .dark #modalCancelBtn:hover {
+    background-color: #4A5568;
+  }
+  
+  .dark #viewMovies, 
+  .dark #viewSeries {
+    background-color: #2D3748;
+    color: #E2E8F0;
+  }
+  
+  .dark #viewMovies:hover, 
+  .dark #viewSeries:hover {
+    background-color: #4A5568;
+  }
+  
+  .dark .hover\:bg-gray-100:hover {
+    background-color: #2D3748;
+  }
+  
+  /* Color picker related styles */
+  .color-picker-container {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .color-picker-label {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  #mainColorPicker {
+    height: 30px;
+    width: 60px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  #mainColorPicker::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  #mainColorPicker::-webkit-color-swatch {
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+  }
+  
+  .dark #mainColorPicker::-webkit-color-swatch {
+    border-color: #4a5568;
+  }
+  
+  /* Settings form styling */
+  .settings-group {
+    margin-bottom: 20px;
+  }
+  
+  .settings-group h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .api-key-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .api-key-input input {
+    flex-grow: 1;
+    margin-right: 8px;
+  }
+  
+  /* Streaming buttons styling */
+  .streaming-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    margin: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .streaming-button:hover {
+    transform: translateY(-2px);
+  }
+  
+  .streaming-button img {
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+  }
+  
+  /* Provider specific colors */
+  .netflix {
+    background-color: #E50914;
+    color: white;
+  }
+  
+  .amazon {
+    background-color: #00A8E1;
+    color: white;
+  }
+  
+  .disney {
+    background-color: #113CCF;
+    color: white;
+  }
+  
+  .hbo {
+    background-color: #5822B4;
+    color: white;
+  }
+  
+  .hulu {
+    background-color: #1CE783;
+    color: black;
+  }
+  
+  .apple {
+    background-color: #000000;
+    color: white;
+  }
+  
+  .default-provider {
+    background-color: #6B7280;
+    color: white;
+  }
+  
+  /* Basic badge for streaming info */
+  .streaming-badge {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 4px 4px 0;
+    padding: 2px 6px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    color: white;
+    background-color: #4B5563;
+  }
