@@ -61,13 +61,49 @@ def load_settings():
         "streaming_api_key": "",
         "ai_provider": "openai",  # Default zu OpenAI
         "openai_api_key": "",
-        "gemini_api_key": ""
+        "gemini_api_key": "",
+        "language": "en"  # Standard: Englisch
     }
+LANGUAGE_TRANSLATIONS_FILE = os.path.join(BASE_DIR, 'language_translations.json')
 
+def load_translations():
+    """Lädt Übersetzungen aus der JSON-Datei."""
+    if os.path.exists(LANGUAGE_TRANSLATIONS_FILE):
+        with open(LANGUAGE_TRANSLATIONS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+@app.route('/api/translations', methods=['GET'])
+def get_translations():
+    """API-Endpunkt zum Abrufen der Übersetzungen."""
+    translations = load_translations()
+    return jsonify(translations)
 def save_settings(settings):
     """Speichert die Einstellungen in der JSON-Datei."""
     with open(SETTINGS_FILE, 'w', encoding='utf-8') as f:
         json.dump(settings, f, ensure_ascii=False, indent=4)
+
+@app.route('/api/movies/search', methods=['GET'])
+def search_movie():
+    title = request.args.get('title', '')
+    if not title:
+        return jsonify({'error': 'No title provided'}), 400
+
+    # Prüfe API-Limit
+    if not check_api_usage_limit():
+        return jsonify({'error': 'API usage limit reached. Please try again later.'}), 429
+
+    # Suche Film in der API
+    api_response = search_movie_api(title)
+    if not api_response:
+        return jsonify({'error': 'No results found'}), 404
+
+    # Verarbeite API-Antwort
+    movie_data = process_api_response(api_response)
+    if not movie_data:
+        return jsonify({'error': 'Could not process API response'}), 500
+
+    return jsonify(movie_data)
 
 def get_ai_answer(message):
     """Holt eine Antwort vom ausgewählten KI-Anbieter."""
@@ -172,6 +208,11 @@ def search_movie_api(title, country="DE"):
         else:
             print(f"Cache für '{title}' ist veraltet, wird aktualisiert...")
 
+    # Vor dem API-Aufruf prüfen, ob genügend Budget vorhanden ist
+    if not check_api_usage_limit():
+        print(f"API-Limit erreicht! Kann keine Anfrage für '{title}' stellen.")
+        return None
+
     # API-Anfrage stellen
     url = "https://streaming-availability.p.rapidapi.com/shows/search/title"
 
@@ -191,6 +232,9 @@ def search_movie_api(title, country="DE"):
         if response.status_code == 200:
             data = response.json()
             print(data)
+            # API-Nutzungszähler erhöhen
+            increment_api_usage()
+
             # Ergebnis mit Zeitstempel cachen
             cache[cache_key] = data
             cache[f"{cache_key}_timestamp"] = datetime.now().timestamp()
@@ -202,7 +246,49 @@ def search_movie_api(title, country="DE"):
     except Exception as e:
         print(f"Fehler beim Aufrufen der API: {str(e)}")
         return None
+def get_api_usage():
+    """Holt die aktuelle API-Nutzungszahl aus settings.json."""
+    settings = load_settings()
 
+    # Prüfen, ob ein neuer Monat begonnen hat und ggf. zurücksetzen
+    last_reset_month = settings.get("last_reset_month", "")
+    current_month = datetime.now().strftime("%Y-%m")
+
+    if last_reset_month != current_month:
+        settings["api_usage_count"] = 0
+        settings["last_reset_month"] = current_month
+        save_settings(settings)
+        return 0
+
+    return settings.get("api_usage_count", 0)
+
+def increment_api_usage():
+    """Erhöht den API-Nutzungszähler in settings.json."""
+    settings = load_settings()
+    current_count = settings.get("api_usage_count", 0)
+    settings["api_usage_count"] = current_count + 1
+    settings["last_reset_month"] = datetime.now().strftime("%Y-%m")
+    save_settings(settings)
+    return current_count + 1
+
+def check_api_usage_limit(needed_calls=1):
+    """
+    Prüft, ob genügend API-Budget für die benötigten Aufrufe übrig ist.
+    Gibt True zurück, wenn genügend Budget vorhanden ist, sonst False.
+    """
+    current_count = get_api_usage()
+    return current_count + needed_calls <= 1000  # Monatliches Limit
+
+@app.route('/api/api_usage', methods=['GET'])
+def get_api_usage_endpoint():
+    """Gibt die aktuellen API-Nutzungsstatistiken zurück."""
+    current_count = get_api_usage()
+
+    return jsonify({
+        "usage_count": current_count,
+        "limit": 1000,
+        "percentage": (current_count / 1000) * 100
+    })
 def process_api_response(api_response):
     """Extrahiert relevante Informationen aus der API-Antwort."""
     if not api_response:
@@ -569,7 +655,14 @@ def import_netflix():
         try:
             # Datei verarbeiten
             result = analyze_netflix_history(file_path)
+            needed_calls = len(result['movies']) + len(result['series'])
 
+            # Prüfen, ob genügend API-Budget vorhanden ist
+            if not check_api_usage_limit(needed_calls):
+                os.remove(file_path)  # Aufräumen
+                return jsonify({
+                    'error': 'API-Limit erreicht. Bitte versuchen Sie es im nächsten Monat erneut oder verwenden Sie manuelle Eingabe.'
+                })
             # Jeden Filmtitel verarbeiten
             movies = load_movies()
             print(movies)
@@ -715,11 +808,14 @@ def get_ai_suggestions():
     # Extrahiere Anfrageparameter
     selection_mode = data.get('selectionMode', 'all')  # 'all' oder 'rated'
     content_type = data.get('contentType', 'both')     # 'movie', 'series' oder 'both'
-    suggestion_count = data.get('suggestionCount', 5)  # Anzahl der Vorschläge
     description = data.get('description', '')          # Beschreibung des Inhalts
     custom_favorites = data.get('favorites', [])       # Vom Benutzer bearbeitete Favoriten
-
-    # Alle Titel aus der Datenbank holen
+    suggestion_count = data.get('suggestionCount', 5)
+    if not check_api_usage_limit(suggestion_count):
+        return jsonify({
+            'success': False,
+            'message': 'API-Limit erreicht. Bitte versuchen Sie es im nächsten Monat erneut oder reduzieren Sie die Anzahl der Vorschläge.'
+        })    # Alle Titel aus der Datenbank holen
     all_titles = load_movies()
 
     # Titel basierend auf Auswahlmodus filtern
