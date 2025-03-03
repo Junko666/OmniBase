@@ -1,105 +1,140 @@
 <div id="settingsSection" class="hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
-      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Settings</h2>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6" data-lang-key="settings.title">Settings</h2>
+      
+    <!-- API Keys Form -->
+    <form id="settingsForm" class="space-y-6">
+      <!-- Streaming API Settings -->
+      <div class="settings-group">
+        <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.streamingAPI">Streaming Availability API</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.streamingDesc">Set your API key for streaming-availability.p.rapidapi.com</p>
+          
+        <div class="api-key-input">
+          <input type="password" id="streamingApiKey" data-lang-key-placeholder="settings.enterAPIKey" placeholder="Enter API Key" 
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          <button type="button" id="streamingApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+          
+        <div class="mt-2">
+          <a href="https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability/pricing" 
+              target="_blank" rel="noopener noreferrer" 
+              class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+            <i class="fas fa-external-link-alt mr-1"></i> <span data-lang-key="settings.getAPIKey">Get API Key</span>
+          </a>
+        </div>
+      </div>
         
-      <!-- API Keys Form -->
-      <form id="settingsForm" class="space-y-6">
-        <!-- Streaming API Settings -->
-        <div class="settings-group">
-          <h3 class="text-gray-800 dark:text-gray-200">Streaming Availability API</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Set your API key for streaming-availability.p.rapidapi.com</p>
-            
+      <!-- API Usage -->
+      <div class="settings-group">
+        <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.apiUsage">API Usage</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.apiUsageDesc">
+          Streaming Availability API usage this month:
+        </p>
+        
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="settings.monthlyLimit">Monthly Limit:</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">
+            <span id="apiUsageCount">0</span>/1000 <span data-lang-key="settings.calls">calls</span>
+          </span>
+        </div>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-4">
+          <div id="apiUsageBar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        
+        <p class="text-xs text-gray-500 dark:text-gray-400" data-lang-key="settings.resetCounter">
+          The counter is automatically reset at the beginning of each month.
+        </p>
+        <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.aiProvider">AI Provider</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.aiProviderDesc">Select which AI service to use for assistance</p>
+          
+        <div class="flex space-x-4 mb-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="aiProvider" value="openai" checked 
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">OpenAI 4o-mini</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="aiProvider" value="gemini" 
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">Gemini 2.0 Flash</span>
+          </label>
+        </div>
+          
+        <!-- OpenAI API Key -->
+        <div id="openaiApiSection">
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="settings.openAIKey">OpenAI API Key</h4>
           <div class="api-key-input">
-            <input type="password" id="streamingApiKey" placeholder="Enter API Key" 
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-            <button type="button" id="streamingApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+            <input type="password" id="openaiApiKey" data-lang-key-placeholder="settings.enterOpenAIKey" placeholder="Enter OpenAI API Key" 
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <button type="button" id="openaiApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
               <i class="fas fa-eye"></i>
             </button>
           </div>
-            
           <div class="mt-2">
-            <a href="https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability/pricing" 
-                target="_blank" rel="noopener noreferrer" 
-                class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
-              <i class="fas fa-external-link-alt mr-1"></i> Get API Key
+            <a href="https://platform.openai.com/settings/organization/api-keys" 
+              target="_blank" rel="noopener noreferrer" 
+              class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+              <i class="fas fa-external-link-alt mr-1"></i> <span data-lang-key="settings.getOpenAIKey">Get OpenAI API Key</span>
             </a>
           </div>
         </div>
           
-        <!-- AI Provider Selection -->
-        <div class="settings-group">
-          <h3 class="text-gray-800 dark:text-gray-200">AI Provider</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Select which AI service to use for assistance</p>
-            
-          <div class="flex space-x-4 mb-4">
-            <label class="inline-flex items-center">
-              <input type="radio" name="aiProvider" value="openai" checked 
-                    class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
-              <span class="ml-2 text-gray-700 dark:text-gray-300">OpenAI 4o-mini</span>
-            </label>
-            <label class="inline-flex items-center">
-              <input type="radio" name="aiProvider" value="gemini" 
-                    class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
-              <span class="ml-2 text-gray-700 dark:text-gray-300">Gemini 2.0 Flash</span>
-            </label>
+        <!-- Gemini API Key -->
+        <div id="geminiApiSection" class="hidden">
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="settings.geminiKey">Gemini API Key</h4>
+          <div class="api-key-input">
+            <input type="password" id="geminiApiKey" data-lang-key-placeholder="settings.enterGeminiKey" placeholder="Enter Gemini API Key" 
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <button type="button" id="geminiApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+              <i class="fas fa-eye"></i>
+            </button>
           </div>
-            
-          <!-- OpenAI API Key -->
-          <div id="openaiApiSection">
-            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">OpenAI API Key</h4>
-            <div class="api-key-input">
-              <input type="password" id="openaiApiKey" placeholder="Enter OpenAI API Key" 
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-              <button type="button" id="openaiApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
-                <i class="fas fa-eye"></i>
-              </button>
-            </div>
-            <div class="mt-2">
-              <a href="https://platform.openai.com/settings/organization/api-keys" 
-                target="_blank" rel="noopener noreferrer" 
-                class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
-                <i class="fas fa-external-link-alt mr-1"></i> Get OpenAI API Key
-              </a>
-            </div>
-          </div>
-            
-          <!-- Gemini API Key -->
-          <div id="geminiApiSection" class="hidden">
-            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Gemini API Key</h4>
-            <div class="api-key-input">
-              <input type="password" id="geminiApiKey" placeholder="Enter Gemini API Key" 
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-              <button type="button" id="geminiApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
-                <i class="fas fa-eye"></i>
-              </button>
-            </div>
-            <div class="mt-2">
-              <a href="https://aistudio.google.com/apikey" 
-                target="_blank" rel="noopener noreferrer" 
-                class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
-                <i class="fas fa-external-link-alt mr-1"></i> Get Gemini API Key
-              </a>
-            </div>
+          <div class="mt-2">
+            <a href="https://aistudio.google.com/apikey" 
+              target="_blank" rel="noopener noreferrer" 
+              class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+              <i class="fas fa-external-link-alt mr-1"></i> <span data-lang-key="settings.getGeminiKey">Get Gemini API Key</span>
+            </a>
           </div>
         </div>
+      </div>
+        
+      <!-- Theme Color -->
+      <div class="settings-group">
+        <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.appearance">Appearance</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.appearanceDesc">Customize the app's main color</p>
           
-        <!-- Theme Color -->
-        <div class="settings-group">
-          <h3 class="text-gray-800 dark:text-gray-200">Appearance</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Customize the app's main color</p>
-            
-          <div class="flex items-center">
-            <label for="mainColorPicker" class="text-gray-700 dark:text-gray-300 mr-2">Main Color:</label>
-            <input type="color" id="mainColorPicker" class="h-8 w-12 border-0 rounded cursor-pointer">
-          </div>
+        <div class="flex items-center">
+          <label for="mainColorPicker" class="text-gray-700 dark:text-gray-300 mr-2" data-lang-key="settings.mainColor">Main Color:</label>
+          <input type="color" id="mainColorPicker" class="h-8 w-12 border-0 rounded cursor-pointer">
         </div>
-          
-        <!-- Submit Button -->
-        <div>
-          <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-            Save Settings
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <!-- Language Selection -->
+      <div class="settings-group">
+        <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.language">Language</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.languageDesc">Select your preferred language</p>
+        
+        <select id="languageSelect" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="cn">中文</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="hi">हिंदी</option>
+          <option value="ar">عربي</option>
+          <option value="ru">Русский</option>
+        </select>
+      </div>
+        
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="settings.saveSettings">
+          Save Settings
+        </button>
+      </div>
+    </form>
   </div>
+</div>
