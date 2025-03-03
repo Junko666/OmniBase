@@ -1,11 +1,91 @@
 <div id="statsSection" class="hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
-      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Statistics</h2>
-      <p class="text-gray-700 dark:text-gray-300 mb-2">Number of Movies: <span id="movieCount">0</span></p>
-      <p class="text-gray-700 dark:text-gray-300 mb-2">Number of Series: <span id="seriesCount">0</span></p>
-      <p class="text-gray-700 dark:text-gray-300 mb-4">Not Rated by User: <span id="notRatedCount">0</span></p>
-      <div style="position: relative; height: 300px; max-width: 600px; margin: 0 auto;">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6" data-lang-key="stats.title">Statistics</h2>
+    
+    <!-- Collection Overview Card with Percentages -->
+    <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3" data-lang-key="stats.overview">Collection Overview</h3>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="stats.movies">Movies:</span>
+            <div class="flex items-center">
+              <span id="movieCount" class="font-medium">0</span>
+              <span id="moviePercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="stats.tvSeries">TV Series:</span>
+            <div class="flex items-center">
+              <span id="seriesCount" class="font-medium">0</span>
+              <span id="seriesPercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="stats.ratedTitles">Rated Titles:</span>
+            <div class="flex items-center">
+              <span id="ratedCount" class="font-medium">0</span>
+              <span id="ratedPercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="stats.notRated">Not Rated:</span>
+            <div class="flex items-center">
+              <span id="notRatedCount" class="font-medium">0</span>
+              <span id="notRatedPercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="stats.totalTitles">Total Titles:</span>
+            <span id="totalTitles" class="font-medium">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movie Persona Card -->
+      <div id="moviePersonaContainer" class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200" data-lang-key="stats.moviePersona">Your Movie Persona</h3>
+          <button id="generateMoviePersonaBtn" class="text-xs bg-indigo-600 text-white py-1 px-2 rounded hover:bg-indigo-700 transition-colors" data-lang-key="common.generate">
+            Generate
+          </button>
+        </div>
+        <div id="moviePersonaContent" class="hidden">
+          <div class="flex items-center mb-2">
+            <span id="personaTitle" class="text-lg font-bold text-indigo-600 dark:text-indigo-400"></span>
+          </div>
+          <p id="personaDescription" class="text-gray-700 dark:text-gray-300 text-sm"></p>
+        </div>
+        <div id="moviePersonaPlaceholder" class="text-center py-4 text-gray-500 dark:text-gray-400">
+          <p data-lang-key="stats.generatePersona">Generate your movie persona to discover your taste profile!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Genres Section with Chart Toggle -->
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200" data-lang-key="stats.genreDistribution">Genre Distribution</h3>
+        <div class="inline-flex rounded-md shadow-sm">
+          <button type="button" id="pieChartBtn" class="px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md" data-lang-key="stats.pieChart">
+            Pie Chart
+          </button>
+          <button type="button" id="barChartBtn" class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md" data-lang-key="stats.barChart">
+            Bar Chart
+          </button>
+        </div>
+      </div>
+      <div style="position: relative; height: 300px; margin: 0 auto;">
         <canvas id="genreChart"></canvas>
       </div>
     </div>
+
+    <!-- Favorite Titles Section -->
+    <div>
+      <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3" data-lang-key="stats.favoriteTitle">Your Favorite Titles</h3>
+      <div id="statsFavoritesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+        <p class="text-gray-500 dark:text-gray-400 text-center" data-lang-key="stats.rateToSee">Rate your titles to see your favorites here.</p>
+      </div>
+    </div>
   </div>
+</div>
