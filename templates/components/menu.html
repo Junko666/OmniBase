@@ -5,7 +5,7 @@
 <div class="menu-container shadow-xl" id="menuContainer">
   <div class="p-4 border-b dark:border-gray-700">
     <div class="flex justify-between items-center">
-      <h2 class="text-xl font-bold text-indigo-800 dark:text-indigo-300">MovieBase</h2>
+      <h2 class="text-xl font-bold text-indigo-800 dark:text-indigo-300" data-lang-key="header.title">MovieBase</h2>
       <button id="closeMenuBtn" class="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
         <i class="fas fa-times"></i>
       </button>
@@ -15,35 +15,45 @@
     <ul class="space-y-2">
       <li>
         <a href="#" id="menuCollection" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-          <i class="fas fa-clipboard-list mr-2"></i> Collection
+          <i class="fas fa-clipboard-list mr-2"></i> <span data-lang-key="menu.collection">Collection</span>
         </a>
       </li>
       <li>
         <a href="#" id="menuAddTitle" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-          <i class="fas fa-plus mr-2"></i> Add Title
+          <i class="fas fa-plus mr-2"></i> <span data-lang-key="menu.addTitle">Add Title</span>
         </a>
       </li>
       <li>
         <a href="#" id="menuStats" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-          <i class="fas fa-chart-pie mr-2"></i> Stats
+          <i class="fas fa-chart-pie mr-2"></i> <span data-lang-key="menu.stats">Stats</span>
         </a>
       </li>
       <li>
         <a href="#" id="menuSettings" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-          <i class="fas fa-cog mr-2"></i> Settings
+          <i class="fas fa-cog mr-2"></i> <span data-lang-key="menu.settings">Settings</span>
         </a>
       </li>
       <!-- In der bestehenden ul-Liste innerhalb des menuContainer hinzufügen -->
       <li>
         <a href="#" id="menuAiSuggestions" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-          <i class="fas fa-magic mr-2"></i> AI Suggestion
+          <i class="fas fa-magic mr-2"></i> <span data-lang-key="menu.aiSuggestion">AI Suggestion</span>
         </a>
       </li>
     </ul>
   </div>
+  <!-- Logo Section -->
+  <div class="p-4 border-t dark:border-gray-700">
+    <a href="https://github.com/Junko666" class="flex items-center">
+      <img src="/static/pp_round_junko.png" alt="Logo" class="h-12 w-12 mr-3">
+      <div class="flex flex-col">
+        <span class="text-gray-700 dark:text-gray-300">MovieBase</span>
+        <span class="text-gray-700 dark:text-gray-300">Created by <span class="text-indigo-600 dark:text-indigo-400">Junko</span></span>
+      </div>
+    </a>
+  </div>
   <div class="absolute bottom-0 left-0 right-0 p-4 border-t dark:border-gray-700">
     <div class="flex items-center justify-between">
-      <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+      <span class="text-gray-700 dark:text-gray-300" data-lang-key="menu.darkMode">Dark Mode</span>
       <div class="relative inline-block w-10 mr-2 align-middle select-none">
         <input type="checkbox" id="darkModeToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
         <label for="darkModeToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
