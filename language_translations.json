@@ -1,0 +1,1740 @@
+{
+    "common": {
+      "save": {
+        "en": "Save",
+        "de": "Speichern",
+        "cn": "保存",
+        "fr": "Enregistrer",
+        "es": "Guardar",
+        "hi": "सहेजें",
+        "ar": "حفظ",
+        "ru": "Сохранить"
+      },
+      "cancel": {
+        "en": "Cancel",
+        "de": "Abbrechen",
+        "cn": "取消",
+        "fr": "Annuler",
+        "es": "Cancelar",
+        "hi": "रद्द करें",
+        "ar": "إلغاء",
+        "ru": "Отмена"
+      },
+      "edit": {
+        "en": "Edit",
+        "de": "Bearbeiten",
+        "cn": "编辑",
+        "fr": "Modifier",
+        "es": "Editar",
+        "hi": "संपादित करें",
+        "ar": "تعديل",
+        "ru": "Редактировать"
+      },
+      "delete": {
+        "en": "Delete",
+        "de": "Löschen",
+        "cn": "删除",
+        "fr": "Supprimer",
+        "es": "Eliminar",
+        "hi": "हटाएं",
+        "ar": "حذف",
+        "ru": "Удалить"
+      },
+      "rate": {
+        "en": "Rate",
+        "de": "Bewerten",
+        "cn": "评分",
+        "fr": "Noter",
+        "es": "Calificar",
+        "hi": "रेट करें",
+        "ar": "تقييم",
+        "ru": "Оценить"
+      },
+      "all": {
+        "en": "All",
+        "de": "Alle",
+        "cn": "全部",
+        "fr": "Tout",
+        "es": "Todos",
+        "hi": "सभी",
+        "ar": "الكل",
+        "ru": "Все"
+      },
+      "movies": {
+        "en": "Movies",
+        "de": "Filme",
+        "cn": "电影",
+        "fr": "Films",
+        "es": "Películas",
+        "hi": "फ़िल्में",
+        "ar": "أفلام",
+        "ru": "Фильмы"
+      },
+      "series": {
+        "en": "Series",
+        "de": "Serien",
+        "cn": "剧集",
+        "fr": "Séries",
+        "es": "Series",
+        "hi": "श्रृंखलाएँ",
+        "ar": "مسلسلات",
+        "ru": "Сериалы"
+      },
+      "movieType": {
+        "en": "Movie",
+        "de": "Film",
+        "cn": "电影",
+        "fr": "Film",
+        "es": "Película",
+        "hi": "फ़िल्म",
+        "ar": "فيلم",
+        "ru": "Фильм"
+      },
+      "seriesType": {
+        "en": "TV Series",
+        "de": "TV-Serie",
+        "cn": "电视剧",
+        "fr": "Série TV",
+        "es": "Serie de TV",
+        "hi": "टीवी श्रृंखला",
+        "ar": "مسلسل تلفزيوني",
+        "ru": "ТВ-сериал"
+      },
+      "previous": {
+        "en": "Previous",
+        "de": "Zurück",
+        "cn": "上一个",
+        "fr": "Précédent",
+        "es": "Anterior",
+        "hi": "पिछला",
+        "ar": "السابق",
+        "ru": "Предыдущий"
+      },
+      "next": {
+        "en": "Next",
+        "de": "Weiter",
+        "cn": "下一个",
+        "fr": "Suivant",
+        "es": "Siguiente",
+        "hi": "अगला",
+        "ar": "التالي",
+        "ru": "Следующий"
+      },
+      "of": {
+        "en": "of",
+        "de": "von",
+        "cn": "共",
+        "fr": "de",
+        "es": "de",
+        "hi": "का",
+        "ar": "من",
+        "ru": "из"
+      },
+      "generate": {
+        "en": "Generate",
+        "de": "Generieren",
+        "cn": "生成",
+        "fr": "Générer",
+        "es": "Generar",
+        "hi": "उत्पन्न करें",
+        "ar": "إنشاء",
+        "ru": "Генерировать"
+      },
+      "loading": {
+        "en": "Loading...",
+        "de": "Lädt...",
+        "cn": "加载中...",
+        "fr": "Chargement...",
+        "es": "Cargando...",
+        "hi": "लोड हो रहा है...",
+        "ar": "جار التحميل...",
+        "ru": "Загрузка..."
+      }
+    },
+    "header": {
+      "pageTitle": {
+        "en": "MovieBase - Your Personal Movie Database",
+        "de": "MovieBase - Deine persönliche Filmdatenbank",
+        "cn": "MovieBase - 您的个人电影数据库",
+        "fr": "MovieBase - Votre base de données personnelle de films",
+        "es": "MovieBase - Tu base de datos personal de películas",
+        "hi": "MovieBase - आपका व्यक्तिगत मूवी डेटाबेस",
+        "ar": "MovieBase - قاعدة بياناتك الشخصية للأفلام",
+        "ru": "MovieBase - Ваша персональная кино-база данных"
+      },
+      "title": {
+        "en": "MovieBase",
+        "de": "MovieBase",
+        "cn": "MovieBase",
+        "fr": "MovieBase",
+        "es": "MovieBase",
+        "hi": "MovieBase",
+        "ar": "MovieBase",
+        "ru": "MovieBase"
+      },
+      "subtitle": {
+        "en": "Your personal movie and TV series collection with ratings",
+        "de": "Deine persönliche Film- und Seriensammlung mit Bewertungen",
+        "cn": "您的个人电影和电视剧收藏评分系统",
+        "fr": "Votre collection personnelle de films et de séries TV avec des évaluations",
+        "es": "Tu colección personal de películas y series de TV con valoraciones",
+        "hi": "आपकी व्यक्तिगत फ़िल्म और टीवी श्रृंखला संग्रह, रेटिंग्स के साथ",
+        "ar": "مجموعتك الشخصية من الأفلام والمسلسلات مع التقييمات",
+        "ru": "Ваша личная коллекция фильмов и телесериалов с рейтингами"
+      }
+    },
+    "menu": {
+      "collection": {
+        "en": "Collection",
+        "de": "Sammlung",
+        "cn": "收藏",
+        "fr": "Collection",
+        "es": "Colección",
+        "hi": "संग्रह",
+        "ar": "المجموعة",
+        "ru": "Коллекция"
+      },
+      "addTitle": {
+        "en": "Add Title",
+        "de": "Titel hinzufügen",
+        "cn": "添加标题",
+        "fr": "Ajouter un titre",
+        "es": "Agregar título",
+        "hi": "शीर्षक जोड़ें",
+        "ar": "إضافة عنوان",
+        "ru": "Добавить название"
+      },
+      "stats": {
+        "en": "Stats",
+        "de": "Statistiken",
+        "cn": "统计",
+        "fr": "Statistiques",
+        "es": "Estadísticas",
+        "hi": "सांख्यिकी",
+        "ar": "إحصائيات",
+        "ru": "Статистика"
+      },
+      "settings": {
+        "en": "Settings",
+        "de": "Einstellungen",
+        "cn": "设置",
+        "fr": "Paramètres",
+        "es": "Configuración",
+        "hi": "सेटिंग्स",
+        "ar": "الإعدادات",
+        "ru": "Настройки"
+      },
+      "aiSuggestion": {
+        "en": "AI Suggestion",
+        "de": "KI-Vorschläge",
+        "cn": "AI推荐",
+        "fr": "Suggestion d'IA",
+        "es": "Sugerencia de IA",
+        "hi": "एआई सुझाव",
+        "ar": "اقتراح الذكاء الاصطناعي",
+        "ru": "Предложение ИИ"
+      },
+      "darkMode": {
+        "en": "Dark Mode",
+        "de": "Dunkelmodus",
+        "cn": "暗黑模式",
+        "fr": "Mode sombre",
+        "es": "Modo oscuro",
+        "hi": "डार्क मोड",
+        "ar": "الوضع الداكن",
+        "ru": "Темный режим"
+      }
+    },
+    "collection": {
+      "title": {
+        "en": "Your Collection",
+        "de": "Deine Sammlung",
+        "cn": "您的收藏",
+        "fr": "Votre collection",
+        "es": "Tu colección",
+        "hi": "आपका संग्रह",
+        "ar": "مجموعتك",
+        "ru": "Ваша коллекция"
+      },
+      "search": {
+        "en": "Search titles...",
+        "de": "Titel suchen...",
+        "cn": "搜索标题...",
+        "fr": "Rechercher des titres...",
+        "es": "Buscar títulos...",
+        "hi": "शीर्षक खोजें...",
+        "ar": "ابحث عن العناوين...",
+        "ru": "Искать названия..."
+      },
+      "filters": {
+        "en": "Filters",
+        "de": "Filter",
+        "cn": "筛选",
+        "fr": "Filtres",
+        "es": "Filtros",
+        "hi": "फ़िल्टर",
+        "ar": "الفلاتر",
+        "ru": "Фильтры"
+      },
+      "genre": {
+        "en": "Genre",
+        "de": "Genre",
+        "cn": "类型",
+        "fr": "Genre",
+        "es": "Género",
+        "hi": "शैली",
+        "ar": "النوع",
+        "ru": "Жанр"
+      },
+      "allGenres": {
+        "en": "All Genres",
+        "de": "Alle Genres",
+        "cn": "所有类型",
+        "fr": "Tous les genres",
+        "es": "Todos los géneros",
+        "hi": "सभी शैलियाँ",
+        "ar": "جميع الأنواع",
+        "ru": "Все жанры"
+      },
+      "releaseYear": {
+        "en": "Release Year",
+        "de": "Erscheinungsjahr",
+        "cn": "发行年份",
+        "fr": "Année de sortie",
+        "es": "Año de lanzamiento",
+        "hi": "रिलीज वर्ष",
+        "ar": "سنة الإصدار",
+        "ru": "Год выпуска"
+      },
+      "allYears": {
+        "en": "All Years",
+        "de": "Alle Jahre",
+        "cn": "所有年份",
+        "fr": "Toutes les années",
+        "es": "Todos los años",
+        "hi": "सभी वर्ष",
+        "ar": "جميع السنوات",
+        "ru": "Все годы"
+      },
+      "yourRating": {
+        "en": "Your Rating",
+        "de": "Deine Bewertung",
+        "cn": "您的评分",
+        "fr": "Votre note",
+        "es": "Tu calificación",
+        "hi": "आपकी रेटिंग",
+        "ar": "تقييمك",
+        "ru": "Ваш рейтинг"
+      },
+      "anyRating": {
+        "en": "Any Rating",
+        "de": "Beliebige Bewertung",
+        "cn": "任意评分",
+        "fr": "N'importe quelle note",
+        "es": "Cualquier calificación",
+        "hi": "कोई भी रेटिंग",
+        "ar": "أي تقييم",
+        "ru": "Любой рейтинг"
+      },
+      "notRated": {
+        "en": "Not Rated",
+        "de": "Nicht bewertet",
+        "cn": "未评分",
+        "fr": "Non noté",
+        "es": "Sin evaluar",
+        "hi": "रेट नहीं किया गया",
+        "ar": "غير مُقيّم",
+        "ru": "Не оценено"
+      },
+      "imdbRating": {
+        "en": "IMDB Rating",
+        "de": "IMDB-Bewertung",
+        "cn": "IMDB评分",
+        "fr": "Note IMDB",
+        "es": "Calificación IMDB",
+        "hi": "IMDB रेटिंग",
+        "ar": "تقييم IMDB",
+        "ru": "Рейтинг IMDb"
+      },
+      "notAvailable": {
+        "en": "Not Available",
+        "de": "Nicht verfügbar",
+        "cn": "不可用",
+        "fr": "Non disponible",
+        "es": "No disponible",
+        "hi": "उपलब्ध नहीं",
+        "ar": "غير متوفر",
+        "ru": "Недоступно"
+      },
+      "resetFilters": {
+        "en": "Reset Filters",
+        "de": "Filter zurücksetzen",
+        "cn": "重置筛选",
+        "fr": "Réinitialiser les filtres",
+        "es": "Restablecer filtros",
+        "hi": "फ़िल्टर रीसेट करें",
+        "ar": "إعادة تعيين الفلاتر",
+        "ru": "Сбросить фильтры"
+      },
+      "emptyState": {
+        "title": {
+          "en": "No Content Yet",
+          "de": "Noch keine Inhalte",
+          "cn": "暂无内容",
+          "fr": "Pas encore de contenu",
+          "es": "Aún no hay contenido",
+          "hi": "अभी कोई सामग्री नहीं",
+          "ar": "لا يوجد محتوى حتى الآن",
+          "ru": "Пока нет содержимого"
+        },
+        "description": {
+          "en": "Start by adding a movie/series or importing your collection",
+          "de": "Beginne damit, einen Film/eine Serie hinzuzufügen oder deine Sammlung zu importieren",
+          "cn": "开始添加电影/剧集或导入您的收藏",
+          "fr": "Commencez par ajouter un film/série ou importer votre collection",
+          "es": "Comienza añadiendo una película/serie o importando tu colección",
+          "hi": "एक फ़िल्म/श्रृंखला जोड़कर या अपना संग्रह आयात करके शुरू करें",
+          "ar": "ابدأ بإضافة فيلم/مسلسل أو استيراد مجموعتك",
+          "ru": "Начните с добавления фильма/сериала или импорта вашей коллекции"
+        }
+      },
+      "streamingInfo": {
+        "en": "No streaming information available",
+        "de": "Keine Streaming-Informationen verfügbar",
+        "cn": "没有可用的流媒体信息",
+        "fr": "Aucune information de streaming disponible",
+        "es": "No hay información de streaming disponible",
+        "hi": "कोई स्ट्रीमिंग जानकारी उपलब्ध नहीं है",
+        "ar": "لا تتوفر معلومات عن البث",
+        "ru": "Информация о стриминге недоступна"
+      }
+    },
+    "addTitle": {
+      "title": {
+        "en": "Add Content",
+        "de": "Inhalt hinzufügen",
+        "cn": "添加内容",
+        "fr": "Ajouter du contenu",
+        "es": "Agregar contenido",
+        "hi": "सामग्री जोड़ें",
+        "ar": "إضافة محتوى",
+        "ru": "Добавить контент"
+      },
+      "manualEntry": {
+        "en": "Manual Entry",
+        "de": "Manuelle Eingabe",
+        "cn": "手动输入",
+        "fr": "Saisie manuelle",
+        "es": "Entrada manual",
+        "hi": "मैनुअल एंट्री",
+        "ar": "إدخال يدوي",
+        "ru": "Ручной ввод"
+      },
+      "importCSV": {
+        "en": "Import CSV",
+        "de": "CSV importieren",
+        "cn": "导入CSV",
+        "fr": "Importer CSV",
+        "es": "Importar CSV",
+        "hi": "CSV आयात करें",
+        "ar": "استيراد CSV",
+        "ru": "Импортировать CSV"
+      },
+      "addViaAPI": {
+    "en": "Add via API",
+    "de": "Über API hinzufügen",
+    "cn": "通过API添加",
+    "fr": "Ajouter via API",
+    "es": "Añadir vía API",
+    "hi": "API के माध्यम से जोड़ें",
+    "ar": "إضافة عبر API",
+    "ru": "Добавить через API"
+    },
+    "api": {
+        "title": {
+        "en": "Search for Movies and TV Shows",
+        "de": "Filme und Serien suchen",
+        "cn": "搜索电影和电视节目",
+        "fr": "Rechercher des films et séries TV",
+        "es": "Buscar películas y series de TV",
+        "hi": "फिल्में और टीवी शो खोजें",
+        "ar": "البحث عن الأفلام والبرامج التلفزيونية",
+        "ru": "Поиск фильмов и сериалов"
+        },
+        "description": {
+        "en": "Enter a title to search for it using the streaming availability database.",
+        "de": "Geben Sie einen Titel ein, um ihn in der Streaming-Verfügbarkeitsdatenbank zu suchen.",
+        "cn": "输入标题以使用流媒体可用性数据库进行搜索。",
+        "fr": "Entrez un titre pour le rechercher dans la base de données de disponibilité en streaming.",
+        "es": "Ingrese un título para buscarlo usando la base de datos de disponibilidad de streaming.",
+        "hi": "स्ट्रीमिंग उपलब्धता डेटाबेस का उपयोग करके खोजने के लिए शीर्षक दर्ज करें।",
+        "ar": "أدخل عنوانًا للبحث عنه باستخدام قاعدة بيانات توفر البث.",
+        "ru": "Введите название для поиска в базе данных доступности стриминга."
+        },
+        "apiUsage": {
+        "en": "API Usage:",
+        "de": "API-Nutzung:",
+        "cn": "API使用情况：",
+        "fr": "Utilisation de l'API :",
+        "es": "Uso de API:",
+        "hi": "API उपयोग:",
+        "ar": "استخدام API:",
+        "ru": "Использование API:"
+        },
+        "searchTitle": {
+        "en": "Title to search",
+        "de": "Titel zum Suchen",
+        "cn": "要搜索的标题",
+        "fr": "Titre à rechercher",
+        "es": "Título a buscar",
+        "hi": "खोजने के लिए शीर्षक",
+        "ar": "العنوان للبحث",
+        "ru": "Название для поиска"
+        },
+        "search": {
+        "en": "Search",
+        "de": "Suchen",
+        "cn": "搜索",
+        "fr": "Rechercher",
+        "es": "Buscar",
+        "hi": "खोजें",
+        "ar": "بحث",
+        "ru": "Поиск"
+        },
+        "searching": {
+        "en": "Searching...",
+        "de": "Suche läuft...",
+        "cn": "搜索中...",
+        "fr": "Recherche en cours...",
+        "es": "Buscando...",
+        "hi": "खोज रहा है...",
+        "ar": "جاري البحث...",
+        "ru": "Поиск..."
+        },
+        "enterTitle": {
+        "en": "Please enter a title to search for",
+        "de": "Bitte geben Sie einen Titel zum Suchen ein",
+        "cn": "请输入要搜索的标题",
+        "fr": "Veuillez entrer un titre à rechercher",
+        "es": "Por favor ingrese un título para buscar",
+        "hi": "कृपया खोजने के लिए एक शीर्षक दर्ज करें",
+        "ar": "الرجاء إدخال عنوان للبحث عنه",
+        "ru": "Пожалуйста, введите название для поиска"
+        },
+        "noResults": {
+        "en": "No results found for your search.",
+        "de": "Keine Ergebnisse für Ihre Suche gefunden.",
+        "cn": "未找到搜索结果。",
+        "fr": "Aucun résultat trouvé pour votre recherche.",
+        "es": "No se encontraron resultados para su búsqueda.",
+        "hi": "आपकी खोज के लिए कोई परिणाम नहीं मिला।",
+        "ar": "لم يتم العثور على نتائج لبحثك.",
+        "ru": "По вашему запросу ничего не найдено."
+        },
+        "searchError": {
+        "en": "An error occurred during the search. Please try again.",
+        "de": "Bei der Suche ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "cn": "搜索过程中发生错误。请再试一次。",
+        "fr": "Une erreur s'est produite pendant la recherche. Veuillez réessayer.",
+        "es": "Se produjo un error durante la búsqueda. Por favor, inténtelo de nuevo.",
+        "hi": "खोज के दौरान एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+        "ar": "حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.",
+        "ru": "Произошла ошибка во время поиска. Пожалуйста, попробуйте еще раз."
+        },
+        "invalidData": {
+        "en": "Invalid data returned from the API.",
+        "de": "Ungültige Daten von der API zurückgegeben.",
+        "cn": "API返回的数据无效。",
+        "fr": "Données invalides renvoyées par l'API.",
+        "es": "Datos inválidos devueltos por la API.",
+        "hi": "API से अमान्य डेटा प्राप्त हुआ।",
+        "ar": "بيانات غير صالحة تم إرجاعها من API.",
+        "ru": "Недопустимые данные, полученные от API."
+        },
+        "director": {
+        "en": "Director",
+        "de": "Regisseur",
+        "cn": "导演",
+        "fr": "Réalisateur",
+        "es": "Director",
+        "hi": "निर्देशक",
+        "ar": "المخرج",
+        "ru": "Режиссер"
+        },
+        "noDirector": {
+        "en": "Not available",
+        "de": "Nicht verfügbar",
+        "cn": "不可用",
+        "fr": "Non disponible",
+        "es": "No disponible",
+        "hi": "उपलब्ध नहीं",
+        "ar": "غير متوفر",
+        "ru": "Недоступно"
+        },
+        "noDescription": {
+        "en": "No description available",
+        "de": "Keine Beschreibung verfügbar",
+        "cn": "没有可用的描述",
+        "fr": "Aucune description disponible",
+        "es": "No hay descripción disponible",
+        "hi": "कोई विवरण उपलब्ध नहीं है",
+        "ar": "لا يوجد وصف متاح",
+        "ru": "Описание отсутствует"
+        },
+        "noStreaming": {
+        "en": "No streaming information available",
+        "de": "Keine Streaming-Informationen verfügbar",
+        "cn": "没有可用的流媒体信息",
+        "fr": "Aucune information de streaming disponible",
+        "es": "No hay información de streaming disponible",
+        "hi": "कोई स्ट्रीमिंग जानकारी उपलब्ध नहीं है",
+        "ar": "لا تتوفر معلومات البث",
+        "ru": "Информация о стриминге отсутствует"
+        },
+        "addToCollection": {
+        "en": "Add to Collection",
+        "de": "Zur Sammlung hinzufügen",
+        "cn": "添加到收藏",
+        "fr": "Ajouter à la collection",
+        "es": "Añadir a la colección",
+        "hi": "संग्रह में जोड़ें",
+        "ar": "إضافة إلى المجموعة",
+        "ru": "Добавить в коллекцию"
+        },
+        "discard": {
+        "en": "Discard",
+        "de": "Verwerfen",
+        "cn": "丢弃",
+        "fr": "Rejeter",
+        "es": "Descartar",
+        "hi": "छोड़ दें",
+        "ar": "تجاهل",
+        "ru": "Отклонить"
+        }
+    },
+      "form": {
+        "title": {
+          "en": "Title*",
+          "de": "Titel*",
+          "cn": "标题*",
+          "fr": "Titre*",
+          "es": "Título*",
+          "hi": "शीर्षक*",
+          "ar": "العنوان*",
+          "ru": "Название*"
+        },
+        "type": {
+          "en": "Type*",
+          "de": "Typ*",
+          "cn": "类型*",
+          "fr": "Type*",
+          "es": "Tipo*",
+          "hi": "प्रकार*",
+          "ar": "النوع*",
+          "ru": "Тип*"
+        },
+        "releaseYear": {
+          "en": "Release Year",
+          "de": "Erscheinungsjahr",
+          "cn": "发行年份",
+          "fr": "Année de sortie",
+          "es": "Año de lanzamiento",
+          "hi": "रिलीज वर्ष",
+          "ar": "سنة الإصدار",
+          "ru": "Год выпуска"
+        },
+        "director": {
+          "en": "Director",
+          "de": "Regisseur",
+          "cn": "导演",
+          "fr": "Réalisateur",
+          "es": "Director",
+          "hi": "निर्देशक",
+          "ar": "المخرج",
+          "ru": "Режиссер"
+        },
+        "genre": {
+          "en": "Genre",
+          "de": "Genre",
+          "cn": "类型",
+          "fr": "Genre",
+          "es": "Género",
+          "hi": "शैली",
+          "ar": "النوع",
+          "ru": "Жанр"
+        },
+        "genrePlaceholder": {
+          "en": "e.g., Drama, Sci-Fi",
+          "de": "z.B. Drama, Sci-Fi",
+          "cn": "例如：剧情、科幻",
+          "fr": "par exemple, Drame, Science-fiction",
+          "es": "por ejemplo, Drama, Ciencia ficción",
+          "hi": "जैसे, ड्रामा, साइ-फाई",
+          "ar": "مثلاً: دراما، خيال علمي",
+          "ru": "например, Драма, научная фантастика"
+        },
+        "posterURL": {
+          "en": "Poster URL",
+          "de": "Poster-URL",
+          "cn": "海报URL",
+          "fr": "URL de l'affiche",
+          "es": "URL del póster",
+          "hi": "पोस्टर URL",
+          "ar": "رابط الملصق",
+          "ru": "URL постера"
+        },
+        "posterPlaceholder": {
+          "en": "https://example.com/poster.jpg",
+          "de": "https://beispiel.de/poster.jpg",
+          "cn": "https://示例.com/海报.jpg",
+          "fr": "https://exemple.com/poster.jpg",
+          "es": "https://ejemplo.com/poster.jpg",
+          "hi": "https://उदाहरण.com/पोस्टर.jpg",
+          "ar": "https://مثال.com/ملصق.jpg",
+          "ru": "https://пример.com/постер.jpg"
+        },
+        "yourRating": {
+          "en": "Your Rating",
+          "de": "Deine Bewertung",
+          "cn": "您的评分",
+          "fr": "Votre note",
+          "es": "Tu calificación",
+          "hi": "आपकी रेटिंग",
+          "ar": "تقييمك",
+          "ru": "Ваш рейтинг"
+        },
+        "rateStars": {
+          "en": "Rate from 0.5 to 5 stars",
+          "de": "Bewerte von 0.5 bis 5 Sternen",
+          "cn": "评分范围0.5至5星",
+          "fr": "Notez de 0,5 à 5 étoiles",
+          "es": "Califica de 0,5 a 5 estrellas",
+          "hi": "0.5 से 5 स्टार तक रेट करें",
+          "ar": "قيم من 0.5 إلى 5 نجوم",
+          "ru": "Оцените от 0.5 до 5 звезд"
+        },
+        "imdbRating": {
+          "en": "IMDB Rating (0-10)",
+          "de": "IMDB-Bewertung (0-10)",
+          "cn": "IMDB评分（0-10）",
+          "fr": "Note IMDB (0-10)",
+          "es": "Calificación IMDB (0-10)",
+          "hi": "IMDB रेटिंग (0-10)",
+          "ar": "تقييم IMDB (0-10)",
+          "ru": "Рейтинг IMDb (0-10)"
+        },
+        "notes": {
+          "en": "Notes",
+          "de": "Notizen",
+          "cn": "笔记",
+          "fr": "Notes",
+          "es": "Notas",
+          "hi": "टिप्पणियाँ",
+          "ar": "ملاحظات",
+          "ru": "Заметки"
+        },
+        "addContent": {
+          "en": "Add Content",
+          "de": "Inhalt hinzufügen",
+          "cn": "添加内容",
+          "fr": "Ajouter du contenu",
+          "es": "Agregar contenido",
+          "hi": "सामग्री जोड़ें",
+          "ar": "أضف محتوى",
+          "ru": "Добавить контент"
+        },
+        "updateContent": {
+          "en": "Update Content",
+          "de": "Inhalt aktualisieren",
+          "cn": "更新内容",
+          "fr": "Mettre à jour le contenu",
+          "es": "Actualizar contenido",
+          "hi": "सामग्री अपडेट करें",
+          "ar": "تحديث المحتوى",
+          "ru": "Обновить контент"
+        }
+      },
+      "csv": {
+        "format": {
+          "en": "CSV Format",
+          "de": "CSV-Format",
+          "cn": "CSV格式",
+          "fr": "Format CSV",
+          "es": "Formato CSV",
+          "hi": "CSV प्रारूप",
+          "ar": "تنسيق CSV",
+          "ru": "Формат CSV"
+        },
+        "description": {
+          "en": "Your CSV should have these columns: title,date",
+          "de": "Deine CSV sollte diese Spalten haben: title,date",
+          "cn": "您的CSV应该有这些列：title,date",
+          "fr": "Votre CSV doit comporter ces colonnes : title,date",
+          "es": "Tu CSV debe tener estas columnas: title,date",
+          "hi": "आपके CSV में ये कॉलम होने चाहिए: title,date",
+          "ar": "يجب أن يحتوي CSV الخاص بك على الأعمدة التالية: title,date",
+          "ru": "Ваш CSV должен содержать следующие столбцы: title,date"
+        },
+        "readme": {
+          "en": "Have a look at the README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "de": "Wirf einen Blick auf die README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "cn": "查看README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "fr": "Consultez le fichier README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "es": "Echa un vistazo al README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "hi": "README देखें https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "ar": "اطلع على ملف README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import",
+          "ru": "Посмотрите файл README https://github.com/Junko666/moive_db/blob/main/README.md#2-csv-import"
+        },
+        "dropzone": {
+          "en": "Drag & drop your CSV file here",
+          "de": "Ziehe deine CSV-Datei hierher",
+          "cn": "将您的CSV文件拖放到这里",
+          "fr": "Glissez-déposez votre fichier CSV ici",
+          "es": "Arrastra y suelta tu archivo CSV aquí",
+          "hi": "अपनी CSV फ़ाइल को यहाँ खींचें और छोड़ें",
+          "ar": "اسحب وأفلت ملف CSV الخاص بك هنا",
+          "ru": "Перетащите ваш CSV файл сюда"
+        },
+        "or": {
+          "en": "or",
+          "de": "oder",
+          "cn": "或",
+          "fr": "ou",
+          "es": "o",
+          "hi": "या",
+          "ar": "أو",
+          "ru": "или"
+        },
+        "browseFiles": {
+          "en": "Browse Files",
+          "de": "Dateien durchsuchen",
+          "cn": "浏览文件",
+          "fr": "Parcourir les fichiers",
+          "es": "Explorar archivos",
+          "hi": "फ़ाइलें ब्राउज़ करें",
+          "ar": "تصفح الملفات",
+          "ru": "Просмотреть файлы"
+        },
+        "importContent": {
+          "en": "Import Content",
+          "de": "Inhalt importieren",
+          "cn": "导入内容",
+          "fr": "Importer le contenu",
+          "es": "Importar contenido",
+          "hi": "सामग्री आयात करें",
+          "ar": "استيراد المحتوى",
+          "ru": "Импортировать контент"
+        }
+      }
+    },
+    "aiSuggestions": {
+      "title": {
+        "en": "AI Suggestion",
+        "de": "KI-Vorschlag",
+        "cn": "AI推荐",
+        "fr": "Suggestion d'IA",
+        "es": "Sugerencia de IA",
+        "hi": "एआई सुझाव",
+        "ar": "اقتراح الذكاء الاصطناعي",
+        "ru": "Предложение ИИ"
+      },
+      "apiUsage": {
+        "en": "API Usage",
+        "de": "API-Nutzung",
+        "cn": "API使用情况",
+        "fr": "Utilisation de l'API",
+        "es": "Uso de la API",
+        "hi": "एपीआई उपयोग",
+        "ar": "استخدام API",
+        "ru": "Использование API"
+      },
+      "apiUsageDesc": {
+        "en": "Each suggestion requires an API call. Your monthly usage:",
+        "de": "Jeder Vorschlag erfordert einen API-Aufruf. Deine monatliche Nutzung:",
+        "cn": "每个建议都需要一个API调用。您的月度使用情况：",
+        "fr": "Chaque suggestion nécessite un appel API. Votre utilisation mensuelle :",
+        "es": "Cada sugerencia requiere una llamada a la API. Tu uso mensual:",
+        "hi": "प्रत्येक सुझाव के लिए एपीआई कॉल आवश्यक है। आपकी मासिक उपयोग:",
+        "ar": "كل اقتراح يتطلب استدعاء API. استخدامك الشهري:",
+        "ru": "Каждое предложение требует вызова API. Ваше ежемесячное использование:"
+      },
+      "monthlyLimit": {
+        "en": "Monthly Limit:",
+        "de": "Monatliches Limit:",
+        "cn": "月度限制：",
+        "fr": "Limite mensuelle :",
+        "es": "Límite mensual:",
+        "hi": "मासिक सीमा:",
+        "ar": "الحد الشهري:",
+        "ru": "Месячный лимит:"
+      },
+      "calls": {
+        "en": "calls",
+        "de": "Aufrufe",
+        "cn": "调用",
+        "fr": "appels",
+        "es": "llamadas",
+        "hi": "कॉल",
+        "ar": "مكالمات",
+        "ru": "вызовов"
+      },
+      "considerTitles": {
+        "en": "Consider which titles:",
+        "de": "Berücksichtige welche Titel:",
+        "cn": "考虑哪些标题：",
+        "fr": "Considérez quels titres :",
+        "es": "Considera qué títulos:",
+        "hi": "यह विचार करें कि कौन से शीर्षक:",
+        "ar": "فكر في العناوين التالية:",
+        "ru": "Рассмотрите следующие названия:"
+      },
+      "allTitles": {
+        "en": "All Titles",
+        "de": "Alle Titel",
+        "cn": "所有标题",
+        "fr": "Tous les titres",
+        "es": "Todos los títulos",
+        "hi": "सभी शीर्षक",
+        "ar": "كل العناوين",
+        "ru": "Все названия"
+      },
+      "onlyRated": {
+        "en": "Only Rated by Me",
+        "de": "Nur von mir bewertete",
+        "cn": "仅我评分的",
+        "fr": "Seulement notés par moi",
+        "es": "Solo calificados por mí",
+        "hi": "केवल मेरी रेटिंग वाले",
+        "ar": "المُقيّمة فقط من قبلي",
+        "ru": "Оценено только мной"
+      },
+      "genrePrefs": {
+        "en": "Your Genre Preferences:",
+        "de": "Deine Genre-Präferenzen:",
+        "cn": "您的类型偏好：",
+        "fr": "Vos préférences de genre :",
+        "es": "Tus preferencias de género:",
+        "hi": "आपकी शैली वरीयताएँ:",
+        "ar": "تفضيلاتك من حيث النوع:",
+        "ru": "Ваши жанровые предпочтения:"
+      },
+      "rankingSystem": {
+        "en": "Ranking system:",
+        "de": "Ranking-System:",
+        "cn": "排名系统：",
+        "fr": "Système de classement :",
+        "es": "Sistema de clasificación:",
+        "hi": "रैंकिंग सिस्टम:",
+        "ar": "نظام التصنيف:",
+        "ru": "Система ранжирования:"
+      },
+      "genreCount": {
+        "en": "Based on Genre-count",
+        "de": "Basierend auf Genre-Anzahl",
+        "cn": "基于类型计数",
+        "fr": "Basé sur le nombre de genres",
+        "es": "Basado en el recuento de géneros",
+        "hi": "शैली की गिनती पर आधारित",
+        "ar": "استنادًا إلى عدد الأنواع",
+        "ru": "На основе количества жанров"
+      },
+      "userRanking": {
+        "en": "Based on User-Rankings",
+        "de": "Basierend auf Benutzer-Bewertungen",
+        "cn": "基于用户评分",
+        "fr": "Basé sur les classements des utilisateurs",
+        "es": "Basado en las calificaciones de usuarios",
+        "hi": "उपयोगकर्ता रैंकों पर आधारित",
+        "ar": "استنادًا إلى تقييمات المستخدمين",
+        "ru": "На основе пользовательских оценок"
+      },
+      "loadingGenre": {
+        "en": "Loading genre analysis...",
+        "de": "Lade Genre-Analyse...",
+        "cn": "加载类型分析...",
+        "fr": "Analyse de genres en cours de chargement...",
+        "es": "Cargando análisis de géneros...",
+        "hi": "शैली विश्लेषण लोड हो रहा है...",
+        "ar": "جار تحميل تحليل الأنواع...",
+        "ru": "Загрузка анализа жанров..."
+      },
+      "topMovies": {
+        "en": "Your Top Movies/Series:",
+        "de": "Deine Top-Filme/Serien:",
+        "cn": "您的热门电影/剧集：",
+        "fr": "Vos meilleurs films/séries :",
+        "es": "Tus mejores películas/series:",
+        "hi": "आपकी शीर्ष फ़िल्में/श्रृंखलाएँ:",
+        "ar": "أفضل أفلامك ومسلسلاتك:",
+        "ru": "Ваши лучшие фильмы/сериалы:"
+      },
+      "loadingFavs": {
+        "en": "Loading your favorites...",
+        "de": "Lade deine Favoriten...",
+        "cn": "加载您的收藏...",
+        "fr": "Chargement de vos favoris...",
+        "es": "Cargando tus favoritos...",
+        "hi": "आपके पसंदीदा लोड हो रहे हैं...",
+        "ar": "جار تحميل المفضلات الخاصة بك...",
+        "ru": "Загрузка ваших избранных..."
+      },
+      "contentType": {
+        "en": "Content Type:",
+        "de": "Inhaltstyp:",
+        "cn": "内容类型：",
+        "fr": "Type de contenu :",
+        "es": "Tipo de contenido:",
+        "hi": "सामग्री का प्रकार:",
+        "ar": "نوع المحتوى:",
+        "ru": "Тип контента:"
+      },
+      "bothTypes": {
+        "en": "Both Movies & Series",
+        "de": "Filme & Serien",
+        "cn": "电影和剧集",
+        "fr": "Films et séries",
+        "es": "Películas y series",
+        "hi": "फ़िल्में और श्रृंखलाएँ",
+        "ar": "أفلام ومسلسلات",
+        "ru": "И фильмы, и сериалы"
+      },
+      "moviesOnly": {
+        "en": "Movies Only",
+        "de": "Nur Filme",
+        "cn": "仅电影",
+        "fr": "Uniquement des films",
+        "es": "Solo películas",
+        "hi": "सिर्फ़ फ़िल्में",
+        "ar": "أفلام فقط",
+        "ru": "Только фильмы"
+      },
+      "seriesOnly": {
+        "en": "TV Series Only",
+        "de": "Nur Serien",
+        "cn": "仅剧集",
+        "fr": "Uniquement des séries TV",
+        "es": "Solo series de TV",
+        "hi": "सिर्फ़ टीवी श्रृंखलाएँ",
+        "ar": "مسلسلات فقط",
+        "ru": "Только сериалы"
+      },
+      "suggestionCount": {
+        "en": "Number of Suggestions:",
+        "de": "Anzahl der Vorschläge:",
+        "cn": "建议数量：",
+        "fr": "Nombre de suggestions :",
+        "es": "Número de sugerencias:",
+        "hi": "सुझावों की संख्या:",
+        "ar": "عدد الاقتراحات:",
+        "ru": "Количество предложений:"
+      },
+      "aboutWhat": {
+        "en": "What should it be about?",
+        "de": "Worum soll es gehen?",
+        "cn": "它应该是关于什么的？",
+        "fr": "De quoi devrait-il s'agir ?",
+        "es": "¿De qué debería tratarse?",
+        "hi": "यह किस बारे में होना चाहिए?",
+        "ar": "عن ماذا يجب أن يكون؟",
+        "ru": "О чем это должно быть?"
+      },
+      "aboutPlaceholder": {
+        "en": "E.g., 'A thriller with plot twists' or 'Something lighthearted with comedy'",
+        "de": "Z.B. 'Ein Thriller mit Plot-Twists' oder 'Etwas Leichtes mit Komödie'",
+        "cn": "例如，'有情节曲折的惊悚片'或'轻松的喜剧片'",
+        "fr": "Par exemple, 'Un thriller avec des rebondissements' ou 'Quelque chose de léger avec de la comédie'",
+        "es": "Por ejemplo, 'Un thriller con giros inesperados' o 'Algo ligero con comedia'",
+        "hi": "उदाहरण के लिए, 'एक थ्रिलर जिसमें मोड़ हों' या 'कॉमेडी के साथ कुछ हल्का'",
+        "ar": "مثلاً، 'إثارة مع تقلبات في الحبكة' أو 'شيء خفيف مع كوميديا'",
+        "ru": "Например, 'Триллер с неожиданными поворотами' или 'Что-то легкое с элементами комедии'"
+      },
+      "generateSuggestions": {
+        "en": "Generate Suggestions",
+        "de": "Vorschläge generieren",
+        "cn": "生成建议",
+        "fr": "Générer des suggestions",
+        "es": "Generar sugerencias",
+        "hi": "सुझाव उत्पन्न करें",
+        "ar": "إنشاء الاقتراحات",
+        "ru": "Сгенерировать предложения"
+      },
+      "recommendations": {
+        "en": "Recommendations for You",
+        "de": "Empfehlungen für dich",
+        "cn": "为您推荐",
+        "fr": "Recommandations pour vous",
+        "es": "Recomendaciones para ti",
+        "hi": "आपके लिए सिफारिशें",
+        "ar": "التوصيات لك",
+        "ru": "Рекомендации для вас"
+      },
+      "generating": {
+        "en": "Generating your personalized suggestions...",
+        "de": "Generiere deine personalisierten Vorschläge...",
+        "cn": "正在生成您的个性化建议...",
+        "fr": "Génération de vos suggestions personnalisées...",
+        "es": "Generando tus sugerencias personalizadas...",
+        "hi": "आपके व्यक्तिगत सुझाव उत्पन्न हो रहे हैं...",
+        "ar": "جارٍ إنشاء اقتراحاتك الشخصية...",
+        "ru": "Генерация ваших персональных предложений..."
+      },
+      "addToCollection": {
+        "en": "Add to Collection",
+        "de": "Zur Sammlung hinzufügen",
+        "cn": "添加到收藏",
+        "fr": "Ajouter à la collection",
+        "es": "Agregar a la colección",
+        "hi": "संग्रह में जोड़ें",
+        "ar": "أضف إلى المجموعة",
+        "ru": "Добавить в коллекцию"
+      },
+      "noDescription": {
+        "en": "No description available.",
+        "de": "Keine Beschreibung verfügbar.",
+        "cn": "没有可用的描述。",
+        "fr": "Aucune description disponible.",
+        "es": "No hay descripción disponible.",
+        "hi": "कोई विवरण उपलब्ध नहीं है।",
+        "ar": "لا يوجد وصف متاح.",
+        "ru": "Описание недоступно."
+      }
+    },
+    "stats": {
+      "title": {
+        "en": "Statistics",
+        "de": "Statistiken",
+        "cn": "统计",
+        "fr": "Statistiques",
+        "es": "Estadísticas",
+        "hi": "सांख्यिकी",
+        "ar": "إحصائيات",
+        "ru": "Статистика"
+      },
+      "overview": {
+        "en": "Collection Overview",
+        "de": "Sammlungsübersicht",
+        "cn": "收藏概览",
+        "fr": "Aperçu de la collection",
+        "es": "Resumen de la colección",
+        "hi": "संग्रह का अवलोकन",
+        "ar": "نظرة عامة على المجموعة",
+        "ru": "Обзор коллекции"
+      },
+      "movies": {
+        "en": "Movies:",
+        "de": "Filme:",
+        "cn": "电影：",
+        "fr": "Films :",
+        "es": "Películas:",
+        "hi": "फ़िल्में:",
+        "ar": "الأفلام:",
+        "ru": "Фильмы:"
+      },
+      "tvSeries": {
+        "en": "TV Series:",
+        "de": "TV-Serien:",
+        "cn": "电视剧：",
+        "fr": "Séries TV :",
+        "es": "Series de TV:",
+        "hi": "टीवी सीरीज़:",
+        "ar": "المسلسلات التلفزيونية:",
+        "ru": "ТВ-сериалы:"
+      },
+      "ratedTitles": {
+        "en": "Rated Titles:",
+        "de": "Bewertete Titel:",
+        "cn": "评分标题：",
+        "fr": "Titres notés :",
+        "es": "Títulos calificados:",
+        "hi": "रेट किए गए शीर्षक:",
+        "ar": "العناوين المُقيَّمة:",
+        "ru": "Оцененные названия:"
+      },
+      "notRated": {
+        "en": "Not Rated:",
+        "de": "Nicht bewertet:",
+        "cn": "未评分：",
+        "fr": "Non noté :",
+        "es": "Sin calificar:",
+        "hi": "रेट नहीं किया गया:",
+        "ar": "غير مُقيَّم:",
+        "ru": "Не оценено:"
+      },
+      "totalTitles": {
+        "en": "Total Titles:",
+        "de": "Gesamtzahl Titel:",
+        "cn": "总标题数：",
+        "fr": "Titres totaux :",
+        "es": "Total de títulos:",
+        "hi": "कुल शीर्षक:",
+        "ar": "إجمالي العناوين:",
+        "ru": "Всего названий:"
+      },
+      "moviePersona": {
+        "en": "Your Movie Persona",
+        "de": "Dein Film-Persona",
+        "cn": "您的电影角色",
+        "fr": "Votre persona cinématographique",
+        "es": "Tu personalidad cinematográfica",
+        "hi": "आपकी फ़िल्म पर्सोना",
+        "ar": "شخصيتك السينمائية",
+        "ru": "Ваш кино-персонаж"
+      },
+      "generatePersona": {
+        "en": "Generate your movie persona to discover your taste profile!",
+        "de": "Generiere deine Film-Persona, um dein Geschmacksprofil zu entdecken!",
+        "cn": "生成您的电影角色，发现您的口味配置文件！",
+        "fr": "Générez votre persona cinématographique pour découvrir votre profil de goûts !",
+        "es": "¡Genera tu personalidad cinematográfica para descubrir tu perfil de gustos!",
+        "hi": "अपनी फ़िल्म पर्सोना बनाएं और अपने पसंद की पहचान करें!",
+        "ar": "قم بإنشاء شخصيتك السينمائية لاكتشاف ملف تفضيلاتك!",
+        "ru": "Сгенерируйте ваш кино-персонаж, чтобы узнать ваш вкусовой профиль!"
+      },
+      "genreDistribution": {
+        "en": "Genre Distribution",
+        "de": "Genre-Verteilung",
+        "cn": "类型分布",
+        "fr": "Répartition par genre",
+        "es": "Distribución por género",
+        "hi": "शैली वितरण",
+        "ar": "توزيع الأنواع",
+        "ru": "Распределение по жанрам"
+      },
+      "pieChart": {
+        "en": "Pie Chart",
+        "de": "Kreisdiagramm",
+        "cn": "饼图",
+        "fr": "Diagramme circulaire",
+        "es": "Gráfico circular",
+        "hi": "पाई चार्ट",
+        "ar": "مخطط دائري",
+        "ru": "Круговая диаграмма"
+      },
+      "barChart": {
+        "en": "Bar Chart",
+        "de": "Balkendiagramm",
+        "cn": "条形图",
+        "fr": "Diagramme en barres",
+        "es": "Gráfico de barras",
+        "hi": "बार चार्ट",
+        "ar": "مخطط عمودي",
+        "ru": "Столбчатая диаграмма"
+      },
+      "favoriteTitle": {
+        "en": "Your Favorite Titles",
+        "de": "Deine Lieblings Titel",
+        "cn": "你最喜欢的标题",
+        "fr": "Vos titres favoris",
+        "es": "Tus títulos favoritos",
+        "hi": "आपके पसंदीदा शीर्षक",
+        "ar": "عناوينك المفضلة",
+        "ru": "Ваши любимые названия"
+      },
+      "rateToSee": {
+        "en": "Rate your titles to see your favorites here.",
+        "de": "Bewerte Titel um sie hier zu sehen.",
+        "cn": "在此处对您的作品进行评分以查看您最喜欢的作品。",
+        "fr": "Notez vos titres pour voir vos favoris ici.",
+        "es": "Califica tus títulos para ver tus favoritos aquí.",
+        "hi": "यहां अपने पसंदीदा देखने के लिए अपने शीर्षकों को रेट करें।",
+        "ar": "قيّم عناوينك لرؤية المفضلات هنا.",
+        "ru": "Оцените ваши названия, чтобы увидеть избранные здесь."
+      }
+    },
+    "settings": {
+      "title": {
+        "en": "Settings",
+        "de": "Einstellungen",
+        "cn": "设置",
+        "fr": "Paramètres",
+        "es": "Configuración",
+        "hi": "सेटिंग्स",
+        "ar": "الإعدادات",
+        "ru": "Настройки"
+      },
+      "streamingAPI": {
+        "en": "Streaming Availability API",
+        "de": "Streaming-Verfügbarkeits-API",
+        "cn": "流媒体可用性API",
+        "fr": "API de disponibilité de streaming",
+        "es": "API de disponibilidad de streaming",
+        "hi": "स्ट्रीमिंग उपलब्धता एपीआई",
+        "ar": "API توفر البث",
+        "ru": "API доступности стриминга"
+      },
+      "streamingDesc": {
+        "en": "Set your API key for streaming-availability.p.rapidapi.com",
+        "de": "Setze deinen API-Schlüssel für streaming-availability.p.rapidapi.com",
+        "cn": "设置您的streaming-availability.p.rapidapi.com API密钥",
+        "fr": "Configurez votre clé API pour streaming-availability.p.rapidapi.com",
+        "es": "Configura tu clave API para streaming-availability.p.rapidapi.com",
+        "hi": "streaming-availability.p.rapidapi.com के लिए अपना API की सेट करें",
+        "ar": "قم بتعيين مفتاح API الخاص بك لـ streaming-availability.p.rapidapi.com",
+        "ru": "Установите ваш API-ключ для streaming-availability.p.rapidapi.com"
+      },
+      "enterAPIKey": {
+        "en": "Enter API Key",
+        "de": "API-Schlüssel eingeben",
+        "cn": "输入API密钥",
+        "fr": "Entrez la clé API",
+        "es": "Introduce la clave API",
+        "hi": "API की दर्ज करें",
+        "ar": "أدخل مفتاح API",
+        "ru": "Введите API-ключ"
+      },
+      "getAPIKey": {
+        "en": "Get API Key",
+        "de": "API-Schlüssel erhalten",
+        "cn": "获取API密钥",
+        "fr": "Obtenir la clé API",
+        "es": "Obtener clave API",
+        "hi": "API प्राप्त करें",
+        "ar": "احصل على مفتاح API",
+        "ru": "Получить API-ключ"
+      },
+      "apiUsage": {
+        "en": "API Usage",
+        "de": "API-Nutzung",
+        "cn": "API使用情况",
+        "fr": "Utilisation de l'API",
+        "es": "Uso de la API",
+        "hi": "एपीआई उपयोग",
+        "ar": "استخدام API",
+        "ru": "Использование API"
+      },
+      "apiUsageDesc": {
+        "en": "Streaming Availability API usage this month:",
+        "de": "Streaming-Verfügbarkeits-API-Nutzung in diesem Monat:",
+        "cn": "本月流媒体可用性API使用情况：",
+        "fr": "Utilisation de l'API de disponibilité de streaming ce mois :",
+        "es": "Uso de la API de disponibilidad de streaming este mes:",
+        "hi": "इस महीने स्ट्रीमिंग उपलब्धता एपीआई का उपयोग:",
+        "ar": "استخدام API لتوفر البث هذا الشهر:",
+        "ru": "Использование API доступности стриминга за этот месяц:"
+      },
+      "monthlyLimit": {
+        "en": "Monthly Limit:",
+        "de": "Monatliches Limit:",
+        "cn": "月度限制：",
+        "fr": "Limite mensuelle :",
+        "es": "Límite mensual:",
+        "hi": "मासिक सीमा:",
+        "ar": "الحد الشهري:",
+        "ru": "Месячный лимит:"
+      },
+      "calls": {
+        "en": "calls",
+        "de": "Aufrufe",
+        "cn": "调用",
+        "fr": "appels",
+        "es": "llamadas",
+        "hi": "कॉल",
+        "ar": "مكالمات",
+        "ru": "вызовов"
+      },
+      "resetCounter": {
+        "en": "The counter is automatically reset at the beginning of each month.",
+        "de": "Der Zähler wird zu Beginn jedes Monats automatisch zurückgesetzt.",
+        "cn": "计数器在每月初自动重置。",
+        "fr": "Le compteur se réinitialise automatiquement au début de chaque mois.",
+        "es": "El contador se restablece automáticamente al comienzo de cada mes.",
+        "hi": "काउंटर प्रत्येक महीने की शुरुआत में स्वचालित रूप से रीसेट हो जाता है।",
+        "ar": "يتم إعادة تعيين العداد تلقائيًا في بداية كل شهر.",
+        "ru": "Счетчик автоматически сбрасывается в начале каждого месяца."
+      },
+      "aiProvider": {
+        "en": "AI Provider",
+        "de": "KI-Anbieter",
+        "cn": "AI提供商",
+        "fr": "Fournisseur d'IA",
+        "es": "Proveedor de IA",
+        "hi": "एआई प्रदाता",
+        "ar": "مزود الذكاء الاصطناعي",
+        "ru": "Поставщик ИИ"
+      },
+      "aiProviderDesc": {
+        "en": "Select which AI service to use for assistance",
+        "de": "Wähle, welchen KI-Dienst du für Unterstützung verwenden möchtest",
+        "cn": "选择使用哪种AI服务来提供帮助",
+        "fr": "Sélectionnez le service d'IA à utiliser pour l'assistance",
+        "es": "Selecciona qué servicio de IA utilizar para asistencia",
+        "hi": "सहायता के लिए किस एआई सेवा का उपयोग करना है, चुनें",
+        "ar": "اختر خدمة الذكاء الاصطناعي التي تريد استخدامها للمساعدة",
+        "ru": "Выберите, какой AI-сервис использовать для помощи"
+      },
+      "openAIKey": {
+        "en": "OpenAI API Key",
+        "de": "OpenAI API-Schlüssel",
+        "cn": "OpenAI API密钥",
+        "fr": "Clé API OpenAI",
+        "es": "Clave API de OpenAI",
+        "hi": "OpenAI API की",
+        "ar": "مفتاح API الخاص بـ OpenAI",
+        "ru": "API-ключ OpenAI"
+      },
+      "enterOpenAIKey": {
+        "en": "Enter OpenAI API Key",
+        "de": "OpenAI API-Schlüssel eingeben",
+        "cn": "输入OpenAI API密钥",
+        "fr": "Entrez la clé API OpenAI",
+        "es": "Introduce la clave API de OpenAI",
+        "hi": "OpenAI API की दर्ज करें",
+        "ar": "أدخل مفتاح API الخاص بـ OpenAI",
+        "ru": "Введите API-ключ OpenAI"
+      },
+      "getOpenAIKey": {
+        "en": "Get OpenAI API Key",
+        "de": "OpenAI API-Schlüssel erhalten",
+        "cn": "获取OpenAI API密钥",
+        "fr": "Obtenir la clé API OpenAI",
+        "es": "Obtener clave API de OpenAI",
+        "hi": "OpenAI API प्राप्त करें",
+        "ar": "احصل على مفتاح API الخاص بـ OpenAI",
+        "ru": "Получить API-ключ OpenAI"
+      },
+      "geminiKey": {
+        "en": "Gemini API Key",
+        "de": "Gemini API-Schlüssel",
+        "cn": "Gemini API密钥",
+        "fr": "Clé API Gemini",
+        "es": "Clave API de Gemini",
+        "hi": "Gemini API की",
+        "ar": "مفتاح API الخاص بـ Gemini",
+        "ru": "API-ключ Gemini"
+      },
+      "enterGeminiKey": {
+        "en": "Enter Gemini API Key",
+        "de": "Gemini API-Schlüssel eingeben",
+        "cn": "输入Gemini API密钥",
+        "fr": "Entrez la clé API Gemini",
+        "es": "Introduce la clave API de Gemini",
+        "hi": "Gemini API की दर्ज करें",
+        "ar": "أدخل مفتاح API الخاص بـ Gemini",
+        "ru": "Введите API-ключ Gemini"
+      },
+      "getGeminiKey": {
+        "en": "Get Gemini API Key",
+        "de": "Gemini API-Schlüssel erhalten",
+        "cn": "获取Gemini API密钥",
+        "fr": "Obtenir la clé API Gemini",
+        "es": "Obtener clave API de Gemini",
+        "hi": "Gemini API प्राप्त करें",
+        "ar": "احصل على مفتاح API الخاص بـ Gemini",
+        "ru": "Получить API-ключ Gemini"
+      },
+      "appearance": {
+        "en": "Appearance",
+        "de": "Erscheinungsbild",
+        "cn": "外观",
+        "fr": "Apparence",
+        "es": "Apariencia",
+        "hi": "दिखावट",
+        "ar": "المظهر",
+        "ru": "Внешний вид"
+      },
+      "appearanceDesc": {
+        "en": "Customize the app's main color",
+        "de": "Passe die Hauptfarbe der App an",
+        "cn": "自定义应用程序的主要颜色",
+        "fr": "Personnalisez la couleur principale de l'application",
+        "es": "Personaliza el color principal de la aplicación",
+        "hi": "ऐप के मुख्य रंग को अनुकूलित करें",
+        "ar": "قم بتخصيص اللون الرئيسي للتطبيق",
+        "ru": "Настройте основной цвет приложения"
+      },
+      "mainColor": {
+        "en": "Main Color:",
+        "de": "Hauptfarbe:",
+        "cn": "主要颜色：",
+        "fr": "Couleur principale :",
+        "es": "Color principal:",
+        "hi": "मुख्य रंग:",
+        "ar": "اللون الرئيسي:",
+        "ru": "Основной цвет:"
+      },
+      "language": {
+        "en": "Language",
+        "de": "Sprache",
+        "cn": "语言",
+        "fr": "Langue",
+        "es": "Idioma",
+        "hi": "भाषा",
+        "ar": "اللغة",
+        "ru": "Язык"
+      },
+      "languageDesc": {
+        "en": "Select your preferred language",
+        "de": "Wähle deine bevorzugte Sprache",
+        "cn": "选择您的首选语言",
+        "fr": "Sélectionnez votre langue préférée",
+        "es": "Selecciona tu idioma preferido",
+        "hi": "अपनी पसंदीदा भाषा चुनें",
+        "ar": "اختر لغتك المفضلة",
+        "ru": "Выберите предпочитаемый язык"
+      },
+      "saveSettings": {
+        "en": "Save Settings",
+        "de": "Einstellungen speichern",
+        "cn": "保存设置",
+        "fr": "Enregistrer les paramètres",
+        "es": "Guardar configuración",
+        "hi": "सेटिंग्स सहेजें",
+        "ar": "حفظ الإعدادات",
+        "ru": "Сохранить настройки"
+      }
+    },
+    "movie": {
+      "director": {
+        "en": "Director",
+        "de": "Regisseur",
+        "cn": "导演",
+        "fr": "Réalisateur",
+        "es": "Director",
+        "hi": "निर्देशक",
+        "ar": "المخرج",
+        "ru": "Режиссер"
+      },
+      "notes": {
+        "en": "Notes",
+        "de": "Notizen",
+        "cn": "笔记",
+        "fr": "Notes",
+        "es": "Notas",
+        "hi": "टिप्पणियाँ",
+        "ar": "ملاحظات",
+        "ru": "Заметки"
+      },
+      "streamingOptions": {
+        "en": "Streaming Options",
+        "de": "Streaming-Optionen",
+        "cn": "流媒体选项",
+        "fr": "Options de streaming",
+        "es": "Opciones de streaming",
+        "hi": "स्ट्रीमिंग विकल्प",
+        "ar": "خيارات البث",
+        "ru": "Варианты стриминга"
+      },
+      "yourRating": {
+        "en": "Your Rating",
+        "de": "Deine Bewertung",
+        "cn": "您的评分",
+        "fr": "Votre note",
+        "es": "Tu calificación",
+        "hi": "आपकी रेटिंग",
+        "ar": "تقييمك",
+        "ru": "Ваш рейтинг"
+      },
+      "imdb": {
+        "en": "IMDB",
+        "de": "IMDB",
+        "cn": "IMDB",
+        "fr": "IMDb",
+        "es": "IMDb",
+        "hi": "IMDb",
+        "ar": "IMDb",
+        "ru": "IMDb"
+      },
+      "watchTrailer": {
+        "en": "Watch Trailer",
+        "de": "Trailer ansehen",
+        "cn": "观看预告片",
+        "fr": "Regarder la bande-annonce",
+        "es": "Ver tráiler",
+        "hi": "ट्रेलर देखें",
+        "ar": "شاهد العرض التشويقي",
+        "ru": "Смотреть трейлер"
+      },
+      "confirmDelete": {
+        "en": "Confirm Deletion",
+        "de": "Löschen bestätigen",
+        "cn": "确认删除",
+        "fr": "Confirmer la suppression",
+        "es": "Confirmar eliminación",
+        "hi": "हटाने की पुष्टि करें",
+        "ar": "تأكيد الحذف",
+        "ru": "Подтвердить удаление"
+      },
+      "confirmDeleteMsg": {
+        "en": "Are you sure you want to delete this item? This action cannot be undone.",
+        "de": "Bist du sicher, dass du diesen Eintrag löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "cn": "您确定要删除此项目吗？此操作无法撤消。",
+        "fr": "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.",
+        "es": "¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.",
+        "hi": "क्या आप वाकई इस आइटम को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+        "ar": "هل أنت متأكد أنك تريد حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.",
+        "ru": "Вы уверены, что хотите удалить этот элемент? Это действие нельзя отменить."
+      },
+      "removeRating": {
+        "en": "Remove Rating",
+        "de": "Bewertung entfernen",
+        "cn": "删除评分",
+        "fr": "Supprimer la note",
+        "es": "Eliminar calificación",
+        "hi": "रेटिंग हटाएं",
+        "ar": "إزالة التقييم",
+        "ru": "Удалить рейтинг"
+      },
+      "saveRating": {
+        "en": "Save Rating",
+        "de": "Bewertung speichern",
+        "cn": "保存评分",
+        "fr": "Enregistrer la note",
+        "es": "Guardar calificación",
+        "hi": "रेटिंग सहेजें",
+        "ar": "حفظ التقييم",
+        "ru": "Сохранить рейтинг"
+      },
+      "clickToRate": {
+        "en": "Click to rate",
+        "de": "Klicke zum Bewerten",
+        "cn": "点击评分",
+        "fr": "Cliquez pour noter",
+        "es": "Haz clic para calificar",
+        "hi": "रेट करने के लिए क्लिक करें",
+        "ar": "اضغط للتقييم",
+        "ru": "Нажмите, чтобы оценить"
+      },
+      "rateTitle": {
+        "en": "Rate \"{title}\"",
+        "de": "Bewerte \"{title}\"",
+        "cn": "为\"{title}\"评分",
+        "fr": "Notez \"{title}\"",
+        "es": "Califica \"{title}\"",
+        "hi": "\"{title}\" को रेट करें",
+        "ar": "قيّم \"{title}\"",
+        "ru": "Оцените \"{title}\""
+      }
+    },
+    "notifications": {
+      "languageChanged": {
+        "en": "Language changed to {language}",
+        "de": "Sprache geändert zu {language}",
+        "cn": "语言已更改为{language}",
+        "fr": "Langue changée en {language}",
+        "es": "Idioma cambiado a {language}",
+        "hi": "भाषा बदलकर {language} कर दी गई",
+        "ar": "تم تغيير اللغة إلى {language}",
+        "ru": "Язык изменён на {language}"
+      },
+      "settingsSaved": {
+        "en": "Settings saved successfully!",
+        "de": "Einstellungen erfolgreich gespeichert!",
+        "cn": "设置保存成功！",
+        "fr": "Paramètres enregistrés avec succès !",
+        "es": "¡Configuración guardada con éxito!",
+        "hi": "सेटिंग्स सफलतापूर्वक सहेजी गईं!",
+        "ar": "تم حفظ الإعدادات بنجاح!",
+        "ru": "Настройки успешно сохранены!"
+      },
+      "movieAdded": {
+        "en": "Movie added successfully!",
+        "de": "Film erfolgreich hinzugefügt!",
+        "cn": "电影添加成功！",
+        "fr": "Film ajouté avec succès !",
+        "es": "¡Película agregada con éxito!",
+        "hi": "फ़िल्म सफलतापूर्वक जोड़ी गई!",
+        "ar": "تم إضافة الفيلم بنجاح!",
+        "ru": "Фильм успешно добавлен!"
+      },
+      "seriesAdded": {
+        "en": "TV Series added successfully!",
+        "de": "TV-Serie erfolgreich hinzugefügt!",
+        "cn": "电视剧添加成功！",
+        "fr": "Série TV ajoutée avec succès !",
+        "es": "¡Serie de TV agregada con éxito!",
+        "hi": "टीवी सीरीज सफलतापूर्वक जोड़ी गई!",
+        "ar": "تم إضافة المسلسل التلفزيوني بنجاح!",
+        "ru": "ТВ-сериал успешно добавлен!"
+      },
+      "movieUpdated": {
+        "en": "Movie updated successfully!",
+        "de": "Film erfolgreich aktualisiert!",
+        "cn": "电影更新成功！",
+        "fr": "Film mis à jour avec succès !",
+        "es": "¡Película actualizada con éxito!",
+        "hi": "फ़िल्म सफलतापूर्वक अपडेट की गई!",
+        "ar": "تم تحديث الفيلم بنجاح!",
+        "ru": "Фильм успешно обновлён!"
+      },
+      "seriesUpdated": {
+        "en": "TV Series updated successfully!",
+        "de": "TV-Serie erfolgreich aktualisiert!",
+        "cn": "电视剧更新成功！",
+        "fr": "Série TV mise à jour avec succès !",
+        "es": "¡Serie de TV actualizada con éxito!",
+        "hi": "टीवी सीरीज सफलतापूर्वक अपडेट की गई!",
+        "ar": "تم تحديث المسلسل التلفزيوني بنجاح!",
+        "ru": "ТВ-сериал успешно обновлён!"
+      },
+      "movieDeleted": {
+        "en": "Movie deleted successfully!",
+        "de": "Film erfolgreich gelöscht!",
+        "cn": "电影删除成功！",
+        "fr": "Film supprimé avec succès !",
+        "es": "¡Película eliminada con éxito!",
+        "hi": "फ़िल्म सफलतापूर्वक हटाई गई!",
+        "ar": "تم حذف الفيلم بنجاح!",
+        "ru": "Фильм успешно удалён!"
+      },
+      "seriesDeleted": {
+        "en": "TV Series deleted successfully!",
+        "de": "TV-Serie erfolgreich gelöscht!",
+        "cn": "电视剧删除成功！",
+        "fr": "Série TV supprimée avec succès !",
+        "es": "¡Serie de TV eliminada con éxito!",
+        "hi": "टीवी सीरीज सफलतापूर्वक हटाई गई!",
+        "ar": "تم حذف المسلسل التلفزيوني بنجاح!",
+        "ru": "ТВ-сериал успешно удалён!"
+      },
+      "ratingRemoved": {
+        "en": "Rating removed successfully!",
+        "de": "Bewertung erfolgreich entfernt!",
+        "cn": "评分成功删除！",
+        "fr": "Note supprimée avec succès !",
+        "es": "¡Calificación eliminada con éxito!",
+        "hi": "रेटिंग सफलतापूर्वक हटाई गई!",
+        "ar": "تم إزالة التقييم بنجاح!",
+        "ru": "Рейтинг успешно удалён!"
+      },
+      "ratingSaved": {
+        "en": "Rating saved successfully!",
+        "de": "Bewertung erfolgreich gespeichert!",
+        "cn": "评分保存成功！",
+        "fr": "Note enregistrée avec succès !",
+        "es": "¡Calificación guardada con éxito!",
+        "hi": "रेटिंग सफलतापूर्वक सहेजी गई!",
+        "ar": "تم حفظ التقييم بنجاح!",
+        "ru": "Рейтинг успешно сохранён!"
+      },
+      "selectRating": {
+        "en": "Please select a rating",
+        "de": "Bitte wähle eine Bewertung",
+        "cn": "请选择评分",
+        "fr": "Veuillez sélectionner une note",
+        "es": "Por favor, selecciona una calificación",
+        "hi": "कृपया एक रेटिंग चुनें",
+        "ar": "يرجى اختيار تقييم",
+        "ru": "Пожалуйста, выберите рейтинг"
+      },
+      "importSuccess": {
+        "en": "Imported {count} items successfully! ({skipped} skipped)",
+        "de": "{count} Einträge erfolgreich importiert! ({skipped} übersprungen)",
+        "cn": "成功导入{count}个项目！（跳过{skipped}个）",
+        "fr": "Importation de {count} éléments réussie ! ({skipped} ignorés)",
+        "es": "¡Se importaron {count} elementos con éxito! ({skipped} omitidos)",
+        "hi": "{count} आइटम सफलतापूर्वक आयात किए गए! ({skipped} छोड़े गए)",
+        "ar": "تم استيراد {count} عنصر بنجاح! ({skipped} تم تخطيها)",
+        "ru": "Успешно импортировано {count} элементов! ({skipped} пропущено)"
+      },
+      "error": {
+        "en": "Error: {message}",
+        "de": "Fehler: {message}",
+        "cn": "错误：{message}",
+        "fr": "Erreur : {message}",
+        "es": "Error: {message}",
+        "hi": "त्रुटि: {message}",
+        "ar": "خطأ: {message}",
+        "ru": "Ошибка: {message}"
+      }
+    }
+  }
