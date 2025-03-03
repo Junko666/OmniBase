@@ -1,134 +1,216 @@
 <div id="addTitleSection" class="hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8 transition-all duration-300">
-      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Add Content</h2>
-      
-      <!-- Tabs -->
-      <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
-        <button id="manualTabBtn" class="py-2 px-4 text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 font-medium transition-colors">Manual Entry</button>
-        <button id="csvTabBtn" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors">Import CSV</button>
-      </div>
-      
-      <!-- Manual Form -->
-      <div id="manualForm" class="mb-6">
-        <form id="addMovieForm" class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="md:col-span-2">
-              <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title*</label>
-              <input type="text" id="title" name="title" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-            </div>
-            <div>
-              <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type*</label>
-              <select id="type" name="type" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-                <option value="movie">Movie</option>
-                <option value="series">TV Series</option>
-              </select>
-            </div>
-          </div>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4" data-lang-key="addTitle.title">Add Content</h2>
+  
+    <!-- Tabs -->
+    <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+      <button id="apiTabBtn" class="py-2 px-4 text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 font-medium transition-colors" data-lang-key="addTitle.addViaAPI">Add via API</button>
+      <button id="csvTabBtn" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors" data-lang-key="addTitle.importCSV">Import CSV</button>
+      <button id="manualTabBtn" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors" data-lang-key="addTitle.manualEntry">Manual Entry</button>
+    </div>
+  
+    <!-- API Search Form -->
+    <div id="apiForm" class="mb-6">
+      <div class="space-y-4">
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
+          <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="addTitle.api.title">Search for Movies and TV Shows</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300" data-lang-key="addTitle.api.description">Enter a title to search for it using the streaming availability database.</p>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="year" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Release Year</label>
-              <input type="number" id="year" name="year" min="1900" max="2030" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          <!-- API Usage Info -->
+          <div class="mt-2 flex items-center">
+            <span class="text-xs text-gray-500 dark:text-gray-400" data-lang-key="addTitle.api.apiUsage">API Usage:</span>
+            <div class="ml-2 w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+              <div id="apiUsageBar" class="bg-indigo-600 h-2.5 rounded-full"></div>
             </div>
-            <div>
-              <label for="director" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Director</label>
-              <input type="text" id="director" name="director" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-            </div>
+            <span class="ml-2 text-xs text-gray-500 dark:text-gray-400"><span id="apiUsageCount">0</span>/1000</span>
           </div>
-          
+        </div>
+
+        <form id="apiSearchForm" class="space-y-4">
           <div>
-            <label for="genre" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Genre</label>
-            <input type="text" id="genre" name="genre" placeholder="e.g., Drama, Sci-Fi" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-          </div>
-          
-          <div>
-            <label for="poster" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Poster URL</label>
-            <input type="url" id="poster" name="poster" placeholder="https://example.com/poster.jpg" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Rating</label>
-              <fieldset class="rating" id="manualRating">
-                <input type="radio" id="star5" name="rating" value="5" />
-                <label class="full" for="star5" title="Awesome - 5 stars"></label>
-            
-                <input type="radio" id="star4half" name="rating" value="4.5" />
-                <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-            
-                <input type="radio" id="star4" name="rating" value="4" />
-                <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-            
-                <input type="radio" id="star3half" name="rating" value="3.5" />
-                <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-            
-                <input type="radio" id="star3" name="rating" value="3" />
-                <label class="full" for="star3" title="Meh - 3 stars"></label>
-            
-                <input type="radio" id="star2half" name="rating" value="2.5" />
-                <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-            
-                <input type="radio" id="star2" name="rating" value="2" />
-                <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-            
-                <input type="radio" id="star1half" name="rating" value="1.5" />
-                <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-            
-                <input type="radio" id="star1" name="rating" value="1" />
-                <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-            
-                <input type="radio" id="star0.5" name="rating" value="0.5" />
-                <label class="half" for="star0.5" title="Sucks big time - 0.5 stars"></label>
-                <input type="radio" id="noRating" name="rating" value="0" checked hidden>
-              </fieldset>
-              <div class="mt-1 text-sm text-gray-500 dark:text-gray-400">Rate from 0.5 to 5 stars</div>
+            <label for="apiSearchTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.api.searchTitle">Title to search</label>
+            <div class="flex">
+              <input type="text" id="apiSearchTitle" name="apiSearchTitle" required class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-l-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <button type="submit" id="apiSearchBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="addTitle.api.search">
+                Search
+              </button>
             </div>
-            <div>
-              <label for="imdbRating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">IMDB Rating (0-10)</label>
-              <input type="number" id="imdbRating" name="imdbRating" min="0" max="10" step="0.1" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-            </div>
-          </div>
-          
-          <div>
-            <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
-            <textarea id="notes" name="notes" rows="2" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"></textarea>
-          </div>
-          
-          <div class="flex justify-between">
-            <button type="button" id="cancelEditBtn" class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors hidden">
-              Cancel
-            </button>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-              Add Content
-            </button>
           </div>
         </form>
-      </div>
-      
-      <!-- CSV Import -->
-      <div id="csvForm" class="mb-6 hidden">
-        <div class="space-y-4">
-          <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
-            <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2">CSV Format</h3>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Your CSV should have these columns: title,date</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Import</p>
+
+        <!-- API Search Results -->
+        <div id="apiSearchResults" class="hidden space-y-4">
+          <div id="apiSearchLoading" class="text-center py-6">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
+            <p class="mt-2 text-gray-600 dark:text-gray-400" data-lang-key="addTitle.api.searching">Searching...</p>
           </div>
-      
-          <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center transition-all duration-200" id="dropZone">
-            <input type="file" id="csvFile" accept=".csv" class="hidden">
-            <i class="fas fa-file-csv text-4xl text-gray-400 dark:text-gray-500 mb-3"></i>
-            <p class="text-gray-500 dark:text-gray-400 mb-2">Drag & drop your CSV file here</p>
-            <p class="text-gray-500 dark:text-gray-400 mb-3">or</p>
-            <button type="button" id="browseBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-              Browse Files
-            </button>
-            <p id="selectedFileName" class="mt-3 text-sm text-indigo-600 dark:text-indigo-400 hidden"></p>
+          
+          <div id="apiSearchError" class="hidden bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-300 p-4 rounded-md">
+            <p id="apiErrorMessage"></p>
           </div>
-      
-          <button type="button" id="importBtn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-            Import Content
-          </button>
+          
+          <div id="apiSearchResult" class="hidden">
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow">
+              <div class="md:flex">
+                <div class="md:w-1/3 p-4 flex justify-center">
+                  <img id="resultPoster" src="https://placehold.co/300x450/e2e8f0/1e293b?text=No+Poster" alt="Movie Poster" class="h-64 object-cover rounded-lg">
+                </div>
+                <div class="md:w-2/3 p-4">
+                  <h3 id="resultTitle" class="text-xl font-bold text-gray-800 dark:text-gray-100"></h3>
+                  <div id="resultType" class="mt-1 inline-block px-2 py-1 text-xs rounded-full"></div>
+                  <div class="mt-2 text-gray-600 dark:text-gray-400">
+                    <span id="resultYear" class="mr-2"></span>
+                    <span id="resultGenre" class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"></span>
+                  </div>
+                  <div class="mt-2 flex items-center">
+                    <span id="resultImdbRating" class="text-yellow-500"></span>
+                  </div>
+                  <div class="mt-2">
+                    <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="addTitle.api.director">Director</h4>
+                    <p id="resultDirector" class="text-gray-600 dark:text-gray-400"></p>
+                  </div>
+                  <div class="mt-2">
+                    <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="movie.notes">Notes</h4>
+                    <p id="resultNotes" class="text-gray-600 dark:text-gray-400 line-clamp-3"></p>
+                  </div>
+                  <div id="resultStreaming" class="mt-4"></div>
+                  <div class="mt-6 flex space-x-2">
+                    <button id="addResultBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors" data-lang-key="addTitle.api.addToCollection">
+                      Add to Collection
+                    </button>
+                    <button id="discardResultBtn" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-lang-key="addTitle.api.discard">
+                      Discard
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  
+    <!-- CSV Import -->
+    <div id="csvForm" class="mb-6 hidden">
+      <div class="space-y-4">
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
+          <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="addTitle.csv.format">CSV Format</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300" data-lang-key="addTitle.csv.description">Your CSV should have these columns: title,date</p>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-1" data-lang-key="addTitle.csv.readme">Have a look at the README</p>
+        </div>
+  
+        <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center transition-all duration-200" id="dropZone">
+          <input type="file" id="csvFile" accept=".csv" class="hidden">
+          <i class="fas fa-file-csv text-4xl text-gray-400 dark:text-gray-500 mb-3"></i>
+          <p class="text-gray-500 dark:text-gray-400 mb-2" data-lang-key="addTitle.csv.dropzone">Drag & drop your CSV file here</p>
+          <p class="text-gray-500 dark:text-gray-400 mb-3" data-lang-key="addTitle.csv.or">or</p>
+          <button type="button" id="browseBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="addTitle.csv.browseFiles">
+            Browse Files
+          </button>
+          <p id="selectedFileName" class="mt-3 text-sm text-indigo-600 dark:text-indigo-400 hidden"></p>
+        </div>
+  
+        <button type="button" id="importBtn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled data-lang-key="addTitle.csv.importContent">
+          Import Content
+        </button>
+      </div>
+    </div>
+
+    <!-- Manual Form -->
+    <div id="manualForm" class="mb-6 hidden">
+      <form id="addMovieForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="md:col-span-2">
+            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.title">Title*</label>
+            <input type="text" id="title" name="title" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+          <div>
+            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.type">Type*</label>
+            <select id="type" name="type" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="movie" data-lang-key="common.movieType">Movie</option>
+              <option value="series" data-lang-key="common.seriesType">TV Series</option>
+            </select>
+          </div>
+        </div>
+      
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="year" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.releaseYear">Release Year</label>
+            <input type="number" id="year" name="year" min="1900" max="2030" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+          <div>
+            <label for="director" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.director">Director</label>
+            <input type="text" id="director" name="director" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+        </div>
+      
+        <div>
+          <label for="genre" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.genre">Genre</label>
+          <input type="text" id="genre" name="genre" placeholder="e.g., Drama, Sci-Fi" data-lang-key-placeholder="addTitle.form.genrePlaceholder" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+        </div>
+      
+        <div>
+          <label for="poster" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.posterURL">Poster URL</label>
+          <input type="url" id="poster" name="poster" placeholder="https://example.com/poster.jpg" data-lang-key-placeholder="addTitle.form.posterPlaceholder" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+        </div>
+      
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="addTitle.form.yourRating">Your Rating</label>
+            <fieldset class="rating" id="manualRating">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label class="full" for="star5" title="Awesome - 5 stars"></label>
+        
+              <input type="radio" id="star4half" name="rating" value="4.5" />
+              <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+        
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+        
+              <input type="radio" id="star3half" name="rating" value="3.5" />
+              <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+        
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label class="full" for="star3" title="Meh - 3 stars"></label>
+        
+              <input type="radio" id="star2half" name="rating" value="2.5" />
+              <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+        
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+        
+              <input type="radio" id="star1half" name="rating" value="1.5" />
+              <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+        
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+        
+              <input type="radio" id="star0.5" name="rating" value="0.5" />
+              <label class="half" for="star0.5" title="Sucks big time - 0.5 stars"></label>
+              <input type="radio" id="noRating" name="rating" value="0" checked hidden>
+            </fieldset>
+            <div class="mt-1 text-sm text-gray-500 dark:text-gray-400" data-lang-key="addTitle.form.rateStars">Rate from 0.5 to 5 stars</div>
+          </div>
+          <div>
+            <label for="imdbRating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.imdbRating">IMDB Rating (0-10)</label>
+            <input type="number" id="imdbRating" name="imdbRating" min="0" max="10" step="0.1" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+        </div>
+      
+        <div>
+          <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="addTitle.form.notes">Notes</label>
+          <textarea id="notes" name="notes" rows="2" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"></textarea>
+        </div>
+      
+        <div class="flex justify-between">
+          <button type="button" id="cancelEditBtn" class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors hidden" data-lang-key="common.cancel">
+            Cancel
+          </button>
+          <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="addTitle.form.addContent">
+            Add Content
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>
