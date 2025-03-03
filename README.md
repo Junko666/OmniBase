@@ -1,7 +1,7 @@
 # MovieBase 🎬
 **Your Intelligent Media Catalog System** - A sophisticated web application for managing and analyzing your movie/TV show collection with AI-powered insights.
 
-## Screenshots 🖼️
+## Screenshots (Version 1.0)🖼️
 | Collection View | Add Title | Settings | AI-Suggestion | Architecture |
 |-----------------|-----------|----------|---------------|--------------|
 | ![Collection](https://github.com/user-attachments/assets/7146b562-106c-48fc-9dd9-55a8c2309389) | ![Content Details](https://github.com/user-attachments/assets/baf875fb-7884-4098-ae9a-3dc5b1d487ad) | ![Settings](https://github.com/user-attachments/assets/70466e50-2376-426d-8d37-1a6299cadde1) | ![AI Suggestions](https://github.com/user-attachments/assets/845c22f0-1375-4d50-a77f-5909522696db) | ![MovieBase Banner](https://github.com/user-attachments/assets/2d17687f-cac6-4b55-833c-6bbd55372236) |
@@ -20,8 +20,8 @@
 - [Configuration](#configuration-)
 - [Developer Notes](#developer-notes-)
 - [Architecture](#architecture-)
-- [Contributor](#contributor-)
-
+- [Contributor](#contributor)
+- [Version-Update](#versions)
 
 ## Introduction 🚀
 MovieBase is a comprehensive media management solution that combines traditional collection tracking with modern AI capabilities. Designed for cinephiles and series enthusiasts, it offers:
@@ -31,6 +31,7 @@ MovieBase is a comprehensive media management solution that combines traditional
 - Personalized recommendation engine
 - Advanced viewing habit analytics
 - Multi-service import capabilities
+- Translation for (German, English, Chinese, French, Spanic, Hindi, Arabic, Russian)
 
 ## Features ✨
 ### Core Functionality
@@ -46,6 +47,7 @@ MovieBase is a comprehensive media management solution that combines traditional
   - Automated genre analysis
   - Natural language queries
   - Content comparison engine
+  - Movie Persona
 
 - **Streaming Intelligence**
   - Real-time availability checks
@@ -207,7 +209,9 @@ flask run --port 16969
 ## Architecture 🔧
 ![System Diagram](https://github.com/user-attachments/assets/2d17687f-cac6-4b55-833c-6bbd55372236)
 
-
+## Versions
+### Version 1.1
++ Add Titel Entry via API, +Bar chart, +AI Movie Persona generation, +Favorite Titels in Stats, +Watch Trailer Function, +API-Usage Tracker, +Translation for (German, English, Chinese, French, Spanic, Hindi, Arabic, Russian), +Bug-Fix
 ## Contributor
 1. Junko666 | Development Director https://github.com/Junko666
 2. Claude 3.7 thinking | UI / Backend
