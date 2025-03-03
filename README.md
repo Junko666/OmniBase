@@ -1,10 +1,15 @@
 # MovieBase 🎬
 **Your Intelligent Media Catalog System** - A sophisticated web application for managing and analyzing your movie/TV show collection with AI-powered insights.
 
-## Screenshots (Version 1.0)🖼️
-| Collection View | Add Title | Settings | AI-Suggestion | Architecture |
+## Screenshots (Version 1.1)🖼️
+| Collection View | Add Title | Settings | AI-Suggestion | Stats |
 |-----------------|-----------|----------|---------------|--------------|
-| ![Collection](https://github.com/user-attachments/assets/7146b562-106c-48fc-9dd9-55a8c2309389) | ![Content Details](https://github.com/user-attachments/assets/baf875fb-7884-4098-ae9a-3dc5b1d487ad) | ![Settings](https://github.com/user-attachments/assets/70466e50-2376-426d-8d37-1a6299cadde1) | ![AI Suggestions](https://github.com/user-attachments/assets/845c22f0-1375-4d50-a77f-5909522696db) | ![MovieBase Banner](https://github.com/user-attachments/assets/2d17687f-cac6-4b55-833c-6bbd55372236) |
+| ![screencapture-192-168-0-3-16969-2025-03-03-14_01_47](https://github.com/user-attachments/assets/00c2382c-0f55-43fe-860c-92c56d547942) | ![screencapture-192-168-0-3-16969-2025-03-03-14_06_18](https://github.com/user-attachments/assets/b97874d8-27bd-4730-8055-cbb75b904dd9) | ![screencapture-192-168-0-3-16969-2025-03-03-14_03_56](https://github.com/user-attachments/assets/0aa00d2d-65fa-4164-9912-44a03a932899) | ![screencapture-192-168-0-3-16969-2025-03-02-17_21_05](https://github.com/user-attachments/assets/40ebf1d5-86ff-401a-88da-7549218a6ade) | ![new_stats_page](https://github.com/user-attachments/assets/d372d14d-cc57-464d-824f-e35835cfded4) |
+
+
+
+
+
 
 
 ## Table of Contents 📖
@@ -211,7 +216,12 @@ flask run --port 16969
 
 ## Versions
 ### Version 1.1
-+ Add Titel Entry via API, +Bar chart, +AI Movie Persona generation, +Favorite Titels in Stats, +Watch Trailer Function, +API-Usage Tracker, +Translation for (German, English, Chinese, French, Spanic, Hindi, Arabic, Russian), +Bug-Fix
++ +Add Titel Entry via API, +Bar chart, +AI Movie Persona generation, +Favorite Titels in Stats, +Watch Trailer Function, +API-Usage Tracker, +Translation for (German, English, Chinese, French, Spanic, Hindi, Arabic, Russian), +Bug-Fix
+### Version 1.0 Screenshots 🖼️
+| Collection View | Add Title | Settings | AI-Suggestion | Architecture |
+|-----------------|-----------|----------|---------------|--------------|
+| ![Collection](https://github.com/user-attachments/assets/7146b562-106c-48fc-9dd9-55a8c2309389) | ![Content Details](https://github.com/user-attachments/assets/baf875fb-7884-4098-ae9a-3dc5b1d487ad) | ![Settings](https://github.com/user-attachments/assets/70466e50-2376-426d-8d37-1a6299cadde1) | ![AI Suggestions](https://github.com/user-attachments/assets/845c22f0-1375-4d50-a77f-5909522696db) | ![MovieBase Banner](https://github.com/user-attachments/assets/2d17687f-cac6-4b55-833c-6bbd55372236) |
+
 ## Contributor
 1. Junko666 | Development Director https://github.com/Junko666
 2. Claude 3.7 thinking | UI / Backend
