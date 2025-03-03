@@ -8,7 +8,7 @@ let genreChart; // Chart.js object for stats
 let editingMovieId = null; // ID of the movie being edited
 let mainColor = localStorage.getItem('mainColor') || '#667EEA'; // Default indigo color
 let userSettings = {}; // Store user settings
-
+let currentLanguage = localStorage.getItem('language') || 'en';
 // DOM elements common to various functions
 const manualTabBtn = document.getElementById('manualTabBtn');
 const csvTabBtn = document.getElementById('csvTabBtn');
@@ -398,7 +398,109 @@ cancelEditBtn.addEventListener('click', () => {
     editingMovieId = null;
   }
 });
+let translations = {};
 
+
+// Übersetzungen laden
+function loadTranslations() {
+  fetch('/api/translations')
+    .then(response => response.json())
+    .then(data => {
+      translations = data;
+      applyTranslations();
+    })
+    .catch(error => {
+      console.error('Error loading translations:', error);
+      showNotification('Failed to load translations', 'error');
+    });
+}
+
+// Sprache ändern
+function changeLanguage(language) {
+  currentLanguage = language;
+  localStorage.setItem('language', language);
+  
+  // Spracheinstellung auf dem Server speichern
+  const settings = { language: language };
+  
+  fetch('/api/settings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(settings)
+  })
+  .then(response => response.json())
+  .then(() => {
+    applyTranslations();
+    showNotification(`Language changed to ${getLanguageName(language)}`);
+  })
+  .catch(error => {
+    console.error('Error saving language setting:', error);
+  });
+}
+
+// Sprachname anhand des Codes zurückgeben
+function getLanguageName(code) {
+  const languages = {
+    'en': 'English',
+    'de': 'Deutsch',
+    'cn': '中文'
+  };
+  return languages[code] || code;
+}
+
+// Übersetzungen auf die Seite anwenden
+function applyTranslations() {
+  document.querySelectorAll('[data-lang-key]').forEach(element => {
+    const key = element.getAttribute('data-lang-key');
+    const translation = getTranslation(key);
+    
+    if (translation) {
+      element.textContent = translation;
+    }
+  });
+}
+
+// Übersetzung für einen bestimmten Schlüssel abrufen
+function getTranslation(key) {
+  // Unterstützt verschachtelte Schlüssel wie "common.save" oder "pages.stats.title"
+  const parts = key.split('.');
+  let value = translations;
+  
+  for (const part of parts) {
+    if (value && value[part]) {
+      value = value[part];
+    } else {
+      return null;
+    }
+  }
+  
+  return value[currentLanguage] || value['en'] || null;
+}
+
+// Beim Laden der Seite Übersetzungen initialisieren
+document.addEventListener('DOMContentLoaded', () => {
+  loadTranslations();
+  
+  // Sprache aus Einstellungen laden und in localStorage speichern
+  fetch('/api/settings')
+    .then(response => response.json())
+    .then(data => {
+      if (data.language) {
+        currentLanguage = data.language;
+        localStorage.setItem('language', currentLanguage);
+        
+        // Select-Element aktualisieren, falls vorhanden
+        const languageSelect = document.getElementById('languageSelect');
+        if (languageSelect) {
+          languageSelect.value = currentLanguage;
+        }
+        
+        applyTranslations();
+      }
+    });
+});
 // Form submission for adding/updating a movie
 addMovieForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -468,27 +570,42 @@ addMovieForm.addEventListener('submit', (e) => {
       rating: formData.get('rating') ? parseFloat(formData.get('rating')) : 0,
       imdbRating: formData.get('imdbRating') ? parseFloat(formData.get('imdbRating')) : null,
       notes: formData.get('notes') || '',
-      poster: formData.get('poster') || 'https://placehold.co/300x450/e2e8f0/1e293b?text=No+Poster',
-      id: Date.now()
+      poster: formData.get('poster') || 'https://placehold.co/300x450/e2e8f0/1e293b?text=No+Poster'
     };
 
-    movies.push(movie);
-    resetForm();
-    updateFilterOptions();
-    applyFiltersAndSearch();
-    showNotification(`${movie.type === 'movie' ? 'Movie' : 'TV Series'} added successfully!`);
+    // Sende die Filmdaten an den Server via API
+    fetch('/api/movies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(movie)
+    })
+    .then(response => response.json())
+    .then(savedMovie => {
+      // Füge den gespeicherten Film (mit vom Server zugewiesener ID) zum lokalen Array hinzu
+      movies.push(savedMovie);
+      resetForm();
+      updateFilterOptions();
+      applyFiltersAndSearch();
+      showNotification(`${movie.type === 'movie' ? 'Movie' : 'TV Series'} added successfully!`);
 
-    // Switch to collection view to see the new movie
-    showSection('collectionSection');
+      // Wechsle zur Collection-Ansicht, um den neuen Film zu sehen
+      showSection('collectionSection');
 
-    // Set currentIndex to show the new movie
-    setTimeout(() => {
-      const newIndex = filteredMovies.findIndex(m => m.id === movie.id);
-      if (newIndex !== -1) {
-        currentIndex = newIndex;
-        updateMovieDisplay();
-      }
-    }, 300);
+      // Setze currentIndex, um den neuen Film anzuzeigen
+      setTimeout(() => {
+        const newIndex = filteredMovies.findIndex(m => m.id === savedMovie.id);
+        if (newIndex !== -1) {
+          currentIndex = newIndex;
+          updateMovieDisplay();
+        }
+      }, 300);
+    })
+    .catch(error => {
+      console.error('Error adding movie:', error);
+      showNotification('Error adding movie. Please try again.', 'error');
+    });
   }
 });
 
@@ -645,7 +762,7 @@ function setActiveView(viewType) {
   applyFiltersAndSearch();
 }
 
-function applyFiltersAndSearch() {
+function applyFiltersAndSearch(resetIndex = true) {
   const searchTerm = searchInput.value.toLowerCase();
   const genreValue = genreFilter.value.toLowerCase();
   const yearValue = yearFilter.value;
@@ -653,6 +770,7 @@ function applyFiltersAndSearch() {
   const imdbRatingValue = imdbRatingFilter.value;
 
   filteredMovies = movies.filter(movie => {
+    // Filterlogik bleibt gleich
     if (activeViewType !== 'all' && movie.type !== activeViewType) {
       return false;
     }
@@ -684,7 +802,10 @@ function applyFiltersAndSearch() {
     return true;
   });
 
-  currentIndex = 0;
+  // Nur zurücksetzen, wenn resetIndex true ist
+  if (resetIndex) {
+    currentIndex = 0;
+  }
   updateMovieDisplay();
 }
 
@@ -808,7 +929,9 @@ function renderMovie(movie) {
   movieCard.className = 'movie-card w-full max-w-2xl bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg';
 
   const posterUrl = movie.poster || 'https://placehold.co/300x450/e2e8f0/1e293b?text=No+Poster';
-  const typeLabel = movie.type === 'series' ? 'TV Series' : 'Movie';
+  const typeLabel = movie.type === 'series' ? 
+    getTranslation('common.seriesType') || 'TV Series' : 
+    getTranslation('common.movieType') || 'Movie';
   const typeBadgeClass = movie.type === 'series' ? 'series-badge' : 'movie-badge';
 
   // Generate streaming buttons if available
@@ -836,25 +959,25 @@ function renderMovie(movie) {
           ${movie.rating > 0 ? `
             <div class="rating-badge user-rating">
               ${generateStarRating(movie.rating)}
-              <span class="ml-1 text-xs">Your Rating</span>
+              <span class="ml-1 text-xs">${getTranslation('movie.yourRating') || 'Your Rating'}</span>
             </div>` : ''
           }
           ${movie.imdbRating ? `
             <div class="rating-badge imdb-rating">
               <i class="fab fa-imdb text-yellow-600 mr-1"></i>
               <span>${movie.imdbRating}</span>
-              <span class="ml-1 text-xs">IMDB</span>
+              <span class="ml-1 text-xs">${getTranslation('movie.imdb') || 'IMDB'}</span>
             </div>` : ''
           }
         </div>
         ${movie.director ? `
         <div class="mt-4">
-          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">Director</h4>
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">${getTranslation('movie.director') || 'Director'}</h4>
           <p class="text-gray-600 dark:text-gray-400">${movie.director}</p>
         </div>` : ''}
         ${movie.notes ? `
         <div class="mt-4">
-          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">Notes</h4>
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">${getTranslation('movie.notes') || 'Notes'}</h4>
           <p class="text-gray-600 dark:text-gray-400">${movie.notes}</p>
         </div>` : ''}
       
@@ -863,13 +986,13 @@ function renderMovie(movie) {
       
         <div class="mt-6 flex space-x-2">
           <button class="rate-btn px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md hover:bg-yellow-200 dark:hover:bg-yellow-800 transition-colors" data-id="${movie.id}">
-            <i class="fas fa-star mr-1"></i> Rate
+            <i class="fas fa-star mr-1"></i> ${getTranslation('common.rate') || 'Rate'}
           </button>
           <button class="edit-btn px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-md hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors" data-id="${movie.id}">
-            <i class="fas fa-edit mr-1"></i> Edit
+            <i class="fas fa-edit mr-1"></i> ${getTranslation('common.edit') || 'Edit'}
           </button>
           <button class="delete-btn px-3 py-1 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md hover:bg-red-200 dark:hover:bg-red-800 transition-colors" data-id="${movie.id}">
-            <i class="fas fa-trash-alt mr-1"></i> Delete
+            <i class="fas fa-trash-alt mr-1"></i> ${getTranslation('common.delete') || 'Delete'}
           </button>
         </div>
       </div>
@@ -890,7 +1013,6 @@ function renderMovie(movie) {
     movieCard.style.transform = 'translateY(0)';
   }, 10);
 }
-
 function generateStarRating(rating) {
   let html = '<div class="rating-display">';
   const fullStars = Math.floor(rating);
@@ -936,7 +1058,15 @@ nextBtn.addEventListener('click', () => {
     updateMovieDisplay();
   }, 300);
 });
-
+// Sprach-Dropdown-Listener
+document.addEventListener('DOMContentLoaded', function() {
+  const languageSelect = document.getElementById('languageSelect');
+  if (languageSelect) {
+    languageSelect.addEventListener('change', function(e) {
+      changeLanguage(e.target.value);
+    });
+  }
+});
 // Touch swipe functionality
 function setupSwipe(element) {
   let startX;
@@ -986,7 +1116,9 @@ function rateMovie(id) {
 
   modal.innerHTML = `
     <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-sm transform scale-95 transition-all duration-300">
-      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Rate "${movie.title}"</h3>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+        ${formatTranslation('movie.rateTitle', {title: movie.title}) || `Rate "${movie.title}"`}
+      </h3>
       <div class="mb-4 text-center">
         <fieldset class="rating inline-block" id="modalRating">
           <input type="radio" id="modal-star5" name="modalRating" value="5">
@@ -1019,20 +1151,20 @@ function rateMovie(id) {
           <input type="radio" id="modal-star0.5" name="modalRating" value="0.5">
           <label class="half" for="modal-star0.5" title="Sucks big time - 0.5 stars"></label>
         </fieldset>
-        <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">Click to rate</div>
+        <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">${getTranslation('movie.clickToRate') || 'Click to rate'}</div>
         
         <div class="mt-4">
           <button id="removeRatingBtn" class="px-3 py-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md hover:bg-red-200 dark:hover:bg-red-800 transition-colors ${movie.rating > 0 ? '' : 'hidden'}">
-            <i class="fas fa-times mr-1"></i> Remove Rating
+            <i class="fas fa-times mr-1"></i> ${getTranslation('movie.removeRating') || 'Remove Rating'}
           </button>
         </div>
       </div>
       <div class="flex justify-end space-x-2">
         <button id="modalCancelBtn" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-          Cancel
+          ${getTranslation('common.cancel') || 'Cancel'}
         </button>
         <button id="modalSaveBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
-          Save Rating
+          ${getTranslation('movie.saveRating') || 'Save Rating'}
         </button>
       </div>
     </div>
@@ -1076,13 +1208,13 @@ function rateMovie(id) {
     })
     .then(() => {
       applyFiltersAndSearch();
-      showNotification('Rating removed successfully!');
+      showNotification(getTranslation('notifications.ratingRemoved') || 'Rating removed successfully!');
       closeModal(modal);
     })
     .catch(error => {
       console.error('Error removing rating:', error);
       movie.rating = oldRating;
-      showNotification('Error removing rating. Please try again.', 'error');
+      showNotification(formatTranslation('notifications.error', {message: error.message}) || 'Error removing rating. Please try again.', 'error');
     });
   });
 
@@ -1091,7 +1223,12 @@ function rateMovie(id) {
     if (selectedRating) {
       const oldRating = movie.rating;
       movie.rating = parseFloat(selectedRating.value);
-
+      
+      // Aktuelle und nächste Indizes ermitteln
+      const displayMovies = filteredMovies.length > 0 ? filteredMovies : movies;
+      const currentMovieIndex = currentIndex;
+      const nextIndex = (currentIndex + 1) % displayMovies.length;
+  
       fetch(`/api/movies/${movie.id}`, {
         method: 'PUT',
         headers: {
@@ -1106,16 +1243,21 @@ function rateMovie(id) {
         return response.json();
       })
       .then(() => {
-        applyFiltersAndSearch();
-        showNotification('Rating saved successfully!');
+        // Filter anwenden, ohne den Index zurückzusetzen
+        applyFiltersAndSearch(false);
+        
+        // Zum nächsten Film wechseln
+        currentIndex = nextIndex;
+        updateMovieDisplay();
+        showNotification(getTranslation('notifications.ratingSaved') || 'Rating saved successfully!');
       })
       .catch(error => {
         console.error('Error updating rating:', error);
         movie.rating = oldRating;
-        showNotification('Error saving rating. Please try again.', 'error');
+        showNotification(formatTranslation('notifications.error', {message: error.message}) || 'Error saving rating. Please try again.', 'error');
       });
     } else {
-      showNotification('Please select a rating', 'error');
+      showNotification(getTranslation('notifications.selectRating') || 'Please select a rating', 'error');
     }
     closeModal(modal);
   });
@@ -1131,7 +1273,53 @@ function rateMovie(id) {
     }, 300);
   }
 }
+// Funktion zum Abrufen und Aktualisieren der API-Nutzung
+function updateApiUsage() {
+  fetch('/api/api_usage')
+    .then(response => response.json())
+    .then(data => {
+      const usageCount = data.usage_count;
+      const percentage = data.percentage;
+      
+      // Alle Fortschrittsbalken auf der Seite aktualisieren
+      document.querySelectorAll('#apiUsageCount').forEach(el => {
+        el.textContent = usageCount;
+      });
+      
+      document.querySelectorAll('#apiUsageBar').forEach(el => {
+        el.style.width = `${percentage}%`;
+        
+        // Farbe basierend auf der Nutzung ändern
+        if (percentage > 90) {
+          el.classList.remove('bg-indigo-600', 'bg-yellow-500');
+          el.classList.add('bg-red-600');
+        } else if (percentage > 70) {
+          el.classList.remove('bg-indigo-600', 'bg-red-600');
+          el.classList.add('bg-yellow-500');
+        } else {
+          el.classList.remove('bg-yellow-500', 'bg-red-600');
+          el.classList.add('bg-indigo-600');
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching API usage:', error);
+    });
+}
 
+// Diese Funktion aufrufen, wenn die Einstellungs- oder KI-Vorschlagsseiten angezeigt werden
+document.getElementById('menuSettings').addEventListener('click', () => {
+  updateApiUsage();
+});
+
+document.getElementById('menuAiSuggestions').addEventListener('click', () => {
+  updateApiUsage();
+});
+
+// Auch beim Laden der Seite aktualisieren
+document.addEventListener('DOMContentLoaded', () => {
+  updateApiUsage();
+});
 // Edit movie function - updated to fix scrolling issue
 function editMovie(id) {
   const movie = movies.find(m => m.id === id);
@@ -1402,14 +1590,40 @@ function showNotification(message, type = 'success') {
 
 // Function to update the Stats section
 function updateStats() {
+  const totalCount = movies.length;
   const movieCount = movies.filter(m => m.type === 'movie').length;
   const seriesCount = movies.filter(m => m.type === 'series').length;
+  const ratedCount = movies.filter(m => m.rating > 0).length;
   const notRatedCount = movies.filter(m => !m.rating || m.rating === 0).length;
+  
+  // Prüfe, ob die Elemente existieren, bevor wir textContent setzen
+  const movieCountEl = document.getElementById('movieCount');
+  const seriesCountEl = document.getElementById('seriesCount');
+  const notRatedCountEl = document.getElementById('notRatedCount');
+  const ratedCountEl = document.getElementById('ratedCount');
+  const totalTitlesEl = document.getElementById('totalTitles');
+  
+  // Anzahl aktualisieren (mit Prüfung, ob Elemente existieren)
+  if (movieCountEl) movieCountEl.textContent = movieCount;
+  if (seriesCountEl) seriesCountEl.textContent = seriesCount;
+  if (notRatedCountEl) notRatedCountEl.textContent = notRatedCount;
+  if (ratedCountEl) ratedCountEl.textContent = ratedCount;
+  if (totalTitlesEl) totalTitlesEl.textContent = totalCount;
+  
+  // Prozentangaben aktualisieren
+  if (totalCount > 0) {
+    const moviePercentageEl = document.getElementById('moviePercentage');
+    const seriesPercentageEl = document.getElementById('seriesPercentage');
+    const ratedPercentageEl = document.getElementById('ratedPercentage');
+    const notRatedPercentageEl = document.getElementById('notRatedPercentage');
+    
+    if (moviePercentageEl) moviePercentageEl.textContent = `(${Math.round(movieCount / totalCount * 100)}%)`;
+    if (seriesPercentageEl) seriesPercentageEl.textContent = `(${Math.round(seriesCount / totalCount * 100)}%)`;
+    if (ratedPercentageEl) ratedPercentageEl.textContent = `(${Math.round(ratedCount / totalCount * 100)}%)`;
+    if (notRatedPercentageEl) notRatedPercentageEl.textContent = `(${Math.round(notRatedCount / totalCount * 100)}%)`;
+  }
 
-  document.getElementById('movieCount').textContent = movieCount;
-  document.getElementById('seriesCount').textContent = seriesCount;
-  document.getElementById('notRatedCount').textContent = notRatedCount;
-
+  // Genre-Analyse
   const genreDensity = {};
   movies.forEach(movie => {
     if (movie.genre) {
@@ -1426,51 +1640,292 @@ function updateStats() {
   const data = Object.values(genreDensity);
 
   const textColor = darkMode ? '#E2E8F0' : '#4A5568';
-
-  const ctx = document.getElementById('genreChart').getContext('2d');
+  const chartCtx = document.getElementById('genreChart');
+  
+  if (!chartCtx) return; // Sicherheitscheck
+  
+  const ctx = chartCtx.getContext('2d');
+  
+  // Chart-Konfiguration basierend auf dem gewählten Typ (pie oder bar)
   if (genreChart) {
-    genreChart.data.labels = labels;
-    genreChart.data.datasets[0].data = data;
-    genreChart.options.plugins.legend.labels.color = textColor;
-    genreChart.update();
-  } else {
-    genreChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Genre Distribution',
-          data: data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)',
-            'rgba(255, 159, 64, 0.6)'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            labels: {
-              color: textColor
-            }
+    genreChart.destroy(); // Vorherigen Chart zerstören
+  }
+  
+  // Chart-Konfiguration basierend auf dem Typ
+  const chartConfig = {
+    type: currentChartType,
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Number of Titles',
+        data: data,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(201, 203, 207, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)'
+        ],
+        borderColor: darkMode ? '#1A202C' : '#FFFFFF',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: currentChartType === 'pie',
+          position: 'right',
+          labels: {
+            color: textColor
           }
         },
-        animation: {
-          animateRotate: true,
-          animateScale: true,
-          duration: 1000,
-          easing: 'easeOutQuart'
+        title: {
+          display: false,
+          text: 'Genre Distribution',
+          color: textColor
+        }
+      },
+      animation: {
+        animateRotate: true,
+        animateScale: true,
+        duration: 1000,
+        easing: 'easeOutQuart'
+      },
+      scales: {
+        y: {
+          display: currentChartType === 'bar',
+          beginAtZero: true,
+          ticks: {
+            color: textColor
+          },
+          grid: {
+            color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+          }
+        },
+        x: {
+          display: currentChartType === 'bar',
+          ticks: {
+            color: textColor
+          },
+          grid: {
+            display: false
+          }
         }
       }
+    }
+  };
+  
+  genreChart = new Chart(ctx, chartConfig);
+  
+  // Lieblingstitel in Stats anzeigen
+  loadStatsFavorites();
+}
+function loadStatsFavorites() {
+  const statsFavoritesList = document.getElementById('statsFavoritesList');
+  
+  // Get movies with ratings and sort by rating (high to low)
+  const ratedMovies = movies.filter(m => m.rating > 0)
+    .sort((a, b) => b.rating - a.rating);
+  
+  // Take top 10
+  const favoritesList = ratedMovies.slice(0, 10).map(m => ({
+    id: m.id,
+    title: m.title,
+    rating: m.rating,
+    type: m.type || 'movie'
+  }));
+  
+  if (favoritesList.length > 0) {
+    let html = '<ul class="space-y-2">';
+    favoritesList.forEach((item, index) => {
+      const typeIcon = item.type === 'movie' ? 'film' : 'tv';
+      html += `
+        <li class="flex justify-between items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
+          <div class="flex items-center">
+            <span class="text-gray-500 dark:text-gray-400 mr-2">${index + 1}.</span>
+            <i class="fas fa-${typeIcon} text-indigo-500 dark:text-indigo-400 mr-2"></i>
+            <span class="text-gray-700 dark:text-gray-300">${item.title}</span>
+          </div>
+          <div class="flex items-center">
+            <span class="text-yellow-500"><i class="fas fa-star mr-1"></i>${item.rating}/5</span>
+          </div>
+        </li>
+      `;
     });
+    html += '</ul>';
+    
+    statsFavoritesList.innerHTML = html;
+  } else {
+    statsFavoritesList.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center">Rate your titles to see your favorites here.</p>';
   }
 }
+function generateMoviePersona() {
+  const generateBtn = document.getElementById('generateMoviePersonaBtn');
+  const personaPlaceholder = document.getElementById('moviePersonaPlaceholder');
+  const personaContent = document.getElementById('moviePersonaContent');
+  
+  // Button-Status ändern
+  generateBtn.disabled = true;
+  generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+  // Favoriten und Genres sammeln
+  const favoritesList = movies.filter(m => m.rating > 0)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, 10);
+  
+  // Genre-Häufigkeit berechnen
+  const genreCounts = {};
+  movies.forEach(movie => {
+    if (movie.genre) {
+      movie.genre.split(',').forEach(g => {
+        const genre = g.trim();
+        if (genre) {
+          genreCounts[genre] = (genreCounts[genre] || 0) + 1;
+        }
+      });
+    }
+  });
+  
+  // Sortierte Genre-Liste erstellen
+  const sortedGenres = Object.entries(genreCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(entry => ({genre: entry[0], count: entry[1]}));
+  
+  // Prompt erstellen
+  let prompt = "Based on my movie and TV series preferences, create a 'movie persona' that describes my taste in 1-2 words, followed by a 6-sentence description of my viewing profile. The User selected the Language '"+currentLanguage+"', so answer in that Language.";
+  
+  // Favoriten hinzufügen
+  if (favoritesList.length > 0) {
+    prompt += "My favorite titles are: ";
+    prompt += favoritesList.map(m => `${m.title} (${m.rating}/5)`).join(", ");
+    prompt += ". ";
+  }
+  
+  // Genres hinzufügen
+  if (sortedGenres.length > 0) {
+    prompt += "My most watched genres are: ";
+    prompt += sortedGenres.slice(0, 5).map(g => `${g.genre} (${g.count} titles)`).join(", ");
+    prompt += ". ";
+  }
+  
+  // Ausgabeformat spezifizieren
+  prompt += "Please respond ONLY with a JSON array in this exact format: [{\"persona\":\"1-2 word description\", \"description\":\"6 sentences about my taste profile\"}]. Do not include any other text.";
+  
+  // AI-Anfrage stellen
+  fetch('/api/ask_ai', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: prompt })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Button-Status zurücksetzen
+    generateBtn.disabled = false;
+    generateBtn.innerHTML = 'Generate';
+    
+    if (data.success && data.answer) {
+      try {
+        // Versuche, die Antwort als JSON zu parsen
+        const result = extractJsonFromString(data.answer);
+        if (result && result.length > 0 && result[0].persona && result[0].description) {
+          // Persona anzeigen
+          document.getElementById('personaTitle').textContent = result[0].persona;
+          document.getElementById('personaDescription').textContent = result[0].description;
+          
+          // Layout anpassen
+          personaPlaceholder.classList.add('hidden');
+          personaContent.classList.remove('hidden');
+          
+          // Ergebnis im localStorage speichern
+          localStorage.setItem('moviePersona', JSON.stringify(result[0]));
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (e) {
+        console.error('Error parsing AI response:', e);
+        showNotification('Could not generate movie persona. Please try again.', 'error');
+      }
+    } else {
+      showNotification('Could not generate movie persona. Please try again.', 'error');
+    }
+  })
+  .catch(error => {
+    console.error('Error generating movie persona:', error);
+    // Button-Status zurücksetzen
+    generateBtn.disabled = false;
+    generateBtn.innerHTML = 'Generate';
+    
+    showNotification('Error connecting to AI service. Please try again.', 'error');
+  });
+}
+function extractJsonFromString(str) {
+  try {
+    // Versuche direkt zu parsen
+    return JSON.parse(str);
+  } catch (e) {
+    // Versuche, JSON-Array aus dem String zu extrahieren
+    const match = str.match(/\[(\s*{[\s\S]*?})+\s*\]/);
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch (e2) {
+        console.error('Error parsing extracted JSON:', e2);
+      }
+    }
+    
+    // Versuche, JSON-Objekt aus dem String zu extrahieren
+    const objMatch = str.match(/{[\s\S]*?}/);
+    if (objMatch) {
+      try {
+        const obj = JSON.parse(objMatch[0]);
+        return [obj]; // Als Array zurückgeben
+      } catch (e3) {
+        console.error('Error parsing extracted object:', e3);
+      }
+    }
+  }
+  return null;
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const pieChartBtn = document.getElementById('pieChartBtn');
+  const barChartBtn = document.getElementById('barChartBtn');
+  const generatePersonaBtn = document.getElementById('generateMoviePersonaBtn');
+  
+  if (pieChartBtn) {
+    pieChartBtn.addEventListener('click', () => switchChartType('pie'));
+  }
+  
+  if (barChartBtn) {
+    barChartBtn.addEventListener('click', () => switchChartType('bar'));
+  }
+  
+  if (generatePersonaBtn) {
+    generatePersonaBtn.addEventListener('click', generateMoviePersona);
+  }
+  
+  // Gespeicherte Movie Persona laden, falls vorhanden
+  const savedPersona = localStorage.getItem('moviePersona');
+  if (savedPersona) {
+    try {
+      const personaData = JSON.parse(savedPersona);
+      document.getElementById('personaTitle').textContent = personaData.persona;
+      document.getElementById('personaDescription').textContent = personaData.description;
+      document.getElementById('moviePersonaPlaceholder').classList.add('hidden');
+      document.getElementById('moviePersonaContent').classList.remove('hidden');
+    } catch (e) {
+      console.error('Error loading saved movie persona:', e);
+    }
+  }
+});
 // AI Suggestions related variables and state
 let genrePreferences = {};
 let favoritesList = [];
@@ -1952,6 +2407,376 @@ document.getElementById('aiSuggestionsForm').addEventListener('submit', (e) => {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnText;
   });
+});
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("Created by Junko. For Updates check my Github Profile (https://github.com/Junko666/moive_db/tree/main) \n If you have Troubles, please check the README (https://github.com/Junko666/moive_db/blob/main/README.md)");
+  // Funktion zum Erstellen eines "Watch Trailer" Buttons
+  function createWatchTrailerButton(title) {
+    const button = document.createElement('button');
+    button.className = 'watch-trailer-btn px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors ml-2';
+    button.innerHTML = '<i class="fab fa-youtube mr-1"></i> Watch Trailer';
+    
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // YouTube-Suche nach Filmtitel + "Trailer" erstellen
+      const searchQuery = encodeURIComponent(title + ' Trailer');
+      const youtubeURL = `https://www.youtube.com/results?search_query=${searchQuery}`;
+      // In neuem Tab öffnen
+      window.open(youtubeURL, '_blank');
+    });
+    
+    return button;
+  }
+  
+  // Funktion zum Hinzufügen der Trailer-Buttons zu allen Film-Karten
+  function addTrailerButtonsToMovieCards() {
+    // Selektiere alle Film-Karten im Container
+    // Die Selektoren müssen ggf. an Ihre tatsächliche HTML-Struktur angepasst werden
+    const movieCards = document.querySelectorAll('#movieContainer .movie-card');
+    
+    movieCards.forEach(card => {
+      // Überspringe, falls der Button bereits vorhanden ist
+      if (card.querySelector('.watch-trailer-btn')) return;
+      
+      // Finde das Titelelement
+      const titleElement = card.querySelector('.movie-title, .title, h3, h4');
+      if (!titleElement) return;
+      
+      const movieTitle = titleElement.textContent.trim();
+      
+      // Finde den Button-Container
+      let actionContainer = card.querySelector('.movie-actions, .card-actions, .buttons');
+      if (!actionContainer) {
+        // Wenn kein Button-Container gefunden wird, erstelle einen
+        actionContainer = document.createElement('div');
+        actionContainer.className = 'movie-actions flex mt-2';
+        card.appendChild(actionContainer);
+      }
+      
+      // Erstelle und füge den Trailer-Button hinzu
+      const trailerButton = createWatchTrailerButton(movieTitle);
+      actionContainer.appendChild(trailerButton);
+    });
+  }
+  
+  // Initial ausführen
+  addTrailerButtonsToMovieCards();
+  
+  // Beobachter einrichten, um dynamisch geladene Inhalte zu erfassen
+  const movieContainer = document.getElementById('movieContainer');
+  if (movieContainer) {
+    const observer = new MutationObserver(function() {
+      addTrailerButtonsToMovieCards();
+    });
+    
+    // Container auf Änderungen überwachen
+    observer.observe(movieContainer, { childList: true, subtree: true });
+  }
+  
+  // Hier könnte zusätzlicher Code zur Integration mit Ihrer vorhandenen 
+  // createMovieCard-Funktion stehen, falls Sie eine solche haben
+});
+// Form submission for adding/updating a movie
+let currentChartType = 'pie'; // Default-Typ
+
+// Funktion zum Umschalten des Chart-Typs
+function switchChartType(type) {
+  if (type === currentChartType) return;
+  
+  currentChartType = type;
+  
+  // Aktive Button-Klassen aktualisieren
+  if (type === 'pie') {
+    document.getElementById('pieChartBtn').className = 'px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md';
+    document.getElementById('barChartBtn').className = 'px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md';
+  } else {
+    document.getElementById('pieChartBtn').className = 'px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-l-md';
+    document.getElementById('barChartBtn').className = 'px-2 py-1 text-xs bg-indigo-600 text-white rounded-r-md';
+  }
+  
+  // Chart neu erstellen
+  updateStats();
+}
+const apiTabBtn = document.getElementById('apiTabBtn');
+const apiForm = document.getElementById('apiForm');
+const apiSearchForm = document.getElementById('apiSearchForm');
+const apiSearchResults = document.getElementById('apiSearchResults');
+const apiSearchLoading = document.getElementById('apiSearchLoading');
+const apiSearchError = document.getElementById('apiSearchError');
+const apiSearchResult = document.getElementById('apiSearchResult');
+const apiErrorMessage = document.getElementById('apiErrorMessage');
+const addResultBtn = document.getElementById('addResultBtn');
+const discardResultBtn = document.getElementById('discardResultBtn');
+
+// Aktuelle API-Suchergebnisse
+let currentApiResult = null;
+
+// API Tab Button Event Listener
+apiTabBtn.addEventListener('click', () => {
+  apiForm.classList.remove('hidden');
+  csvForm.classList.add('hidden');
+  manualForm.classList.add('hidden');
+  
+  apiTabBtn.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  apiTabBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
+  
+  csvTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  csvTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  
+  manualTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  manualTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  
+  // API-Nutzung aktualisieren
+  updateApiUsage();
+});
+
+// Tab-Umschaltung aktualisieren für CSV und Manual
+csvTabBtn.addEventListener('click', () => {
+  apiForm.classList.add('hidden');
+  manualForm.classList.add('hidden');
+  csvForm.classList.remove('hidden');
+  
+  csvTabBtn.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  csvTabBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
+  
+  apiTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  apiTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  
+  manualTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  manualTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+});
+
+manualTabBtn.addEventListener('click', () => {
+  apiForm.classList.add('hidden');
+  csvForm.classList.add('hidden');
+  manualForm.classList.remove('hidden');
+  
+  manualTabBtn.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  manualTabBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
+  
+  apiTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  apiTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+  
+  csvTabBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+  csvTabBtn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+});
+
+// API-Suche
+apiSearchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const searchTitle = document.getElementById('apiSearchTitle').value.trim();
+  if (!searchTitle) {
+    showNotification(getTranslation('addTitle.api.enterTitle') || 'Please enter a title to search for', 'error');
+    return;
+  }
+  
+  // API-Suche starten
+  searchMovieAPI(searchTitle);
+});
+
+// Funktion für API-Suche
+function searchMovieAPI(title) {
+  // Status-Anzeige aktualisieren
+  apiSearchResults.classList.remove('hidden');
+  apiSearchLoading.classList.remove('hidden');
+  apiSearchError.classList.add('hidden');
+  apiSearchResult.classList.add('hidden');
+  
+  // API-Button deaktivieren während der Suche
+  const searchBtn = document.getElementById('apiSearchBtn');
+  const originalBtnText = searchBtn.textContent;
+  searchBtn.disabled = true;
+  searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>' + (getTranslation('addTitle.api.searching') || 'Searching...');
+  
+  // API-Anfrage senden
+  fetch(`/api/movies/search?title=${encodeURIComponent(title)}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Button zurücksetzen
+    searchBtn.disabled = false;
+    searchBtn.textContent = originalBtnText;
+    
+    // Ladeanzeige ausblenden
+    apiSearchLoading.classList.add('hidden');
+    
+    if (data.error) {
+      // Fehler anzeigen
+      apiSearchError.classList.remove('hidden');
+      apiErrorMessage.textContent = data.error;
+      return;
+    }
+    
+    if (!data || (Array.isArray(data.results) && data.results.length === 0)) {
+      // Keine Ergebnisse gefunden
+      apiSearchError.classList.remove('hidden');
+      apiErrorMessage.textContent = getTranslation('addTitle.api.noResults') || 'No results found for your search.';
+      return;
+    }
+    
+    // Ergebnis anzeigen
+    displayAPIResult(data);
+  })
+  .catch(error => {
+    console.error('API search error:', error);
+    
+    // Button zurücksetzen
+    searchBtn.disabled = false;
+    searchBtn.textContent = originalBtnText;
+    
+    // Ladeanzeige ausblenden und Fehler anzeigen
+    apiSearchLoading.classList.add('hidden');
+    apiSearchError.classList.remove('hidden');
+    apiErrorMessage.textContent = getTranslation('addTitle.api.searchError') || 'An error occurred during the search. Please try again.';
+  });
+}
+
+// Funktion zum Anzeigen des API-Ergebnisses
+function displayAPIResult(data) {
+  // Daten aus der API-Antwort extrahieren
+  let result;
+  
+  if (data.results && data.results.length > 0) {
+    // Nehmen wir das erste Ergebnis
+    result = data.results[0];
+  } else if (typeof data === 'object' && data.title) {
+    // Falls die API direkt ein Objekt zurückgibt
+    result = data;
+  } else {
+    // Keine verwendbaren Daten gefunden
+    apiSearchError.classList.remove('hidden');
+    apiErrorMessage.textContent = getTranslation('addTitle.api.invalidData') || 'Invalid data returned from the API.';
+    return;
+  }
+  
+  // Ergebnis speichern für die "Add to Collection"-Funktion
+  currentApiResult = result;
+  
+  // UI-Elemente mit den Daten füllen
+  document.getElementById('resultTitle').textContent = result.title || '';
+  
+  // Typ-Badge formatieren
+  const resultTypeEl = document.getElementById('resultType');
+  if (result.type === 'series') {
+    resultTypeEl.textContent = getTranslation('common.seriesType') || 'TV Series';
+    resultTypeEl.className = 'mt-1 inline-block px-2 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200';
+  } else {
+    resultTypeEl.textContent = getTranslation('common.movieType') || 'Movie';
+    resultTypeEl.className = 'mt-1 inline-block px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200';
+  }
+  
+  // Jahr anzeigen
+  document.getElementById('resultYear').textContent = result.year || '';
+  
+  // Genre anzeigen
+  document.getElementById('resultGenre').textContent = result.genre || '';
+  
+  // IMDB-Bewertung anzeigen
+  const imdbEl = document.getElementById('resultImdbRating');
+  if (result.imdbRating) {
+    imdbEl.innerHTML = `<i class="fab fa-imdb text-yellow-600 mr-1"></i> ${result.imdbRating}`;
+  } else {
+    imdbEl.textContent = '';
+  }
+  
+  // Regisseur anzeigen
+  document.getElementById('resultDirector').textContent = result.director || getTranslation('addTitle.api.noDirector') || 'Not available';
+  
+  // Beschreibung anzeigen
+  document.getElementById('resultNotes').textContent = result.notes || getTranslation('addTitle.api.noDescription') || 'No description available';
+  
+  // Poster anzeigen
+  const posterEl = document.getElementById('resultPoster');
+  if (result.poster) {
+    posterEl.src = result.poster;
+  } else {
+    posterEl.src = 'https://placehold.co/300x450/e2e8f0/1e293b?text=No+Poster';
+  }
+  
+  // Streaming-Informationen anzeigen
+  const streamingEl = document.getElementById('resultStreaming');
+  if (result.streamingInfo && Object.keys(result.streamingInfo).length > 0) {
+    streamingEl.innerHTML = generateStreamingButtons(result.streamingInfo);
+  } else {
+    streamingEl.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-sm">${getTranslation('addTitle.api.noStreaming') || 'No streaming information available'}</p>`;
+  }
+  
+  // Ergebnis-Container anzeigen
+  apiSearchResult.classList.remove('hidden');
+}
+
+// Event-Listener für "Add to Collection"-Button
+addResultBtn.addEventListener('click', () => {
+  if (!currentApiResult) return;
+  
+  // Füge den Eintrag zur Sammlung hinzu
+  fetch('/api/movies', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(currentApiResult)
+  })
+  .then(response => response.json())
+  .then(savedMovie => {
+    // Füge den gespeicherten Film zum lokalen Array hinzu
+    movies.push(savedMovie);
+    updateFilterOptions();
+    applyFiltersAndSearch();
+    
+    // Benachrichtigung anzeigen
+    const typeLabel = currentApiResult.type === 'series' ? 
+      (getTranslation('common.seriesType') || 'TV Series') : 
+      (getTranslation('common.movieType') || 'Movie');
+    showNotification(getTranslation('notifications.titleAdded') || `${typeLabel} added successfully!`);
+    
+    // Ergebnisbereich zurücksetzen und Suchformular leeren
+    apiSearchResults.classList.add('hidden');
+    document.getElementById('apiSearchTitle').value = '';
+    currentApiResult = null;
+    
+    // Zur Collection-Ansicht wechseln
+    showSection('collectionSection');
+    
+    // Index setzen, um den neuen Film anzuzeigen
+    setTimeout(() => {
+      const newIndex = filteredMovies.findIndex(m => m.id === savedMovie.id);
+      if (newIndex !== -1) {
+        currentIndex = newIndex;
+        updateMovieDisplay();
+      }
+    }, 300);
+  })
+  .catch(error => {
+    console.error('Error adding movie from API:', error);
+    showNotification(getTranslation('notifications.error') || 'Error adding content. Please try again.', 'error');
+  });
+});
+function formatTranslation(key, replacements) {
+  let text = getTranslation(key);
+  if (text) {
+    for (const [placeholder, value] of Object.entries(replacements)) {
+      text = text.replace(`{${placeholder}}`, value);
+    }
+  }
+  return text;
+}
+// Event-Listener für "Discard"-Button
+discardResultBtn.addEventListener('click', () => {
+  // Ergebnisbereich zurücksetzen, aber Suchformular beibehalten
+  apiSearchResults.classList.add('hidden');
+  currentApiResult = null;
 });
 // Initialize on load
 fetchMovies();
