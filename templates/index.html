@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieBase - Your Personal Movie Database</title>
+    <title data-lang-key="header.pageTitle">MovieBase - Your Personal Movie Database</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -23,8 +23,8 @@
         <button id="menuBtn" class="absolute left-0 top-2 p-2 text-indigo-800 dark:text-indigo-300 hover:text-indigo-600 dark:hover:text-indigo-100 transition-colors">
           <i class="fas fa-bars text-xl"></i>
         </button>
-        <h1 class="text-4xl font-bold text-indigo-800 dark:text-indigo-300 mb-2">MovieBase</h1>
-        <p class="text-gray-600 dark:text-gray-400">Your personal movie and TV series collection with ratings</p>
+        <h1 class="text-4xl font-bold text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="header.title">MovieBase</h1>
+        <p class="text-gray-600 dark:text-gray-400" data-lang-key="header.subtitle">Your personal movie and TV series collection with ratings</p>
       </header>
   
       <!-- Sektionen: Collection, Add Title, Stats -->
