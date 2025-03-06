@@ -1,11 +1,13 @@
 // Movie database and state
 let movies = [];
 let currentIndex = 0;
+const OMNIBASE_VERSION = "b1.0";
 let filteredMovies = [];
 let activeViewType = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
 let genreChart; // Chart.js object for stats
 let editingMovieId = null; // ID of the movie being edited
+let currentMode = "";
 let mainColor = localStorage.getItem('mainColor') || '#667EEA'; // Default indigo color
 let userSettings = {}; // Store user settings
 let currentLanguage = localStorage.getItem('language') || 'en';
@@ -34,6 +36,10 @@ const menuContainer = document.getElementById('menuContainer');
 const menuOverlay = document.getElementById('menuOverlay');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
 const mainColorPicker = document.getElementById('mainColorPicker');
+const spotifyClientId = document.getElementById('spotifyClientId');
+const spotifyClientIdShow = document.getElementById('spotifyClientIdShow');
+const spotifyClientSecret = document.getElementById('spotifyClientSecret');
+const spotifyClientSecretShow = document.getElementById('spotifyClientSecretShow');
 
 // Settings elements
 const settingsForm = document.getElementById('settingsForm');
@@ -71,7 +77,19 @@ if (darkMode) {
 // Initialize main color
 mainColorPicker.value = mainColor;
 applyMainColor(mainColor);
-
+async function checkVersion() {
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/Junko666/OmniBase/refs/heads/main/current_version.txt');
+    if (!response.ok) {
+      throw new Error('Netzwerkfehler');
+    }
+    const versionText = await response.text();
+    return versionText.trim() === OMNIBASE_VERSION;
+  } catch (error) {
+    console.error('Fehler beim Überprüfen der Version:', error);
+    return false;
+  }
+}
 // Load settings from server
 function loadSettings() {
   fetch('/api/settings')
@@ -89,7 +107,17 @@ function loadSettings() {
         openaiApiSection.classList.remove('hidden');
         geminiApiSection.classList.add('hidden');
       }
-    
+      if (data.spotify_client_id) {
+        spotifyClientId.placeholder = "API Key is set (leave empty to keep)";
+      } else {
+        spotifyClientId.placeholder = "No API Key set";
+      }
+      
+      if (data.spotify_client_secret) {
+        spotifyClientSecret.placeholder = "API Key is set (leave empty to keep)";
+      } else {
+        spotifyClientSecret.placeholder = "No API Key set";
+      }
       // Show if API keys are set by updating placeholder text
       if (data.streaming_api_key) {
         streamingApiKey.placeholder = "API Key is set (leave empty to keep)";
@@ -107,6 +135,11 @@ function loadSettings() {
         geminiApiKey.placeholder = "API Key is set (leave empty to keep)";
       } else {
         geminiApiKey.placeholder = "No API Key set";
+      }
+      if (data.rawg_api_key) {
+        rawgApiKey.placeholder = "API Key is set (leave empty to keep)";
+      } else {
+        rawgApiKey.placeholder = "No API Key set";
       }
     })
     .catch(error => {
@@ -135,7 +168,16 @@ function saveSettings(e) {
   if (geminiApiKey.value) {
     settings.gemini_api_key = geminiApiKey.value;
   }
-
+  if (rawgApiKey.value) {
+    settings.rawg_api_key = rawgApiKey.value;
+  }
+  if (spotifyClientId.value) {
+    settings.spotify_client_id = spotifyClientId.value;
+  }
+  
+  if (spotifyClientSecret.value) {
+    settings.spotify_client_secret = spotifyClientSecret.value;
+  }
   fetch('/api/settings', {
     method: 'POST',
     headers: {
@@ -152,6 +194,7 @@ function saveSettings(e) {
       streamingApiKey.value = '';
       openaiApiKey.value = '';
       geminiApiKey.value = '';
+      rawgApiKey.value = '';
       
       // Reload settings
       loadSettings();
@@ -184,6 +227,8 @@ function setupPasswordToggle(inputId, buttonId) {
 setupPasswordToggle('streamingApiKey', 'streamingApiKeyShow');
 setupPasswordToggle('openaiApiKey', 'openaiApiKeyShow');
 setupPasswordToggle('geminiApiKey', 'geminiApiKeyShow');
+setupPasswordToggle('spotifyClientId', 'spotifyClientIdShow');
+setupPasswordToggle('spotifyClientSecret', 'spotifyClientSecretShow');
 
 // Toggle AI provider sections
 for (const radio of aiProviderRadios) {
@@ -347,24 +392,6 @@ document.getElementById('menuSettings').addEventListener('click', (e) => {
 });
 
 // Function to show a section and hide the others with animation
-function showSection(sectionId) {
-  // First add the hidden class to all sections
-  ['collectionSection', 'addTitleSection', 'statsSection', 'settingsSection'].forEach(id => {
-    if (id !== sectionId) {
-      document.getElementById(id).classList.add('hidden');
-    }
-  });
-
-  // Then show the selected section with a slight delay for animation
-  setTimeout(() => {
-    document.getElementById(sectionId).classList.remove('hidden');
-  }, 50);
-
-  if (sectionId === 'statsSection') {
-    updateStats();
-  }
-}
-
 // Tab switching for Add Title section
 manualTabBtn.addEventListener('click', () => {
   manualForm.classList.remove('hidden');
@@ -1939,24 +1966,6 @@ document.getElementById('menuAiSuggestions').addEventListener('click', (e) => {
   closeMenu();
 });
 
-// Function to show a section (updating to include aiSuggestionsSection)
-function showSection(sectionId) {
-  // First add the hidden class to all sections
-  ['collectionSection', 'addTitleSection', 'statsSection', 'settingsSection', 'aiSuggestionsSection'].forEach(id => {
-    if (id !== sectionId) {
-      document.getElementById(id).classList.add('hidden');
-    }
-  });
-
-  // Then show the selected section with a slight delay for animation
-  setTimeout(() => {
-    document.getElementById(sectionId).classList.remove('hidden');
-  }, 50);
-
-  if (sectionId === 'statsSection') {
-    updateStats();
-  }
-}
 let genreRankingMode = 'count'; // 'count' oder 'user'
 
 // Event-Listener für die Ranking-System-Buttons
@@ -1978,7 +1987,7 @@ function initGenreRankingButtons() {
 // Funktion zum Setzen des Ranking-Modus
 function setGenreRankingMode(mode) {
   genreRankingMode = mode;
-  
+
   // Button-Styling aktualisieren
   const genreCountBtn = document.getElementById('genreCountBtn');
   const userRankingBtn = document.getElementById('userRankingBtn');
@@ -2778,6 +2787,554 @@ discardResultBtn.addEventListener('click', () => {
   apiSearchResults.classList.add('hidden');
   currentApiResult = null;
 });
-// Initialize on load
+function justSectionId(section_id){
+  return section_id.replace("games","").replace("music","");
+}
+function SectionId_withMode(section_id){
+    if (currentMode != "Movies"){
+        
+        return currentMode.toLowerCase() + section_id.charAt(0).toUpperCase() + section_id.slice(1);;
+    }else{
+      return section_id.charAt(0).toLowerCase() + section_id.slice(1);;
+    }
+
+    
+}
+function showUpdateButton() {
+  const menuList = document.querySelector('#menuContainer ul.space-y-2');
+  
+  // Prüfen ob der Update-Button bereits existiert
+  if (document.getElementById('menuUpdate')) {
+    return;
+  }
+  
+  // Erstelle neuen Menüeintrag
+  const updateLi = document.createElement('li');
+  updateLi.innerHTML = `
+    <a href="#" id="menuUpdate" class="block p-2 rounded bg-green-100 dark:bg-green-900 hover:bg-green-200 dark:hover:bg-green-800 text-green-800 dark:text-green-200 animate-pulse">
+      <i class="fas fa-download mr-2"></i> <span>Install Update</span>
+    </a>
+  `;
+  
+  // Event-Listener für Klick auf Update-Button
+  updateLi.querySelector('#menuUpdate').addEventListener('click', (e) => {
+    e.preventDefault();
+    installUpdate();
+    closeMenu();
+  });
+  
+  // Button zum Menü hinzufügen
+  menuList.appendChild(updateLi);
+}
+
+async function installUpdate() {
+  if (confirm('Do you want to install the update? The application will restart.')) {
+    try {
+      const response = await fetch('/api/install_update', { method: 'POST' });
+      
+      if (response.ok) {
+        showNotification('Update started. The application will restart shortly.');
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
+      } else {
+        showNotification('Error starting update. Please try again.', 'error');
+      }
+    } catch (error) {
+      console.error('Error installing update:', error);
+      showNotification('Error installing update. Please try again.', 'error');
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  
+  (async () => {
+    if (await checkVersion()) {
+      console.log("Your OmniBase version Up-to-Date.");
+    } else {
+      console.log("Your OmniBase version is not Up-to-Date. Please Update.");
+      showNotification("Your OmniBase version is not Up-to-Date. Please Update.", 'error');
+      showUpdateButton(); // Update-Button anzeigen
+    }
+  })();
+  
+  const allSections = [
+    'collectionSection', 'addTitleSection', 'statsSection', 'settingsSection', 'aiSuggestionsSection',
+    'gamesCollectionSection', 'gamesAddTitleSection', 'gamesStatsSection', 'gamesAiSuggestionsSection',
+    'musicCollectionSection', 'musicAddTitleSection', 'musicStatsSection', 'musicAiSuggestionsSection'
+  ];
+  
+  setTimeout(() => {
+    allSections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+      }
+    });
+    let last_sectionId = localStorage.getItem('last_sectionId');
+    showSection(last_sectionId);
+  },100);
+});
+function showSection(sectionId) {
+  // Aktuellen Modus ermitteln (default: Movies)
+  const currentMode = localStorage.getItem('omnibaseMode') || 'Movies';
+
+  // Einstellungen sind modusunabhängig
+  if (sectionId !== 'settingsSection') {
+    localStorage.setItem('last_sectionId', justSectionId(sectionId));
+
+    if (currentMode === 'Games') {
+      if (sectionId === 'collectionSection') {
+        sectionId = 'gamesCollectionSection';
+      } else if (sectionId === 'addTitleSection') {
+        sectionId = 'gamesAddTitleSection';
+      } else if (sectionId === 'statsSection') {
+        sectionId = 'gamesStatsSection';
+      } else if (sectionId === 'aiSuggestionsSection') {
+        sectionId = 'gamesAiSuggestionsSection';
+      }
+    } else if (currentMode === 'Music') {
+      if (sectionId === 'collectionSection') {
+        sectionId = 'musicCollectionSection';
+      } else if (sectionId === 'addTitleSection') {
+        sectionId = 'musicAddTitleSection';
+      } else if (sectionId === 'statsSection') {
+        sectionId = 'musicStatsSection';
+      } else if (sectionId === 'aiSuggestionsSection') {
+        sectionId = 'musicAiSuggestionsSection';
+      }
+    } else {  // Movies-Modus
+      if (sectionId === 'gamesCollectionSection') {
+        sectionId = 'collectionSection';
+      } else if (sectionId === 'gamesAddTitleSection') {
+        sectionId = 'addTitleSection';
+      } else if (sectionId === 'gamesStatsSection') {
+        sectionId = 'statsSection';
+      } else if (sectionId === 'gamesAiSuggestionsSection') {
+        sectionId = 'aiSuggestionsSection';
+      } else if (sectionId === 'musicCollectionSection') {
+        sectionId = 'collectionSection';
+      } else if (sectionId === 'musicAddTitleSection') {
+        sectionId = 'addTitleSection';
+      } else if (sectionId === 'musicStatsSection') {
+        sectionId = 'statsSection';
+      } else if (sectionId === 'musicAiSuggestionsSection') {
+        sectionId = 'aiSuggestionsSection';
+      }
+    }
+  }
+
+  // Liste aller Sektionen (Movies, Games und Music)
+  const allSections = [
+    'collectionSection', 'addTitleSection', 'statsSection', 'settingsSection', 'aiSuggestionsSection',
+    'gamesCollectionSection', 'gamesAddTitleSection', 'gamesStatsSection', 'gamesAiSuggestionsSection',
+    'musicCollectionSection', 'musicAddTitleSection', 'musicStatsSection', 'musicAiSuggestionsSection'
+  ];
+  
+  // Alle Sektionen ausblenden
+  allSections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('hidden');
+    }
+  });
+  
+  // Gewünschte Sektion anzeigen
+  const targetEl = document.getElementById(sectionId);
+  if (targetEl) {
+    // Kleine Verzögerung für Animationen
+    setTimeout(() => {
+      targetEl.classList.remove('hidden');
+    }, 50);
+  }
+  
+  // Sonderaktionen: Falls für bestimmte Sektionen zusätzliche Funktionen notwendig sind
+  if (sectionId === 'statsSection' || sectionId === 'gamesStatsSection' || sectionId === 'musicStatsSection') {
+    if (sectionId === 'statsSection') {
+      updateStats();
+    } else if (sectionId === 'gamesStatsSection') {
+      if (typeof updateGameStats === 'function') updateGameStats();
+    } else if (sectionId === 'musicStatsSection') {
+      if (typeof updateMusicStats === 'function') updateMusicStats();
+    }
+  }
+  else if (sectionId === 'aiSuggestionsSection' || sectionId === 'gamesAiSuggestionsSection' || sectionId === 'musicAiSuggestionsSection') {
+    if (sectionId === 'aiSuggestionsSection') {
+      if (typeof loadGenreAnalysis === 'function') loadGenreAnalysis();
+      if (typeof loadFavorites === 'function') loadFavorites();
+    } else if (sectionId === 'gamesAiSuggestionsSection') {
+      if (typeof loadGameGenreAnalysis === 'function') loadGameGenreAnalysis();
+      if (typeof loadGameFavorites === 'function') loadGameFavorites();
+    } else if (sectionId === 'musicAiSuggestionsSection') {
+      if (typeof loadMusicGenreAnalysis === 'function') loadMusicGenreAnalysis();
+      if (typeof loadMusicFavorites === 'function') loadMusicFavorites();
+    }
+  }
+}
+// Funktion zum Aktualisieren der Menülinks für den Musik-Modus
+function updateMenuForMusicMode() {
+  if (document.getElementById('menuCollection')) {
+    document.getElementById('menuCollection').onclick = function(e) {
+      e.preventDefault();
+      showSection('musicCollectionSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAddTitle')) {
+    document.getElementById('menuAddTitle').onclick = function(e) {
+      e.preventDefault();
+      showSection('musicAddTitleSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuStats')) {
+    document.getElementById('menuStats').onclick = function(e) {
+      e.preventDefault();
+      showSection('musicStatsSection');
+      if (typeof updateMusicStats === 'function') updateMusicStats();
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAiSuggestions')) {
+    document.getElementById('menuAiSuggestions').onclick = function(e) {
+      e.preventDefault();
+      showSection('musicAiSuggestionsSection');
+      closeMenu();
+      return false;
+    };
+  }
+}
+// Funktionen zum Aktualisieren der Menülinks für verschiedene Modi
+function updateMenuForGamesMode() {
+  if (document.getElementById('menuCollection')) {
+    document.getElementById('menuCollection').onclick = function(e) {
+      e.preventDefault();
+      showSection('gamesCollectionSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAddTitle')) {
+    document.getElementById('menuAddTitle').onclick = function(e) {
+      e.preventDefault();
+      showSection('gamesAddTitleSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuStats')) {
+    document.getElementById('menuStats').onclick = function(e) {
+      e.preventDefault();
+      showSection('gamesStatsSection');
+      if (typeof updateGameStats === 'function') updateGameStats();
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAiSuggestions')) {
+    document.getElementById('menuAiSuggestions').onclick = function(e) {
+      e.preventDefault();
+      showSection('gamesAiSuggestionsSection');
+      closeMenu();
+      return false;
+    };
+  }
+}
+
+function updateMenuForMoviesMode() {
+  if (document.getElementById('menuCollection')) {
+    document.getElementById('menuCollection').onclick = function(e) {
+      e.preventDefault();
+      showSection('collectionSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAddTitle')) {
+    document.getElementById('menuAddTitle').onclick = function(e) {
+      e.preventDefault();
+      showSection('addTitleSection');
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuStats')) {
+    document.getElementById('menuStats').onclick = function(e) {
+      e.preventDefault();
+      showSection('statsSection');
+      updateStats();
+      closeMenu();
+      return false;
+    };
+  }
+  
+  if (document.getElementById('menuAiSuggestions')) {
+    document.getElementById('menuAiSuggestions').onclick = function(e) {
+      e.preventDefault();
+      showSection('aiSuggestionsSection');
+      closeMenu();
+      return false;
+    };
+  }
+}
+
+// Funktion zum Setzen des aktuellen Modus
+function setMode(mode) {
+  console.log('Setting mode to:', mode);
+  currentMode = mode;
+  // UI aktualisieren
+  const currentModeEl = document.getElementById('currentMode');
+  currentModeEl.textContent = `OmniBase - ${mode}`;
+
+  // Seitentitel aktualisieren
+  const pageTitle = document.getElementById("currentMode");//document.querySelector('title');
+  pageTitle.setAttribute('data-lang-key', `omnibase.${mode.toLowerCase()}`);
+  pageTitle.textContent = `OmniBase - ${mode}`;
+  applyTranslations();
+  // Im localStorage speichern
+  localStorage.setItem('omnibaseMode', mode);
+
+  // Untertitel je nach Modus aktualisieren
+  const subtitleEl = document.querySelector('[data-lang-key="header.subtitle"]');
+  if (subtitleEl) {
+    switch (mode) {
+      case 'Movies':
+        subtitleEl.textContent = 'Your personal movie and TV series collection with ratings';
+        break;
+      case 'Games':
+        subtitleEl.textContent = 'Your personal video games collection with ratings';
+        break;
+      case 'Books':
+        subtitleEl.textContent = 'Your personal books and literature collection with ratings';
+        break;
+      default:
+        subtitleEl.textContent = 'Your personal movie and TV series collection with ratings';
+        break;
+    }
+  }
+
+  // Animation für den Titelwechsel
+  if (currentModeEl) {
+    currentModeEl.animate([
+      { transform: 'translateY(-3px)', opacity: 0.7 },
+      { transform: 'translateY(0)', opacity: 1 }
+    ], {
+      duration: 300,
+      easing: 'ease-out'
+    });
+  }
+
+  // Alle Sektionen ausblenden
+  const allSections = [
+    // Movie-Sektionen
+    'collectionSection', 'addTitleSection', 'statsSection', 'settingsSection', 'aiSuggestionsSection',
+    // Game-Sektionen
+    'gamesCollectionSection', 'gamesAddTitleSection', 'gamesStatsSection', 'gamesAiSuggestionsSection',
+    'musicCollectionSection', 'musicAddTitleSection', 'musicStatsSection', 'musicAiSuggestionsSection'
+  ];
+
+  allSections.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.classList.add('hidden');
+    }
+  });
+
+  // Komponenten je nach Modus ein-/ausblenden
+  if (mode === 'Games') {
+    // Spiele-Sektionen einblenden
+    if (document.getElementById('gamesCollectionSection')) {
+      document.getElementById('gamesCollectionSection').classList.remove('hidden');
+      if (typeof fetchGames === 'function') fetchGames(); // Spieldaten laden, falls Funktion existiert
+    }
+
+    // Menülinks aktualisieren
+    updateMenuForGamesMode();
+  } else if (mode === 'Music') {
+    // Music-Sektionen einblenden
+    if (document.getElementById('musicCollectionSection')) {
+      document.getElementById('musicCollectionSection').classList.remove('hidden');
+      loadMusicTracks(); // Musikdaten laden
+    }
+
+    // Menülinks aktualisieren
+    updateMenuForMusicMode();
+  } else {
+    // Film-Sektionen einblenden
+    if (document.getElementById('collectionSection')) {
+      document.getElementById('collectionSection').classList.remove('hidden');
+      fetchMovies(); // Filmdaten laden
+    }
+
+    // Menülinks aktualisieren
+    updateMenuForMoviesMode();
+  }
+  let last_sectionId = localStorage.getItem('last_sectionId');
+  showSection(SectionId_withMode(last_sectionId));
+}
+
+// Initialisierung beim Laden der Seite
+document.addEventListener('DOMContentLoaded', function() {
+  const allSections = [
+    'collectionSection', 'addTitleSection', 'statsSection', 'settingsSection', 'aiSuggestionsSection',
+    'gamesCollectionSection', 'gamesAddTitleSection', 'gamesStatsSection', 'gamesAiSuggestionsSection',
+    'musicCollectionSection', 'musicAddTitleSection', 'musicStatsSection', 'musicAiSuggestionsSection'
+  ];
+  
+  setTimeout(() => {
+    allSections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+      }
+    });
+    let last_sectionId = localStorage.getItem('last_sectionId');
+    showSection(SectionId_withMode(last_sectionId));
+  },100);
+
+  const modeDropdown = document.querySelector('.mode-dropdown');
+  const modeOptions = document.querySelector('.mode-options');
+  const currentModeEl = document.getElementById('currentMode');
+  const chevronIcon = document.querySelector('.chevron-icon');
+  modeOptions.addEventListener('mouseenter', () => clearTimeout(closeTimeout));
+  modeOptions.addEventListener('mouseleave', closeDropdown);
+  currentModeEl.addEventListener('mouseenter', openDropdown);
+  function closeDropdownDelay() {
+    closeTimeout = setTimeout(() => {
+      closeDropdown();
+    }, 2500);
+  }
+  currentModeEl.addEventListener('mouseleave', closeDropdownDelay);
+  // Dropdown-Funktionen
+  function toggleDropdown() {
+    if (modeOptions.classList.contains('open')) {
+      closeDropdown();
+    } else {
+      openDropdown();
+    }
+  }
+  
+  function openDropdown() {
+    modeOptions.classList.add('open');
+    chevronIcon.classList.add('open');
+    modeOptions.style.pointerEvents = 'auto'; // Aktivieren
+    // Subtile Pulsanimation für das Dropdown
+    modeOptions.animate([
+      { transform: 'translateX(-50%) scaleY(0.98)' },
+      { transform: 'translateX(-50%) scaleY(1.02)' },
+      { transform: 'translateX(-50%) scaleY(1)' }
+    ], {
+      duration: 300,
+      easing: 'ease-out',
+      fill: 'forwards'
+    });
+  }
+  
+  function closeDropdown() {
+    modeOptions.classList.remove('open');
+    chevronIcon.classList.remove('open');
+    setTimeout(() => {
+      modeOptions.style.pointerEvents = 'none'; // Deaktivieren
+    },200);
+
+  }
+  
+  function createRippleEffect(element, event) {
+    const rect = element.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    
+    const ripple = document.createElement('span');
+    ripple.style.position = 'absolute';
+    ripple.style.width = '10px';
+    ripple.style.height = '10px';
+    ripple.style.borderRadius = '50%';
+    ripple.style.backgroundColor = 'rgba(99, 102, 241, 0.3)';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.style.transform = 'scale(0)';
+    ripple.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+    ripple.style.opacity = '1';
+    
+    element.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.style.transform = 'scale(20)';
+      ripple.style.opacity = '0';
+    }, 10);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 500);
+  }
+  
+  // Standardmodus setzen, falls noch keiner gespeichert ist
+  if (!localStorage.getItem('omnibaseMode')) {
+    localStorage.setItem('omnibaseMode', 'Movies');
+  }
+  
+  // Gespeicherten Modus laden und anwenden
+  const savedMode = localStorage.getItem('omnibaseMode');
+  setMode(savedMode);
+  
+  // Toggle dropdown wenn auf den Titel geklickt wird
+  modeDropdown.addEventListener('click', function(e) {
+    // Nicht umschalten, wenn auf eine Mode-Option geklickt wird
+    if (e.target.closest('.mode-option')) return;
+    
+    toggleDropdown();
+  });
+  /**
+  // Dropdown beim Hover öffnen
+/ modeDropdown.addEventListener('mouseenter', function(e) {
+    // Nur öffnen, wenn der Hover direkt auf dem Titel ist (nicht auf den Optionen)
+    if (e.target === modeDropdown) {
+        openDropdown();
+    }
+  });
+
+  // Dropdown schließen, wenn die Maus den Bereich verlässt
+  modeDropdown.addEventListener('mouseleave', function() {
+    closeDropdown();
+  });
+    */
+  // Modus-Option auswählen
+  document.querySelectorAll('.mode-option').forEach(option => {
+    option.addEventListener('click', function(e) {
+      e.stopPropagation(); // Event-Bubbling stoppen
+      
+      const selectedMode = this.dataset.mode;
+      setMode(selectedMode);
+      
+      // Ripple-Effekt beim Klick
+      createRippleEffect(this, e);
+      
+      // Dropdown mit Verzögerung für die Animation schließen
+      setTimeout(() => {
+        closeDropdown();
+      }, 150);
+    });
+  });
+  
+  // Dropdown schließen, wenn woanders hingeklickt wird
+  document.addEventListener('click', function(e) {
+    if (!modeDropdown.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+});
+
+// Initialize on load (diese bleiben unverändert)
 fetchMovies();
 loadSettings();
