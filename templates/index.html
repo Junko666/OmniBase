@@ -1,49 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang-key="header.pageTitle">OmniBase - Your Personal Title Database</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Chart.js für den Pie-Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-200 text-gray-800 dark:text-white">
+  <!-- Include Hamburger Menu -->
+  {% include 'components/menu.html' %}
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="header.pageTitle">MovieBase - Your Personal Movie Database</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Chart.js für den Pie-Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+  <!-- Hauptinhalt -->
+  <div class="container mx-auto px-4 py-8">
+    <!-- Seitenheader -->
+    <header class="mb-10 text-center relative">
+      <button id="menuBtn" class="absolute left-0 top-2 p-2 text-indigo-800 dark:text-indigo-300 hover:text-indigo-600 dark:hover:text-indigo-100 transition-colors z-40">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+      
+      <div class="mode-dropdown">
+        <h1 class="text-4xl font-bold text-indigo-800 dark:text-indigo-300 mb-2 inline-flex items-center">
+          <span id="currentMode">OmniBase</span>
+          <span class="chevron-icon"><i class="fas fa-chevron-right text-xl"></i></span>
+        </h1>
+        
+        <div class="mode-options">
+          <div class="mode-option" data-lang-key="omnibase.movies" data-mode="Movies">OmniBase - Movies</div>
+          <div class="mode-option" data-lang-key="omnibase.games" data-mode="Games">OmniBase - Games</div>
+          <div class="mode-option" data-lang-key="omnibase.music" data-mode="Music">OmniBase - Music</div>
+          <div class="mode-option" data-lang-key="omnibase.books" data-mode="Books">OmniBase - Books</div>
+        </div>
+      </div>
+      
+      <p class="text-gray-600 dark:text-gray-400" data-lang-key="header.subtitle">
+        Your personal movie, TV series and Games collection with ratings
+      </p>
+    </header>
 
-  <body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-200 text-gray-800 dark:text-white">
-    <!-- Include Hamburger Menu -->
-    {% include 'components/menu.html' %}
+    <!-- Sektionen: Collection, Add Title, Stats -->
+    <div id="sectionsContainer">
+      {% include 'components/movie_collection.html' %}
+      {% include 'components/music_collection.html' %}
+      {% include 'components/games_collection.html' %}
+      {% include 'components/movie_add_title.html' %}
+      {% include 'components/music_add_title.html' %}
+      {% include 'components/games_add_title.html' %}
+      {% include 'components/movie_ai_suggestions.html' %}
+      {% include 'components/games_ai_suggestions.html' %}
+      {% include 'components/music_ai_suggestions.html' %}
+      {% include 'components/movie_stats.html' %}
+      {% include 'components/music_stats.html' %}
+      {% include 'components/games_stats.html' %}
+      {% include 'components/settings.html' %}
+    </div>
+  </div>
+  <div id="tutorialModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-4xl relative">
+      <button id="tutorialModalClose" class="absolute top-2 right-2 text-gray-700 dark:text-gray-300 text-2xl">&times;</button>
+      <br>
+      <p class="text-white" id="tutorial_extra_info"></p>
+      <div id="tutorialModalContent">
+        <!-- Hier wird das Video per JS eingefügt -->
+      </div>
+      <div class="mt-4 text-right">
+        <button id="copyCodeBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">Copy Code</button>
+        <button id="openWebsiteBtn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none">Open Webseite</button>
 
-    <!-- Hauptinhalt -->
-    <div class="container mx-auto px-4 py-8">
-      <!-- Seitenheader -->
-      <header class="mb-10 text-center relative">
-        <button id="menuBtn" class="absolute left-0 top-2 p-2 text-indigo-800 dark:text-indigo-300 hover:text-indigo-600 dark:hover:text-indigo-100 transition-colors">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
-        <h1 class="text-4xl font-bold text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="header.title">MovieBase</h1>
-        <p class="text-gray-600 dark:text-gray-400" data-lang-key="header.subtitle">Your personal movie and TV series collection with ratings</p>
-      </header>
-  
-      <!-- Sektionen: Collection, Add Title, Stats -->
-      <div id="sectionsContainer">
-        <!-- Collection Section -->
-        {% include 'components/collection.html' %}
-        
-        <!-- Add Title Section -->
-        {% include 'components/add_title.html' %}
-        
-        {% include 'components/ai_suggestions.html' %}
-        <!-- Stats Section -->
-        {% include 'components/stats.html' %}
-        
-        <!-- Settings Section -->
-        {% include 'components/settings.html' %}
       </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-  </body>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/tutorial_main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/games_main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/music_main.js') }}"></script>
+</body>
 </html>

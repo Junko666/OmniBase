@@ -1,0 +1,123 @@
+<div id="aiSuggestionsSection" class="hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6" data-lang-key="aiSuggestions.title">AI Suggestion</h2>
+    <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md mb-6">
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <i class="fas fa-info-circle text-indigo-600 dark:text-indigo-400"></i>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-indigo-800 dark:text-indigo-300" data-lang-key="aiSuggestions.apiUsage">API Usage</h3>
+          <div class="mt-2 text-sm text-indigo-700 dark:text-indigo-400">
+            <p data-lang-key="aiSuggestions.apiUsageDesc">Each suggestion requires an API call. Your monthly usage:</p>
+            
+            <div class="flex justify-between items-center mt-2 mb-1">
+              <span class="text-xs font-medium text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.monthlyLimit">Monthly Limit:</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">
+                <span id="apiUsageCount">0</span>/1000 <span data-lang-key="aiSuggestions.calls">calls</span>
+              </span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+              <div id="apiUsageBar" class="bg-indigo-600 h-2 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form id="aiSuggestionsForm" class="space-y-6">
+      <!-- 1. Selection Mode -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.considerTitles">Consider which titles:</label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="selectionMode" value="all" checked
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.allTitles">All Titles</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="selectionMode" value="rated"
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.onlyRated">Only Rated by Me</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- 2. Genre Analysis Results -->
+      <div id="genreAnalysisContainer" class="space-y-2">
+          <div class="flex justify-between items-center">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.genrePrefs">Your Genre Preferences:</label>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400" data-lang-key="aiSuggestions.rankingSystem">Ranking system:</span>
+              <div class="inline-flex rounded-md shadow-sm">
+                <button type="button" id="genreCountBtn" class="px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md" data-lang-key="aiSuggestions.genreCount">
+                  Based on Genre-count
+                </button>
+                <button type="button" id="userRankingBtn" class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md" data-lang-key="aiSuggestions.userRanking">
+                  Based on User-Rankings
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="genrePreferencesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-40 overflow-y-auto">
+            <p class="text-gray-500 dark:text-gray-400 text-sm" data-lang-key="aiSuggestions.loadingGenre">Loading genre analysis...</p>
+          </div>
+        </div>
+      
+      <!-- 3. Favorite Titles -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="aiSuggestions.topMovies">Your Top Movies/Series:</label>
+        <div id="favoriteTitlesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+          <p class="text-gray-500 dark:text-gray-400 text-sm" data-lang-key="aiSuggestions.loadingFavs">Loading your favorites...</p>
+        </div>
+      </div>
+      
+      <!-- 4. Suggestion Settings -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="contentType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="aiSuggestions.contentType">Content Type:</label>
+          <select id="contentType" name="contentType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <option value="both" data-lang-key="aiSuggestions.bothTypes">Both Movies & Series</option>
+            <option value="movie" data-lang-key="aiSuggestions.moviesOnly">Movies Only</option>
+            <option value="series" data-lang-key="aiSuggestions.seriesOnly">TV Series Only</option>
+          </select>
+        </div>
+        <div>
+          <label for="suggestionCount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="aiSuggestions.suggestionCount">Number of Suggestions:</label>
+          <select id="suggestionCount" name="suggestionCount" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <option value="3">3</option>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 5. Description -->
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="aiSuggestions.aboutWhat">What should it be about?</label>
+        <textarea id="description" name="description" rows="3" 
+                  data-lang-key-placeholder="aiSuggestions.aboutPlaceholder"
+                  placeholder="E.g., 'A thriller with plot twists' or 'Something lighthearted with comedy'"
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"></textarea>
+      </div>
+      
+      <!-- 6. Generate Button -->
+      <div>
+        <button type="submit" id="generateSuggestionsBtn" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex items-center justify-center">
+          <i class="fas fa-magic mr-2"></i> <span data-lang-key="aiSuggestions.generateSuggestions">Generate Suggestions</span>
+        </button>
+      </div>
+    </form>
+    
+    <!-- 7. Results Display -->
+    <div id="suggestionsResultsContainer" class="mt-8 hidden">
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4" data-lang-key="aiSuggestions.recommendations">Recommendations for You</h3>
+      <div id="loadingSuggestions" class="text-center py-8">
+        <i class="fas fa-spinner fa-spin text-3xl text-indigo-600 dark:text-indigo-400 mb-3"></i>
+        <p class="text-gray-600 dark:text-gray-400" data-lang-key="aiSuggestions.generating">Generating your personalized suggestions...</p>
+      </div>
+      <div id="suggestionsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Suggestions will be populated here -->
+      </div>
+    </div>
+  </div>
+</div>

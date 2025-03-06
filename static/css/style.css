@@ -38,7 +38,91 @@ fieldset, label {
   .rating > label:hover ~ input:checked ~ label {
     color: #FFED85;
   }
-  
+  .mode-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.mode-options {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 100%;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dark .mode-options {
+    background-color: #1e293b;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.mode-options.open {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 1;
+}
+
+.mode-option {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 2rem; /* Match title text-4xl */
+    font-weight: 700; /* Match title font-bold */
+    color: #f8fafc; /* Light color */
+    text-align: center;
+}
+
+.dark .mode-option {
+    color: #f1f5f9;
+}
+
+.mode-option:hover {
+    color: #4f46e5; /* indigo-600 */
+}
+
+.dark .mode-option:hover {
+    color: #818cf8; /* indigo-300 */
+}
+
+.mode-option::after {
+    content: '';
+    position: absolute;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease-out;
+    z-index: -1;
+}
+
+.mode-option:active::after {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+}
+
+.chevron-icon {
+    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.chevron-icon.open {
+    transform: rotate(90deg);
+}
   /* --- Andere CSS-Regeln aus dem Projekt --- */
   body {
     margin: 20px;
@@ -501,3 +585,10 @@ fieldset, label {
     background-color: #4B5563;
   }
   
+  .mode-options {
+    pointer-events: none;
+  }
+  
+  .mode-options.open {
+    pointer-events: auto;
+  }

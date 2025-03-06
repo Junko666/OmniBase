@@ -6,6 +6,25 @@
     <form id="settingsForm" class="space-y-6">
       <!-- Streaming API Settings -->
       <div class="settings-group">
+        <h3 class="text-gray-800 dark:text-gray-200">RAWG Games API</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.gamingDesc">Set your API key for RAWG games database</p>
+          
+        <div class="api-key-input">
+          <input type="password" id="rawgApiKey" placeholder="Enter API Key" 
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          <button type="button" id="rawgApiKeyShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+          
+        <div class="mt-2">
+          <a href="https://rawg.io/apidocs" 
+              target="_blank" rel="noopener noreferrer" 
+              class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+            <i class="fas fa-external-link-alt mr-1"></i><span data-lang-key="settings.getAPIKeyGames">Get RAWG API Key</span> 
+          </a>
+        </div>
+        <br>
         <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.streamingAPI">Streaming Availability API</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.streamingDesc">Set your API key for streaming-availability.p.rapidapi.com</p>
           
@@ -46,6 +65,41 @@
         <p class="text-xs text-gray-500 dark:text-gray-400" data-lang-key="settings.resetCounter">
           The counter is automatically reset at the beginning of each month.
         </p>
+        <br>
+        <h3 class="text-gray-800 dark:text-gray-200">Spotify API</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.spotifyDesc">Set your API credentials for Spotify music recommendations</p>
+        <!-- CLIENT ID -->
+        <div class="mb-3">
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Client ID</h4>
+          <div class="api-key-input">
+            <input type="password" id="spotifyClientId" placeholder="Enter Spotify Client ID" 
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <button type="button" id="spotifyClientIdShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+          
+        <!-- CLIENT SECRET -->
+        <div>
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Client Secret</h4>
+          <div class="api-key-input">
+            <input type="password" id="spotifyClientSecret" placeholder="Enter Spotify Client Secret" 
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <button type="button" id="spotifyClientSecretShow" class="px-2 py-1 text-gray-500 dark:text-gray-400 focus:outline-none">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+          
+        <div class="mt-2">
+          <a href="https://developer.spotify.com/dashboard/applications" 
+              target="_blank" rel="noopener noreferrer" 
+              class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+            <i class="fas fa-external-link-alt mr-1"></i> <span data-lang-key="settings.getSpotifyAPIKey">Get Spotify API Keys</span>
+          </a>
+        </div>
+        <br>
         <h3 class="text-gray-800 dark:text-gray-200" data-lang-key="settings.aiProvider">AI Provider</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-lang-key="settings.aiProviderDesc">Select which AI service to use for assistance</p>
           
@@ -61,7 +115,6 @@
             <span class="ml-2 text-gray-700 dark:text-gray-300">Gemini 2.0 Flash</span>
           </label>
         </div>
-          
         <!-- OpenAI API Key -->
         <div id="openaiApiSection">
           <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="settings.openAIKey">OpenAI API Key</h4>

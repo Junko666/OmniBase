@@ -1,8 +1,8 @@
 <!-- Hamburger Menu Overlay -->
-<div class="menu-overlay" id="menuOverlay"></div>
+<div class="menu-overlay fixed inset-0 z-40 bg-black opacity-50 hidden" id="menuOverlay"></div>
 
 <!-- Hamburger Menu -->
-<div class="menu-container shadow-xl" id="menuContainer">
+<div class="menu-container fixed top-0 left-0 z-50 bg-white dark:bg-gray-800 w-64 h-full transform -translate-x-full transition-transform duration-300" id="menuContainer">
   <div class="p-4 border-b dark:border-gray-700">
     <div class="flex justify-between items-center">
       <h2 class="text-xl font-bold text-indigo-800 dark:text-indigo-300" data-lang-key="header.title">MovieBase</h2>
@@ -33,7 +33,6 @@
           <i class="fas fa-cog mr-2"></i> <span data-lang-key="menu.settings">Settings</span>
         </a>
       </li>
-      <!-- In der bestehenden ul-Liste innerhalb des menuContainer hinzufügen -->
       <li>
         <a href="#" id="menuAiSuggestions" class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
           <i class="fas fa-magic mr-2"></i> <span data-lang-key="menu.aiSuggestion">AI Suggestion</span>
@@ -46,8 +45,10 @@
     <a href="https://github.com/Junko666" class="flex items-center">
       <img src="/static/pp_round_junko.png" alt="Logo" class="h-12 w-12 mr-3">
       <div class="flex flex-col">
-        <span class="text-gray-700 dark:text-gray-300">MovieBase</span>
-        <span class="text-gray-700 dark:text-gray-300">Created by <span class="text-indigo-600 dark:text-indigo-400">Junko</span></span>
+        <span id="omnibase_menu_text" class="text-gray-700 dark:text-gray-300">OmniBase</span>
+        <span class="text-gray-700 dark:text-gray-300">
+          Created by <span class="text-indigo-600 dark:text-indigo-400">Junko</span>
+        </span>
       </div>
     </a>
   </div>
