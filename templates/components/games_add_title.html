@@ -1,0 +1,228 @@
+<div id="gamesAddTitleSection" class="hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4" data-lang-key="games.addTitle.title">Add Game</h2>
+
+    <!-- Tabs -->
+    <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+      <button id="gameApiTabBtn" class="py-2 px-4 text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 font-medium transition-colors" data-lang-key="addTitle.addViaAPI">Add via API</button>
+      <button id="csvTabBtnGames" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors" data-lang-key="addTitle.importCSV">Import CSV</button>
+      <button id="gameManualTabBtn" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors" data-lang-key="addTitle.manualEntry">Manual Entry</button>
+    </div>
+
+    <!-- API Search Form -->
+    <div id="gameApiForm" class="mb-6">
+      <div class="space-y-4">
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
+          <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="games.addTitle.searchTitle">Search for Games</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.addTitle.searchDescription">Enter a game title to search for it using the RAWG database.</p>
+
+        <form id="gameApiSearchForm" class="space-y-4">
+          <div>
+            <label for="gameApiSearchTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.gameToSearch">Game title to search</label>
+            <div class="flex">
+              <input type="text" id="gameApiSearchTitle" name="gameApiSearchTitle" required class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-l-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <button type="submit" id="gameApiSearchBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="games.addTitle.search">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- API Search Results -->
+        <div id="gameApiSearchResults" class="hidden space-y-4">
+          <div id="gameApiSearchLoading" class="text-center py-6">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
+            <p class="mt-2 text-gray-600 dark:text-gray-400" data-lang-key="games.addTitle.searching">Searching...</p>
+          </div>
+        
+          <div id="gameApiSearchError" class="hidden bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-300 p-4 rounded-md">
+            <p id="gameApiErrorMessage"></p>
+          </div>
+        
+          <div id="gameSearchResultsContainer" class="hidden">
+            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3" data-lang-key="games.addTitle.searchResults">Search Results</h3>
+            <div id="gameSearchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Game results will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- CSV Form -->
+    <div id="gamesCsvForm" class="mb-6 hidden">
+      <div class="space-y-4">
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
+          <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2" data-lang-key="games.csv.format">CSV Format</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.csv.description">
+            Your CSV should have these columns: game_title,date
+          </p>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-1" data-lang-key="games.csv.readme">
+            Have a look at the README
+          </p>
+          <div class="flex space-x-4 mt-4">
+            <button id="steamTutorialBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">Steam Tutorial</button>
+            <button id="epicGamesTutorialBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">EpicGames Tutorial</button>
+          </div>
+        </div>
+        
+        <!-- Popup Modal -->
+        
+        </div>
+  
+        <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center transition-all duration-200" id="gamesDropZone">
+          <input type="file" id="gamesCsvFile" accept=".csv" class="hidden">
+          <i class="fas fa-file-csv text-4xl text-gray-400 dark:text-gray-500 mb-3"></i>
+          <p class="text-gray-500 dark:text-gray-400 mb-2" data-lang-key="games.csv.dropzone">
+            Drag & drop your CSV file here
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 mb-3" data-lang-key="games.csv.or">or</p>
+          <button type="button" id="gamesBrowseBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="games.csv.browseFiles">
+            Browse Files
+          </button>
+          <p id="gamesSelectedFileName" class="mt-3 text-sm text-indigo-600 dark:text-indigo-400 hidden"></p>
+        </div>
+  
+        <button type="button" id="gamesImportBtn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled data-lang-key="games.csv.importContent">
+          Import Content
+        </button>
+      </div>
+    </div>
+
+    <!-- Manual Form -->
+    <div id="gameManualForm" class="mb-6 hidden">
+      <form id="addGameForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="md:col-span-2">
+            <label for="gameTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.title">Title*</label>
+            <input type="text" id="gameTitle" name="gameTitle" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+          <div>
+            <label for="gameReleaseDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.releaseDate">Release Date</label>
+            <input type="date" id="gameReleaseDate" name="gameReleaseDate" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+        </div>
+    
+        <div>
+          <label for="gameGenre" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.genre">Genre</label>
+          <input type="text" id="gameGenre" name="gameGenre" placeholder="e.g., Action, RPG, Strategy" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all" data-lang-key-placeholder="games.addTitle.genrePlaceholder">
+        </div>
+    
+        <div>
+          <label for="gamePlatforms" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.platforms">Platforms</label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_pc" value="PC">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.pc">PC</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_playstation_5" value="PlayStation 5">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.ps5">PlayStation 5</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_xbox_series" value="Xbox Series S/X">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.xbox">Xbox Series S/X</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_nintendo_switch" value="Nintendo Switch">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.switch">Nintendo Switch</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_playstation_4" value="PlayStation 4">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.ps4">PlayStation 4</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="platforms[]" id="platform_xbox_one" value="Xbox One">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.platforms.xboxOne">Xbox One</span>
+            </label>
+          </div>
+        </div>
+      
+        <div>
+          <label for="gameStores" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.availableOn">Available on</label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_steam" value="Steam">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.steam">Steam</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_epic" value="Epic Games">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.epic">Epic Games</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_xbox" value="Xbox Store">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.xbox">Xbox Store</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_playstation" value="PlayStation Store">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.playstation">PlayStation Store</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_nintendo" value="Nintendo Store">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.nintendo">Nintendo Store</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4" name="stores[]" id="store_gog" value="GOG">
+              <span class="ml-2 text-sm text-gray-700 dark:text-gray-300" data-lang-key="games.stores.gog">GOG</span>
+            </label>
+          </div>
+        </div>
+    
+        <div>
+          <label for="gameImage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.imageUrl">Image URL</label>
+          <input type="url" id="gameImage" name="gameImage" placeholder="https://example.com/game.jpg" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all" data-lang-key-placeholder="games.addTitle.imageUrlPlaceholder">
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="games.addTitle.yourRating">Your Rating</label>
+          <fieldset class="rating" id="gameManualRating">
+            <input type="radio" id="game-star5" name="gameRating" value="5" />
+            <label class="full" for="game-star5" title="Awesome - 5 stars"></label>
+    
+            <input type="radio" id="game-star4half" name="gameRating" value="4.5" />
+            <label class="half" for="game-star4half" title="Pretty good - 4.5 stars"></label>
+    
+            <input type="radio" id="game-star4" name="gameRating" value="4" />
+            <label class="full" for="game-star4" title="Pretty good - 4 stars"></label>
+    
+            <input type="radio" id="game-star3half" name="gameRating" value="3.5" />
+            <label class="half" for="game-star3half" title="Meh - 3.5 stars"></label>
+    
+            <input type="radio" id="game-star3" name="gameRating" value="3" />
+            <label class="full" for="game-star3" title="Meh - 3 stars"></label>
+    
+            <input type="radio" id="game-star2half" name="gameRating" value="2.5" />
+            <label class="half" for="game-star2half" title="Kinda bad - 2.5 stars"></label>
+    
+            <input type="radio" id="game-star2" name="gameRating" value="2" />
+            <label class="full" for="game-star2" title="Kinda bad - 2 stars"></label>
+    
+            <input type="radio" id="game-star1half" name="gameRating" value="1.5" />
+            <label class="half" for="game-star1half" title="Meh - 1.5 stars"></label>
+    
+            <input type="radio" id="game-star1" name="gameRating" value="1" />
+            <label class="full" for="game-star1" title="Sucks big time - 1 star"></label>
+    
+            <input type="radio" id="game-star0.5" name="gameRating" value="0.5" />
+            <label class="half" for="game-star0.5" title="Sucks big time - 0.5 stars"></label>
+            <input type="radio" id="gameNoRating" name="gameRating" value="0" checked hidden>
+          </fieldset>
+          <div class="mt-1 text-sm text-gray-500 dark:text-gray-400" data-lang-key="games.addTitle.rateStars">Rate from 0.5 to 5 stars</div>
+        </div>
+    
+        <div>
+          <label for="gameNotes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.addTitle.notes">Notes</label>
+          <textarea id="gameNotes" name="gameNotes" rows="2" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"></textarea>
+        </div>
+    
+        <div class="flex justify-between">
+          <button type="button" id="cancelGameEditBtn" class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors hidden" data-lang-key="common.cancel">
+            Cancel
+          </button>
+          <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-lang-key="games.addTitle.addGame">
+            Add Game
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

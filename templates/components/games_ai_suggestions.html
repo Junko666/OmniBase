@@ -1,0 +1,100 @@
+<div id="gamesAiSuggestionsSection" class="hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6" data-lang-key="games.aiSuggestions.title">Games AI Suggestion</h2>
+    <form id="gamesAiSuggestionsForm" class="space-y-6">
+      <!-- 1. Selection Mode -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="games.aiSuggestions.considerWhich">Consider which games:</label>
+        <div class="flex space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" name="gameSelectionMode" value="all" checked
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300" data-lang-key="games.aiSuggestions.allGames">All Games</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="gameSelectionMode" value="rated"
+                  class="form-radio h-4 w-4 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400 dark:bg-gray-700 dark:border-gray-600">
+            <span class="ml-2 text-gray-700 dark:text-gray-300" data-lang-key="games.aiSuggestions.onlyRated">Only Rated by Me</span>
+          </label>
+        </div>
+      </div>
+    
+      <!-- 2. Genre Analysis Results -->
+      <div id="gameGenreAnalysisContainer" class="space-y-2">
+          <div class="flex justify-between items-center">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="games.aiSuggestions.genrePrefs">Your Genre Preferences:</label>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400" data-lang-key="games.aiSuggestions.rankingSystem">Ranking system:</span>
+              <div class="inline-flex rounded-md shadow-sm">
+                <button type="button" id="gameGenreCountBtn" class="px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md" data-lang-key="games.aiSuggestions.genreCount">
+                  Based on Genre-count
+                </button>
+                <button type="button" id="gameUserRankingBtn" class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md" data-lang-key="games.aiSuggestions.userRanking">
+                  Based on User-Rankings
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="gameGenrePreferencesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-40 overflow-y-auto">
+            <p class="text-gray-500 dark:text-gray-400 text-sm" data-lang-key="games.aiSuggestions.loadingGenre">Loading genre analysis...</p>
+          </div>
+        </div>
+    
+      <!-- 3. Favorite Games -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="games.aiSuggestions.topGames">Your Top Games:</label>
+        <div id="gameFavoriteTitlesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+          <p class="text-gray-500 dark:text-gray-400 text-sm" data-lang-key="games.aiSuggestions.loadingFavs">Loading your favorites...</p>
+        </div>
+      </div>
+    
+      <!-- 4. Suggestion Settings -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="gameContentType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.aiSuggestions.gameType">Game Type:</label>
+          <select id="gameContentType" name="gameContentType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <option value="both" data-lang-key="games.aiSuggestions.allTypes">All Game Types</option>
+            <option value="PC" data-lang-key="games.aiSuggestions.pcOnly">PC Games Only</option>
+            <option value="Console" data-lang-key="games.aiSuggestions.consoleOnly">Console Games Only</option>
+          </select>
+        </div>
+        <div>
+          <label for="gameSuggestionCount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.aiSuggestions.suggestionCount">Number of Suggestions:</label>
+          <select id="gameSuggestionCount" name="gameSuggestionCount" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            <option value="3">3</option>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+    
+      <!-- 5. Description -->
+      <div>
+        <label for="gameDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-lang-key="games.aiSuggestions.whatKind">What kind of games are you looking for?</label>
+        <textarea id="gameDescription" name="gameDescription" rows="3" 
+                  placeholder="E.g., 'An action RPG with deep story' or 'A multiplayer strategy game'"
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                  data-lang-key-placeholder="games.aiSuggestions.kindPlaceholder"></textarea>
+      </div>
+    
+      <!-- 6. Generate Button -->
+      <div>
+        <button type="submit" id="generateGameSuggestionsBtn" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex items-center justify-center" data-lang-key="games.aiSuggestions.generateSuggestions">
+          <i class="fas fa-magic mr-2"></i> Generate Game Suggestions
+        </button>
+      </div>
+    </form>
+  
+    <!-- 7. Results Display -->
+    <div id="gameSuggestionsResultsContainer" class="mt-8 hidden">
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4" data-lang-key="games.aiSuggestions.recommendations">Game Recommendations for You</h3>
+      <div id="loadingGameSuggestions" class="text-center py-8">
+        <i class="fas fa-spinner fa-spin text-3xl text-indigo-600 dark:text-indigo-400 mb-3"></i>
+        <p class="text-gray-600 dark:text-gray-400" data-lang-key="games.aiSuggestions.generating">Generating your personalized game suggestions...</p>
+      </div>
+      <div id="gamesSuggestionsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Game suggestions will be populated here -->
+      </div>
+    </div>
+  </div>
+</div>

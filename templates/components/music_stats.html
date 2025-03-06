@@ -1,0 +1,87 @@
+<div id="musicStatsSection" class="hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Music Statistics</h2>
+      
+      <!-- Collection Overview Card -->
+      <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Collection Overview</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 dark:text-gray-300">Tracks:</span>
+              <span id="trackCount" class="font-medium">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 dark:text-gray-300">Artists:</span>
+              <span id="artistCount" class="font-medium">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 dark:text-gray-300">Albums:</span>
+              <span id="albumCount" class="font-medium">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 dark:text-gray-300">Genres:</span>
+              <span id="genreCount" class="font-medium">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700 dark:text-gray-300">Average Popularity:</span>
+              <span id="avgPopularity" class="font-medium">0</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Music Persona Card -->
+        <div id="musicPersonaContainer" class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">Your Music Persona</h3>
+            <button id="generateMusicPersonaBtn" class="text-xs bg-indigo-600 text-white py-1 px-2 rounded hover:bg-indigo-700 transition-colors">
+              Generate
+            </button>
+          </div>
+          <div id="musicPersonaContent" class="hidden">
+            <div class="flex items-center mb-2">
+              <span id="musicPersonaTitle" class="text-lg font-bold text-indigo-600 dark:text-indigo-400"></span>
+            </div>
+            <p id="musicPersonaDescription" class="text-gray-700 dark:text-gray-300 text-sm"></p>
+          </div>
+          <div id="musicPersonaPlaceholder" class="text-center py-4 text-gray-500 dark:text-gray-400">
+            <p>Generate your music persona to discover your taste profile!</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Genres Section with Chart Toggle -->
+      <div class="mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">Genre Distribution</h3>
+          <div class="inline-flex rounded-md shadow-sm">
+            <button type="button" id="musicPieChartBtn" class="px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md">
+              Pie Chart
+            </button>
+            <button type="button" id="musicBarChartBtn" class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md">
+              Bar Chart
+            </button>
+          </div>
+        </div>
+        <div style="position: relative; height: 300px; margin: 0 auto;">
+          <canvas id="musicGenreChart"></canvas>
+        </div>
+      </div>
+  
+      <!-- Top Artists Section -->
+      <div class="mb-8">
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Top Artists</h3>
+        <div id="topArtistsList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+          <p class="text-gray-500 dark:text-gray-400 text-center">Add more tracks to see your most frequent artists.</p>
+        </div>
+      </div>
+      
+      <!-- Popular Tracks Section -->
+      <div>
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Most Popular Tracks</h3>
+        <div id="popularTracksList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+          <p class="text-gray-500 dark:text-gray-400 text-center">Add tracks to see your most popular songs here.</p>
+        </div>
+      </div>
+    </div>
+  </div>

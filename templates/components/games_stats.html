@@ -1,0 +1,91 @@
+<div id="gamesStatsSection" class="hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6" data-lang-key="games.stats.title">Games Statistics</h2>
+  
+    <!-- Collection Overview Card with Percentages -->
+    <div class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3" data-lang-key="games.stats.overview">Collection Overview</h3>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="games.stats.pcGames">PC Games:</span>
+            <div class="flex items-center">
+              <span id="pcGameCount" class="font-medium">0</span>
+              <span id="pcGamePercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="games.stats.consoleGames">Console Games:</span>
+            <div class="flex items-center">
+              <span id="consoleGameCount" class="font-medium">0</span>
+              <span id="consoleGamePercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="games.stats.ratedGames">Rated Games:</span>
+            <div class="flex items-center">
+              <span id="ratedGameCount" class="font-medium">0</span>
+              <span id="ratedGamePercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="games.stats.notRated">Not Rated:</span>
+            <div class="flex items-center">
+              <span id="notRatedGameCount" class="font-medium">0</span>
+              <span id="notRatedGamePercentage" class="text-gray-500 dark:text-gray-400 text-sm ml-2">(0%)</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700 dark:text-gray-300" data-lang-key="games.stats.totalGames">Total Games:</span>
+            <span id="totalGamesCount" class="font-medium">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gaming Persona Card -->
+      <div id="gamePersonaContainer" class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200" data-lang-key="games.stats.gamingPersona">Your Gaming Persona</h3>
+          <button id="generateGamePersonaBtn" class="text-xs bg-indigo-600 text-white py-1 px-2 rounded hover:bg-indigo-700 transition-colors" data-lang-key="games.stats.generate">
+            Generate
+          </button>
+        </div>
+        <div id="gamePersonaContent" class="hidden">
+          <div class="flex items-center mb-2">
+            <span id="gamePersonaTitle" class="text-lg font-bold text-indigo-600 dark:text-indigo-400"></span>
+          </div>
+          <p id="gamePersonaDescription" class="text-gray-700 dark:text-gray-300 text-sm"></p>
+        </div>
+        <div id="gamePersonaPlaceholder" class="text-center py-4 text-gray-500 dark:text-gray-400">
+          <p data-lang-key="games.stats.generatePersonaDesc">Generate your gaming persona to discover your gaming style!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Genres Section with Chart Toggle -->
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200" data-lang-key="games.stats.genreDistribution">Genre Distribution</h3>
+        <div class="inline-flex rounded-md shadow-sm">
+          <button type="button" id="gamePieChartBtn" class="px-2 py-1 text-xs bg-indigo-600 text-white rounded-l-md" data-lang-key="games.stats.pieChart">
+            Pie Chart
+          </button>
+          <button type="button" id="gameBarChartBtn" class="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-r-md" data-lang-key="games.stats.barChart">
+            Bar Chart
+          </button>
+        </div>
+      </div>
+      <div style="position: relative; height: 300px; margin: 0 auto;">
+        <canvas id="gameGenreChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Favorite Games Section -->
+    <div>
+      <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-3" data-lang-key="games.stats.favoriteGames">Your Favorite Games</h3>
+      <div id="gameFavoritesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+        <p class="text-gray-500 dark:text-gray-400 text-center" data-lang-key="games.stats.rateToSee">Rate your games to see your favorites here.</p>
+      </div>
+    </div>
+  </div>
+</div>

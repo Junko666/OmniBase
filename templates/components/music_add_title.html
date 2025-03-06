@@ -1,0 +1,93 @@
+<div id="musicAddTitleSection" class="hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8 transition-all duration-300">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Add Music</h2>
+    
+      <!-- Tabs -->
+      <div class="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+        <button id="musicCsvTabBtn" class="py-2 px-4 text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 font-medium transition-colors">Import CSV</button>
+        <button id="musicManualTabBtn" class="py-2 px-4 text-gray-500 dark:text-gray-400 font-medium transition-colors">Manual Entry</button>
+      </div>
+    
+      <!-- CSV Import -->
+      <div id="musicCsvForm" class="mb-6">
+        <div class="space-y-4">
+          <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-md">
+            <h3 class="font-medium text-indigo-800 dark:text-indigo-300 mb-2">CSV Format</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Your CSV should have these columns: "Track Name", "Artist Name(s)"</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Upload will query Spotify for track information</p>
+            <div class="flex space-x-4 mt-4">
+              <button id="spotifyTutorialBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">Spotify Tutorial</button>
+            </div>
+          </div>
+    
+          <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center transition-all duration-200" id="musicDropZone">
+            <input type="file" id="musicCsvFile" accept=".csv" class="hidden">
+            <i class="fas fa-file-csv text-4xl text-gray-400 dark:text-gray-500 mb-3"></i>
+            <p class="text-gray-500 dark:text-gray-400 mb-2">Drag & drop your music CSV file here</p>
+            <p class="text-gray-500 dark:text-gray-400 mb-3">or</p>
+            <button type="button" id="musicBrowseBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+              Browse Files
+            </button>
+            <p id="musicSelectedFileName" class="mt-3 text-sm text-indigo-600 dark:text-indigo-400 hidden"></p>
+          </div>
+    
+          <button type="button" id="musicImportBtn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            Import Music
+          </button>
+        </div>
+      </div>
+          
+        <!-- Popup Modal -->
+      <!-- Manual Form -->
+      <div id="musicManualForm" class="mb-6 hidden">
+        <form id="addMusicForm" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="trackName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Track Name*</label>
+              <input type="text" id="trackName" name="trackName" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            </div>
+            <div>
+              <label for="artistName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Artist Name*</label>
+              <input type="text" id="artistName" name="artistName" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            </div>
+          </div>
+        
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="albumName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Album</label>
+              <input type="text" id="albumName" name="albumName" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            </div>
+            <div>
+              <label for="genre" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Genre</label>
+              <input type="text" id="genre" name="genre" placeholder="e.g., Electronic, Rock" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+            </div>
+          </div>
+        
+          <div>
+            <label for="spotifyLink" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Spotify Link</label>
+            <input type="url" id="spotifyLink" name="spotifyLink" placeholder="https://open.spotify.com/track/..." class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+          </div>
+        
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Popularity</label>
+            <div class="relative pt-1">
+              <input type="range" id="popularity" name="popularity" min="0" max="100" step="1" value="50" 
+                    class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 px-2 mt-1">
+                <span>0</span>
+                <span>50</span>
+                <span>100</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="flex justify-end">
+            <button type="submit" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+              Add Track
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

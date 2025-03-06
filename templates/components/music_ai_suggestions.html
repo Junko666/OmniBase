@@ -1,0 +1,69 @@
+<div id="musicAiSuggestionsSection" class="hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">AI Music Suggestions</h2>
+      <form id="musicAiSuggestionsForm" class="space-y-6">
+        <!-- Genre Analysis Results -->
+        <div id="musicGenreAnalysisContainer" class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Genre Preferences:</label>
+            <div id="musicGenrePreferencesList" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-40 overflow-y-auto">
+              <p class="text-gray-500 dark:text-gray-400 text-sm">Loading genre analysis...</p>
+            </div>
+        </div>
+        
+        <!-- Top Artists -->
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Top Artists:</label>
+          <div id="topArtistsForAI" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-md max-h-60 overflow-y-auto">
+            <p class="text-gray-500 dark:text-gray-400 text-sm">Loading your favorite artists...</p>
+          </div>
+        </div>
+        
+        <!-- Suggestion Settings -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="musicSuggestionType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Suggestion Type:</label>
+            <select id="musicSuggestionType" name="musicSuggestionType" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="similar">Similar to my collection</option>
+              <option value="discover">New discoveries</option>
+              <option value="trending">Currently trending</option>
+            </select>
+          </div>
+          <div>
+            <label for="musicSuggestionCount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Number of Suggestions:</label>
+            <select id="musicSuggestionCount" name="musicSuggestionCount" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+              <option value="3">3</option>
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Description -->
+        <div>
+          <label for="musicDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What kind of music are you looking for?</label>
+          <textarea id="musicDescription" name="musicDescription" rows="3" 
+                    placeholder="E.g., 'Upbeat electronic tracks for working out' or 'Calm acoustic music for relaxation'"
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition-all"></textarea>
+        </div>
+        
+        <!-- Generate Button -->
+        <div>
+          <button type="submit" id="generateMusicSuggestionsBtn" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex items-center justify-center">
+            <i class="fas fa-magic mr-2"></i> <span>Generate Music Suggestions</span>
+          </button>
+        </div>
+      </form>
+      
+      <!-- Results Display -->
+      <div id="musicSuggestionsResultsContainer" class="mt-8 hidden">
+        <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">Recommended Tracks</h3>
+        <div id="loadingMusicSuggestions" class="text-center py-8">
+          <i class="fas fa-spinner fa-spin text-3xl text-indigo-600 dark:text-indigo-400 mb-3"></i>
+          <p class="text-gray-600 dark:text-gray-400">Generating your personalized music suggestions...</p>
+        </div>
+        <div id="musicSuggestionsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Suggestions will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
